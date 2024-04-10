@@ -1,0 +1,75 @@
+* {
+    box-sizing: border-box;
+  }
+  body {
+    padding: 1rem;
+  }
+  
+  /* Just for the fallback layout */
+  
+  main {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  article {
+    margin: 1rem 0;
+  }
+  
+  /* Now lets do a Grid-based layout */
+  
+  @supports (display: grid) {
+    main { 
+      max-width: 10000px;
+      margin: 0;
+    }
+    article {
+      margin: 0;
+    }
+    .deals {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-gap: 1rem;
+    }
+  }
+    
+  .deals {
+    font-family: Avenir, Roboto, Helvetica, san-serif; 
+    font-size: 80%;
+    margin-top: 30px;
+    display: grid; /* 그리드 레이아웃 사용 */
+    grid-template-columns: repeat(5, 1fr); /* 열의 개수 설정 */
+    grid-gap: 1rem; /* 간격 설정 */
+  }
+  
+  .sale-item {
+    display: flex;
+    flex-flow: column;
+    border:  1px solid black;
+    border-radius: 1rem;
+    padding: 2rem;
+    width: 100%; /* 요소 너비를 100%로 설정하여 한 줄에 하나의 요소만 표시 */
+  }
+
+  .sale-item > h1 {
+    margin: 1rem 1rem 0;
+  }
+  .sale-item > ul {
+    margin: 0 0 1rem;
+  }
+  .sale-item > p {
+    margin: 0.25em 1rem 1rem;
+  }
+  .sale-item > img {
+    order: -1;
+    align-self: center;
+  }
+  .sale-item > button {
+    margin-top: auto; 
+    background: teal;
+    color: white;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 1rem;
+    font-size: 1.2rem;
+  }
+  
