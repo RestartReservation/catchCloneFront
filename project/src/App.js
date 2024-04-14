@@ -1,9 +1,7 @@
 import React from "react";
 import {Routes,Route,Link} from "react-router-dom";
-import ReviewList from "./pages/ReviewList";
 import Review from "./pages/Review";
 import Home from "./pages/Home";
-import WriteReview from "./pages/WriteReview";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './pages/css/style.css';
 import Container from 'react-bootstrap/Container';
@@ -43,9 +41,7 @@ function App() {
     </Navbar>
   <Routes>
     <Route path="/" element={<Home />} /> 
-    <Route path="/reviewList" element={<ReviewList />} />
     <Route path="/review/:id" element={<Review />} />
-    <Route path="/writeReview" element={<WriteReview />} />
     <Route path="/store/:id" element={<Store />} />
   </Routes>
 
