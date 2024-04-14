@@ -30,6 +30,7 @@ const Home = () => {
     fetchData();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   const handleScroll = () => {

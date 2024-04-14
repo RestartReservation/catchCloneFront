@@ -1,6 +1,5 @@
 import React ,{useState,useEffect} from "react"
 import {Routes,Route,useParams} from "react-router-dom";
-import WriteReview from "./WriteReview";
 import axios from 'axios';
 import { URL_VARIABLE } from "./ExportUrl"; 
 
@@ -44,6 +43,7 @@ const Review = () =>{
             }
         };
         fetchComments();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id])
 
 
@@ -62,9 +62,6 @@ const Review = () =>{
         <input type="text"></input>
         {/* <Link to = "/writeReview"><button onClick={writeComment}>댓글작성</button></Link > */}
         </div>
-        <Routes>
-            <Route path="/writeReview" element={<WriteReview />} />
-        </Routes>
         </table>
         
     );
