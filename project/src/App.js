@@ -2,6 +2,7 @@ import React from "react";
 import {Routes,Route,Link} from "react-router-dom";
 import Review from "./pages/Review";
 import Home from "./pages/Home";
+import Signup from "./pages/Singup";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './pages/css/style.css';
 import Container from 'react-bootstrap/Container';
@@ -22,7 +23,8 @@ function App() {
           <Nav.Link >
             <Link to="/" style={{ textDecoration: 'none', fontFamily: 'Arial, sans-serif' , color: 'white' }}>Home</Link>
           </Nav.Link>
-          <Nav.Link to = "/reviewList"> ReviewList </Nav.Link>
+          <Nav.Link> 
+          <Link to="/signup" style={{ textDecoration: 'none', fontFamily: 'Arial, sans-serif' , color: 'white' }}>회원가입</Link></Nav.Link>
             <Nav.Link href="#link">Link</Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
@@ -43,6 +45,7 @@ function App() {
     <Route path="/" element={<Home />} /> 
     <Route path="/review/:id" element={<Review />} />
     <Route path="/store/:id" element={<Store />} />
+    <Route path="/signup" element={<Signup />} />
   </Routes>
 
   </div>
