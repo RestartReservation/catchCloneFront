@@ -3,7 +3,7 @@ import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { URL_VARIABLE } from "./ExportUrl"; 
 
-function Signup() {
+const Signup = () => {
     const [userData, setUserData] = useState({
         username: '',
         password: '',
@@ -22,7 +22,7 @@ function Signup() {
     const handleSignup = async () => { 
     console.log(userData)
     try {
-      const response = await axios.post( URL_VARIABLE + 'user/signUp', userData);
+      const response = await axios.post( URL_VARIABLE + 'users/signUp', userData);
       console.log(response.data);
     } catch (error) {
       console.error(error.response.data);
