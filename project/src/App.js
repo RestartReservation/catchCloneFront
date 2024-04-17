@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {Routes,Route,Link} from "react-router-dom";
 import Review from "./pages/Review";
 import Home from "./pages/Home";
@@ -10,8 +10,20 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Store from "./pages/Store";
+import Login from "./pages/Login";
 
 function App() {
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
+  const openLoginModal = () => {
+    console.log("show")
+    setShowLoginModal(true);
+  };
+
+  const closeLoginModal = () => {
+    setShowLoginModal(false);
+  };
+
   return(
   <div className="App">
       <Navbar expand="lg" className="bg-body-tertiary">
@@ -24,8 +36,13 @@ function App() {
             <Link to="/" style={{ textDecoration: 'none', fontFamily: 'Arial, sans-serif' , color: 'white' }}>Home</Link>
           </Nav.Link>
           <Nav.Link> 
-          <Link to="/signup" style={{ textDecoration: 'none', fontFamily: 'Arial, sans-serif' , color: 'white' }}>회원가입</Link></Nav.Link>
-            <Nav.Link href="#link">Link</Nav.Link>
+          <Link to="/signup" style={{ textDecoration: 'none', fontFamily: 'Arial, sans-serif' , color: 'white' }}>회원가입</Link>
+          </Nav.Link>
+
+          <Nav.Link>
+            <button onClick={openLoginModal} style={{ cursor: 'pointer', textDecoration: 'none', fontFamily: 'Arial, sans-serif', color: 'white' }} > 로그인 </button>
+            </Nav.Link>
+
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
@@ -48,6 +65,7 @@ function App() {
     <Route path="/signup" element={<Signup />} />
   </Routes>
 
+    {showLoginModal && <Login onClose={closeLoginModal} />}
   </div>
 
   
