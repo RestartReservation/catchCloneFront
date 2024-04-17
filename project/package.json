@@ -13,7 +13,6 @@
     "react-bootstrap": "^2.10.2",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3",
-    "react-scripts": "^5.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -42,6 +41,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "html-loader": "^5.0.0"
+    "html-loader": "^5.0.0",
+    "react-scripts": "^5.0.1"
   }
 }
