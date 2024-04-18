@@ -28,6 +28,7 @@ const Signup = () => {
       console.error(error.response.data);
     }
   };
+  
   return (
     <Form>
         <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -60,7 +61,7 @@ const Signup = () => {
         <Form.Label>닉네임</Form.Label>
         <Form.Control 
         type="text" 
-        name="nickname"
+        name="nickName"
         value={userData.nickName}
         onChange={handleInputChange}
         placeholder="닉네임을 입력해 주세요" />
