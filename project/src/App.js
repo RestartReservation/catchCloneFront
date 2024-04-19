@@ -1,19 +1,43 @@
 import React, { useState } from "react";
 import {Routes,Route,Link} from "react-router-dom";
+import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './pages/css/style.css';
+
+import { URL_VARIABLE } from "./pages/ExportUrl"; 
 import Review from "./pages/Review";
 import Home from "./pages/Home";
 import Signup from "./pages/Singup";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './pages/css/style.css';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Store from "./pages/Store";
 import Login from "./pages/Login";
+import Reservation from "./pages/Reservation";
 
 function App() {
   const [showLoginModal, setShowLoginModal] = useState(false);
+
+  const [userName, setUserName] = useState();
+
+  const[isLogin, setIsLogin] = useState(false);
+
+  const checkUserData = async () =>{
+    const jwtToken = localStorage.getItem('jwtToken');
+    if(jwtToken === null || jwtToken === undefined || isLogin) return;
+    try {
+      const response = await axios.get( URL_VARIABLE + 'users/signUp', jwtToken);
+      response.statusCode !== 201 ? alert("다시 로그인 해 주세요") : setUserName(response.userName);
+      setIsLogin(true);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error.response.data);
+      alert("로그인 정보를 가져오는 중 에러가 발생했습니다");
+    }
+  }
+
+  checkUserData();
 
   const openLoginModal = () => {
     console.log("show")
@@ -24,6 +48,7 @@ function App() {
     setShowLoginModal(false);
   };
 
+  
   return(
   <div className="App">
       <Navbar expand="lg" className="bg-body-tertiary">
@@ -42,6 +67,10 @@ function App() {
           <Nav.Link>
             <button onClick={openLoginModal} style={{ cursor: 'pointer', textDecoration: 'none', fontFamily: 'Arial, sans-serif', color: 'white' }} > 로그인 </button>
             </Nav.Link>
+
+            <Nav.Link> 
+          <Link to="/reservation" style={{ textDecoration: 'none', fontFamily: 'Arial, sans-serif' , color: 'white' }}>예약</Link>
+          </Nav.Link>
 
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
@@ -63,8 +92,8 @@ function App() {
     <Route path="/review/:id" element={<Review />} />
     <Route path="/store/:id" element={<Store />} />
     <Route path="/signup" element={<Signup />} />
+    <Route path="/reservation" element={<Reservation />} />
   </Routes>
-
     {showLoginModal && <Login onClose={closeLoginModal} />}
   </div>
 
