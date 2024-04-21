@@ -9,6 +9,8 @@ const Reservation = () => {
   const [date, setDate] = useState(new Date());
   const [events, setEvents] = useState([]);
   const [reservationInfo,setReservationInfo] = useState();
+  const [requestReservationInfo,setRequestReservationInfo] = useState();
+  
   useEffect(() => {
     // 컴포넌트가 마운트되거나 선택된 날짜가 변경될 때 API 호출
     fetchEventsForDate(date);
@@ -20,7 +22,7 @@ const Reservation = () => {
       const month = selectedDate.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더해야 함
       const day = selectedDate.getDate();
 
-      const response = await axios.get(URL_VARIABLE + `${year}/${month}/${day}/` + id);
+      const response = await axios.get(URL_VARIABLE + `reservations/${year}/${month}/${day}/` + id);
       const data = await response.json();
       setReservationInfo(data);
     } catch (error) {
@@ -32,9 +34,21 @@ const Reservation = () => {
     setDate(selectedDate); // 사용자가 날짜를 선택할 때마다 선택된 날짜를 업데이트
   };
 
+  const handleReservation = async () => { 
+    const dayInfo = reservationInfo.dayInfo;
+    const timeInfo = reservationInfo.timeInfo;
+    setRequestReservationInfo(dayInfo,timeInfo);
+    try {
+      const response = await axios.post( URL_VARIABLE + `reservations/users/${id}/` + reservationInfo.id, requestReservationInfo);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error.response.data);
+    }
+  };
+
   return (
     <div>
-      <h2>나의 달력</h2>
+      <h2>예약</h2>
       <div>
         <Calendar
           onChange={onChange}
@@ -52,7 +66,11 @@ const Reservation = () => {
                 <tr>
                     <td>시간 : {reservationInfo.timeInfo} 예약가능여부 : {reservationInfo.isAvailable} 수용인원 : {reservationInfo.capacity} </td>
                 </tr>
+               
             )}
+             <br>
+                </br>
+                <button onClick={handleReservation}>예약</button>
         </tbody>
 
       </div>
