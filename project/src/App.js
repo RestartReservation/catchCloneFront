@@ -23,21 +23,21 @@ function App() {
 
   const[isLogin, setIsLogin] = useState(false);
 
-  const checkUserData = async () =>{
-    const jwtToken = localStorage.getItem('jwtToken');
-    if(jwtToken === null || jwtToken === undefined || isLogin) return;
-    try {
-      const response = await axios.get( URL_VARIABLE + 'users/signUp', jwtToken);
-      response.statusCode !== 201 ? alert("다시 로그인 해 주세요") : setUserName(response.userName);
-      setIsLogin(true);
-      console.log(response.data);
-    } catch (error) {
-      console.error(error.response.data);
-      alert("로그인 정보를 가져오는 중 에러가 발생했습니다");
-    }
-  }
+  // const checkUserData = async () =>{
+  //   const jwtToken = localStorage.getItem('jwtToken');
+  //   if(jwtToken === null || jwtToken === undefined || isLogin) return;
+  //   try {
+  //     const response = await axios.get( URL_VARIABLE + 'users/signUp', jwtToken);
+  //     response.statusCode !== 201 ? alert("다시 로그인 해 주세요") : setUserName(response.userName);
+  //     setIsLogin(true);
+  //     console.log(response.data);
+  //   } catch (error) {
+  //     console.error(error.response.data);
+  //     alert("로그인 정보를 가져오는 중 에러가 발생했습니다");
+  //   }
+  // }
 
-  checkUserData();
+  // checkUserData();
 
   const openLoginModal = () => {
     console.log("show")
@@ -67,10 +67,10 @@ function App() {
           <Nav.Link>
             <button onClick={openLoginModal} style={{ cursor: 'pointer', textDecoration: 'none', fontFamily: 'Arial, sans-serif', color: 'white' }} > 로그인 </button>
             </Nav.Link>
-
+{/* 
             <Nav.Link> 
-          <Link to="/reservation" style={{ textDecoration: 'none', fontFamily: 'Arial, sans-serif' , color: 'white' }}>예약</Link>
-          </Nav.Link>
+          <Link to="/reservations" style={{ textDecoration: 'none', fontFamily: 'Arial, sans-serif' , color: 'white' }}>예약</Link>
+          </Nav.Link> */}
 
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
@@ -92,7 +92,7 @@ function App() {
     <Route path="/review/:id" element={<Review />} />
     <Route path="/store/:id" element={<Store />} />
     <Route path="/signup" element={<Signup />} />
-    <Route path="/reservation" element={<Reservation />} />
+    <Route path="/reservations/:id" element={<Reservation />} />
   </Routes>
     {showLoginModal && <Login onClose={closeLoginModal} />}
   </div>
