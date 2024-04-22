@@ -3,12 +3,21 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { URL_VARIABLE } from "./ExportUrl"; 
 import {useParams} from "react-router-dom";
+import axios from 'axios';
+
+const ReservationInfos = ({reservationData}) => {
+return(
+                <tr>
+                    <td>시간 : {reservationData.timeInfo} 예약가능여부 : {reservationData.isAvailable} 수용인원 : {reservationData.capacity} </td>
+                </tr>
+);
+}
 
 const Reservation = () => {
   const { id } = useParams(); 
   const [date, setDate] = useState(new Date());
   const [events, setEvents] = useState([]);
-  const [reservationInfo,setReservationInfo] = useState();
+  const [reservationInfo,setReservationInfo] = useState([]);
   const [requestReservationInfo,setRequestReservationInfo] = useState();
   
   useEffect(() => {
@@ -17,15 +26,19 @@ const Reservation = () => {
   }, [date]); // date 상태가 변경될 때마다 useEffect 다시 실행
 
   const fetchEventsForDate = async (selectedDate) => {
+    setReservationInfo();
     try {
       const year = selectedDate.getFullYear();
       const month = selectedDate.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더해야 함
       const day = selectedDate.getDate();
 
       const response = await axios.get(URL_VARIABLE + `reservations/${year}/${month}/${day}/` + id);
-      const data = await response.json();
-      setReservationInfo(data);
-    } catch (error) {
+      console.log(response);
+
+      setReservationInfo(response.data);
+      console.log(reservationInfo);
+    } 
+    catch (error) {
       console.error('API 호출 에러:', error);
     }
   };
@@ -35,14 +48,28 @@ const Reservation = () => {
   };
 
   const handleReservation = async () => { 
+    if(localStorage.getItem('jwtToken') == null) {
+      alert("로그인 해 주세요");
+      return;
+    }
+
+
     const dayInfo = reservationInfo.dayInfo;
     const timeInfo = reservationInfo.timeInfo;
     setRequestReservationInfo(dayInfo,timeInfo);
+    const jwtToken = localStorage.getItem('jwtToken'); 
+
     try {
-      const response = await axios.post( URL_VARIABLE + `reservations/users/${id}/` + reservationInfo.id, requestReservationInfo);
+      const response = await axios.post( URL_VARIABLE + `reservations/users/${id}/` + reservationInfo.id, requestReservationInfo,{
+        headers: {
+          Authorization: `${jwtToken}` 
+        }
+      });
       console.log(response.data);
     } catch (error) {
-      console.error(error.response.data);
+      // console.error(error.response.data);
+      localStorage.removeItem('jwtToken');
+      alert("다시 로그인 해 주세요");
     }
   };
 
@@ -61,16 +88,25 @@ const Reservation = () => {
             }
           }}
         />
-         <tbody>
-        {reservationInfo && (
-                <tr>
-                    <td>시간 : {reservationInfo.timeInfo} 예약가능여부 : {reservationInfo.isAvailable} 수용인원 : {reservationInfo.capacity} </td>
-                </tr>
-               
-            )}
-             <br>
-                </br>
-                <button onClick={handleReservation}>예약</button>
+        
+          <tbody>
+            
+          {reservationInfo && reservationInfo.length !== 0 ? (reservationInfo
+              .slice() 
+              .sort((a, b) => {
+                if (a.timeInfo < b.timeInfo) return -1;
+                if (a.timeInfo > b.timeInfo) return 1;
+                return 0;
+              })
+              .map(reservation => (
+                <ReservationInfos key={reservation.id} reservationData={reservation} />
+              ))
+          ) : (
+            <p>예약이 가능하지 않습니다</p>
+          )}
+         <br>
+          </br>
+          <button onClick={handleReservation}>예약</button>
         </tbody>
 
       </div>
