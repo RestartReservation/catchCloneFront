@@ -5,28 +5,51 @@ import { URL_VARIABLE } from "./ExportUrl";
 import {useParams} from "react-router-dom";
 import axios from 'axios';
 
-const ReservationInfos = ({reservationData}) => {
-return(
-                <tr>
-                    <td>시간 : {reservationData.timeInfo} 예약가능여부 : {reservationData.isAvailable} 수용인원 : {reservationData.capacity} </td>
-                </tr>
-);
-}
+
 
 const Reservation = () => {
   const { id } = useParams(); 
   const [date, setDate] = useState(new Date());
   const [events, setEvents] = useState([]);
   const [reservationInfo,setReservationInfo] = useState([]);
-  const [requestReservationInfo,setRequestReservationInfo] = useState();
+  const [requestReservationInfo,setRequestReservationInfo] = useState({
+    reservationCount : '',
+    reservationDate : '',
+    reservationTime : ''
+  });
+  const [selectedDateId,setSelectedDateId] = useState();
+  const [selectedDay,setSelectedDay] = useState();
+  const [selectedTime,setSelectedTime] = useState();
+  const [selectedCount,setSelectedCount] = useState(1);
+
+  const ReservationInfos = ({ reservationData }) => {
+    return (
+      <tr>
+        <td>
+          시간: {reservationData.timeInfo} 예약가능여부: {reservationData.isAvailable} 수용인원: {reservationData.capacity}
+        </td>
+        <td>
+          <button onClick={() => handleSelectReservation(reservationData)}>선택</button>
+        </td>
+      </tr>
+    );
+  };
+
   
   useEffect(() => {
     // 컴포넌트가 마운트되거나 선택된 날짜가 변경될 때 API 호출
     fetchEventsForDate(date);
   }, [date]); // date 상태가 변경될 때마다 useEffect 다시 실행
 
+  const handleSelectReservation = async (reservationData) => {
+    setSelectedDateId(reservationData.id);
+    setSelectedTime(reservationData.timeInfo);
+    if(selectedDay === null) setSelectedDay(date.getDate());
+  };
+  
   const fetchEventsForDate = async (selectedDate) => {
     setReservationInfo();
+    setSelectedDay(selectedDate.getDate());
     try {
       const year = selectedDate.getFullYear();
       const month = selectedDate.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더해야 함
@@ -53,25 +76,60 @@ const Reservation = () => {
       return;
     }
 
+    console.log(selectedDateId);
 
-    const dayInfo = reservationInfo.dayInfo;
-    const timeInfo = reservationInfo.timeInfo;
-    setRequestReservationInfo(dayInfo,timeInfo);
+    if (!selectedDateId) {
+      alert('예약할 시간을 선택해주세요');
+      return;
+    }
+
+    setRequestReservationInfo({
+      reservationCount : selectedCount,
+      reservationDate : selectedDay,
+      reservationTime : selectedTime
+    });
+
+    console.log(setRequestReservationInfo);
+    await sendReservationRequest();
+  };
+  
+  const sendReservationRequest = async () => {
     const jwtToken = localStorage.getItem('jwtToken'); 
-
+  
     try {
-      const response = await axios.post( URL_VARIABLE + `reservations/users/${id}/` + reservationInfo.id, requestReservationInfo,{
-        headers: {
-          Authorization: `${jwtToken}` 
+      const response = await axios.post(
+        URL_VARIABLE + `reservations/users/${id}/` + selectedDateId,
+        requestReservationInfo,
+        {
+          headers: {
+            Authorization: `${jwtToken}`
+          }
         }
-      });
+      );
       console.log(response.data);
     } catch (error) {
-      // console.error(error.response.data);
-      localStorage.removeItem('jwtToken');
-      alert("다시 로그인 해 주세요");
+      console.error('API 호출 에러:', error);
+      // 에러 처리
     }
   };
+ 
+  //   // setRequestReservationInfo(dayInfo,timeInfo);
+  //   const jwtToken = localStorage.getItem('jwtToken'); 
+
+  //   try {
+  //     const response = await axios.post( URL_VARIABLE + `reservations/users/${id}/` + selectedDateId, requestReservationInfo,{
+  //       headers: {
+  //         // Authorization: `Bearer ${jwtToken}`
+  //         Authorization: `${jwtToken}`
+  //       }
+  //     });
+  //     console.log(response.data);
+  //   } catch (error) {
+  //     // console.error(error.response.data);
+  //     // localStorage.removeItem('jwtToken');
+  //     // alert("다시 로그인 해 주세요");
+  //   }
+  // };
 
   return (
     <div>
