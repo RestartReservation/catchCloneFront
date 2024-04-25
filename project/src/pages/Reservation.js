@@ -13,11 +13,15 @@ const Reservation = () => {
   const [events, setEvents] = useState([]);
   const [reservationInfo,setReservationInfo] = useState([]);
   const [requestReservationInfo,setRequestReservationInfo] = useState({
-    reservationCount : '',
-    reservationDate : '',
-    reservationTime : ''
+    numberOfPeople : '',
+    yearInfo : '',
+    monthInfo : '',
+    dayInfo : '',
+    timeInfo : ''
   });
   const [selectedDateId,setSelectedDateId] = useState();
+  const [selectedYear,setSelectedYear] = useState();
+  const [selectedMonth,setSelectedMonth] = useState();
   const [selectedDay,setSelectedDay] = useState();
   const [selectedTime,setSelectedTime] = useState();
   const [selectedCount,setSelectedCount] = useState(1);
@@ -44,12 +48,16 @@ const Reservation = () => {
   const handleSelectReservation = async (reservationData) => {
     setSelectedDateId(reservationData.id);
     setSelectedTime(reservationData.timeInfo);
+    if(selectedYear === null) setSelectedYear(date.getFullYear());
+    if(selectedMonth === null) setSelectedMonth(date.getMonth() + 1);
     if(selectedDay === null) setSelectedDay(date.getDate());
   };
   
   const fetchEventsForDate = async (selectedDate) => {
     setReservationInfo();
     setSelectedDay(selectedDate.getDate());
+    setSelectedYear(date.getFullYear());
+    setSelectedMonth(date.getMonth() + 1);
     try {
       const year = selectedDate.getFullYear();
       const month = selectedDate.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더해야 함
@@ -84,34 +92,44 @@ const Reservation = () => {
     }
 
     setRequestReservationInfo({
-      reservationCount : selectedCount,
-      reservationDate : selectedDay,
-      reservationTime : selectedTime
+      numberOfPeople : selectedCount,
+      yearInfo : selectedYear,
+      monthInfo : selectedMonth,
+      dayInfo : selectedDay,
+      timeInfo : selectedTime
     });
 
-    console.log(setRequestReservationInfo);
-    await sendReservationRequest();
+    console.log(selectedCount);
+    console.log(selectedMonth);
+    console.log(requestReservationInfo);
+    // await sendReservationRequest();
   };
-  
-  const sendReservationRequest = async () => {
-    const jwtToken = localStorage.getItem('jwtToken'); 
-  
-    try {
-      const response = await axios.post(
-        URL_VARIABLE + `reservations/users/${id}/` + selectedDateId,
-        requestReservationInfo,
-        {
-          headers: {
-            Authorization: `${jwtToken}`
+
+  useEffect(() => {
+    console.log(requestReservationInfo); 
+    if(selectedDateId != null){
+      const jwtToken = localStorage.getItem('jwtToken'); 
+    
+      try {
+        const response =  axios.post(
+          URL_VARIABLE + `reservations/users/${id}/` + selectedDateId,
+          requestReservationInfo,
+          {
+            headers: {
+              Authorization: `${jwtToken}`
+            }
           }
-        }
-      );
-      console.log(response.data);
-    } catch (error) {
-      console.error('API 호출 에러:', error);
-      // 에러 처리
+        );
+        console.log(response.data);
+      } catch (error) {
+        console.error('API 호출 에러:', error);
+        // 에러 처리
+      }
     }
-  };
+      
+  }, [requestReservationInfo]);
+  
+
  
   //   // setRequestReservationInfo(dayInfo,timeInfo);
   //   const jwtToken = localStorage.getItem('jwtToken'); 
