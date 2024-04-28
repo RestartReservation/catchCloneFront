@@ -1,4 +1,5 @@
 import React ,{useState,useEffect} from "react"
+import {useParams,Link} from "react-router-dom";
 import axios from 'axios';
 import { URL_VARIABLE } from "./ExportUrl"; 
 
@@ -8,7 +9,7 @@ const ReservationList = () => {
         return(
             <tr>
             <td>{userReservationData.reservationId} 가게명 : {userReservationData.storeName} 예약(방문)일 : {userReservationData.yearInfo} - {userReservationData.dayInfo} - {userReservationData.timeInfo}
-            예약상태 : {userReservationData.reservationStatus} 예약한 날짜 : {}<br/> </td>
+            예약상태 : {userReservationData.reservationStatus} 예약한 날짜 : {}<br/> </td> <Link to = {`/writeReview/${userReservationData.reservationId}`}><button>리뷰작성</button></Link > 
         </tr>
         )
     }
