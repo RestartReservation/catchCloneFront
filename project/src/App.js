@@ -15,6 +15,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Store from "./pages/Store";
 import Login from "./pages/Login";
 import Reservation from "./pages/Reservation";
+import ReservationList from "./pages/ReservationList";
 
 function App() {
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -67,6 +68,11 @@ function App() {
           <Nav.Link>
             <button onClick={openLoginModal} style={{ cursor: 'pointer', textDecoration: 'none', fontFamily: 'Arial, sans-serif', color: 'white' }} > 로그인 </button>
             </Nav.Link>
+
+            <Nav.Link> 
+          <Link to="/reservationList" style={{ textDecoration: 'none', fontFamily: 'Arial, sans-serif' , color: 'white' }}>예약목록</Link>
+          </Nav.Link>
+
 {/* 
             <Nav.Link> 
           <Link to="/reservations" style={{ textDecoration: 'none', fontFamily: 'Arial, sans-serif' , color: 'white' }}>예약</Link>
@@ -93,6 +99,7 @@ function App() {
     <Route path="/store/:id" element={<Store />} />
     <Route path="/signup" element={<Signup />} />
     <Route path="/reservations/:id" element={<Reservation />} />
+    <Route path="/reservationList/:id" element={<ReservationList />} />
   </Routes>
     {showLoginModal && <Login onClose={closeLoginModal} />}
   </div>
