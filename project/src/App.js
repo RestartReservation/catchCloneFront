@@ -99,7 +99,7 @@ function App() {
     <Route path="/store/:id" element={<Store />} />
     <Route path="/signup" element={<Signup />} />
     <Route path="/reservations/:id" element={<Reservation />} />
-    <Route path="/reservationList/:id" element={<ReservationList />} />
+    <Route path="/reservationList" element={<ReservationList />} />
   </Routes>
     {showLoginModal && <Login onClose={closeLoginModal} />}
   </div>

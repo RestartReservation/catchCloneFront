@@ -3,16 +3,37 @@ import {useParams,Link} from "react-router-dom";
 import axios from 'axios';
 import { URL_VARIABLE } from "./ExportUrl"; 
 
+const UserReservations = ({ userReservationData }) => {
+    const {
+      reservationId,
+      storeName,
+      yearInfo,
+      monthInfo,
+      dayInfo,
+      timeInfo,
+      reservationStatus,
+      reservationDate 
+    } = userReservationData;
+  
+  
+    return (
+      <div>
+        <p>
+          {reservationId} 가게명: {storeName} 예약(방문)일: {yearInfo} 년 {monthInfo} 월 {dayInfo} 일 /  {timeInfo} 시 예약상태: {reservationStatus} 예약한 날짜:
+          <Link to={`/writeReview/${reservationId}`}>
+          <button>리뷰작성</button>
+        </Link>
+        </p>
+       
+      </div>
+    );
+  };
+  
+
 const ReservationList = () => {
     const [reservations,setReservations] = useState([]);
-    const UserReservations = (userReservationData) =>{
-        return(
-            <tr>
-            <td>{userReservationData.reservationId} 가게명 : {userReservationData.storeName} 예약(방문)일 : {userReservationData.yearInfo} - {userReservationData.dayInfo} - {userReservationData.timeInfo}
-            예약상태 : {userReservationData.reservationStatus} 예약한 날짜 : {}<br/> </td> <Link to = {`/writeReview/${userReservationData.reservationId}`}><button>리뷰작성</button></Link > 
-        </tr>
-        )
-    }
+
+    
 
     const fetchReservations = async () => {
         const jwtToken = localStorage.getItem('jwtToken'); 
@@ -36,16 +57,14 @@ const ReservationList = () => {
         fetchReservations();
     }, []);
 
-    // reservations 상태가 변경될 때(fetchReservations를 호출)
     useEffect(() => {
-        fetchReservations();
     }, [reservations]);
 
     
     return(
         <div>
-        {reservations.map(reservation => (
-            <UserReservations key={reservation.reservationId} userReservationData={reservation} />
+        {reservations.map(reservations => (
+            <UserReservations key={reservations.reservationId} userReservationData={reservations} />
         ))}
     </div>
     );
