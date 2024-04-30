@@ -6,6 +6,7 @@ import { URL_VARIABLE } from "./ExportUrl";
 const UserReservations = ({ userReservationData }) => {
     const {
       reservationId,
+      storeId,
       storeName,
       yearInfo,
       monthInfo,
@@ -20,7 +21,7 @@ const UserReservations = ({ userReservationData }) => {
       <div>
         <p>
           {reservationId} 가게명: {storeName} 예약(방문)일: {yearInfo} 년 {monthInfo} 월 {dayInfo} 일 /  {timeInfo} 시 예약상태: {reservationStatus} 예약한 날짜:
-          <Link to={`/writeReview/${reservationId}`}>
+          <Link to={`/writeReview/${storeId}/${reservationId}`}>
           <button>리뷰작성</button>
         </Link>
         </p>

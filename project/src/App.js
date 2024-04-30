@@ -16,6 +16,7 @@ import Store from "./pages/Store";
 import Login from "./pages/Login";
 import Reservation from "./pages/Reservation";
 import ReservationList from "./pages/ReservationList";
+import WriteReview from "./pages/WriteReview";
 
 function App() {
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -73,6 +74,10 @@ function App() {
           <Link to="/reservationList" style={{ textDecoration: 'none', fontFamily: 'Arial, sans-serif' , color: 'white' }}>예약목록</Link>
           </Nav.Link>
 
+          <Nav.Link> 
+          <Link to="/writeReview/:id1/:id2"  style={{ textDecoration: 'none', fontFamily: 'Arial, sans-serif' , color: 'white' }}>리뷰작성</Link>
+          </Nav.Link>
+
 {/* 
             <Nav.Link> 
           <Link to="/reservations" style={{ textDecoration: 'none', fontFamily: 'Arial, sans-serif' , color: 'white' }}>예약</Link>
@@ -100,6 +105,7 @@ function App() {
     <Route path="/signup" element={<Signup />} />
     <Route path="/reservations/:id" element={<Reservation />} />
     <Route path="/reservationList" element={<ReservationList />} />
+    <Route path="/writeReview/:id1/:id2" element={<WriteReview />} />
   </Routes>
     {showLoginModal && <Login onClose={closeLoginModal} />}
   </div>
