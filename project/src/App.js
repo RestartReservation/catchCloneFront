@@ -100,8 +100,8 @@ function App() {
     </Navbar>
   <Routes>
     <Route path="/" element={<Home />} /> 
-    <Route path="/review/:id" element={<Review />} />
-    <Route path="/store/:id" element={<Store />} />
+    <Route path="/reviews/:id" element={<Review />} />
+    <Route path="/stores/:id" element={<Store />} />
     <Route path="/signup" element={<Signup />} />
     <Route path="/reservations/:id" element={<Reservation />} />
     <Route path="/reservationList" element={<ReservationList />} />
