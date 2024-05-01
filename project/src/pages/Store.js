@@ -8,10 +8,10 @@
 
     return (
         <tr>
-            <td><Link to={`/review/${reviewData.id}`}>{reviewData.id}</Link></td>
-            <td>{reviewData.nickName}</td>
-            <td>{reviewData.createdAt}</td>
-            <td>{reviewData.likeCount}</td>
+            <td><Link to={`/reviews/${reviewData.id}`}> 제목 : {reviewData.reviewTitle} </Link></td>
+            <td>평점 : {reviewData.totalRating}</td>
+            <td>작성일 : {reviewData.createdAt}</td>
+            <td>좋아요 : {reviewData.likeCount}</td>
         </tr>
     );
   }
@@ -24,7 +24,7 @@
       useEffect(() => {
       const fetchReviews = async () => {
           try {
-              const response = await axios.get(URL_VARIABLE + "reviews/store/" + id);
+              const response = await axios.get(URL_VARIABLE + "reviews/stores/" + id);
               console.log(response);
               setReviews(response.data);
           } catch (error) {
