@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from 'axios';
 import { URL_VARIABLE } from "./ExportUrl"; 
@@ -9,12 +9,12 @@ const WriteReview = () => {
   const [reviewContent, setReviewContent] = useState("");
   const { id1,id2 } = useParams(); 
   const [requestReviewInfo,setRequestReviewInfo] = useState({
-      reservationId : '',
+      reservationId : id2,
       reviewContent : '',
       reviewTitle : '',
-      tasteRating : '',
-      atmosphereRating : '',
-      serviceRating : ''
+      tasteRating : 0,
+      atmosphereRating : 0,
+      serviceRating : 0
     });
 
   const handleRatingChange = (category, value) => {
@@ -29,35 +29,53 @@ const WriteReview = () => {
       setReviewContent(e.target.value);
     };
 
-  const submitReview = () => {
-      setRequestReviewInfo({
-      reservationId : id2,
-      reviewContent : reviewContent,
-      reviewTitle : reviewTitle,
-      tasteRating : ratings.맛,
-      atmosphereRating : ratings.분위기,
-      serviceRating : ratings.서비스
-      })
-
+    const submitReview = async () => {
+      if (!reviewTitle.trim()) { 
+        alert("제목을 입력해 주세요");
+        return;
+      } else if (!reviewContent.trim()) { 
+        alert("리뷰 내용을 입력해 주세요");
+        return;
+      } else if (ratings.맛 === 0 || ratings.분위기 === 0 || ratings.서비스 === 0) {
+        alert("별점은 최소 1점 이상이어야 합니다");
+        return;
+      }
+  
+      const requestData = {
+        reservationId: id2,
+        reviewContent: reviewContent,
+        reviewTitle: reviewTitle,
+        tasteRating: ratings.맛,
+        atmosphereRating: ratings.분위기,
+        serviceRating: ratings.서비스
+      };
+    
       try {
-            const jwtToken = localStorage.getItem('jwtToken'); 
-            const response =  axios.post(
-              URL_VARIABLE + `reviews/${id1}`,
-              requestReviewInfo,
-              {
-                headers: {
-                  Authorization: `${jwtToken}`
-                }
-              }
-            );
-            console.log(response.data);
-          } catch (error) {
-            console.error('API 호출 에러:', error);
-            // 에러 처리
+        const jwtToken = localStorage.getItem('jwtToken');
+        const response = await axios.post(
+          URL_VARIABLE + `reviews/${id1}`,
+          requestData,
+          {
+            headers: {
+              Authorization: `${jwtToken}`
+            }
           }
-
-  };
-
+        );
+        console.log(response.data);
+      } catch (error) {
+        console.error('API 호출 에러:', error);
+        // 에러 처리
+      }
+    };
+  
+  
+  // useEffect(() => {
+  //   console.log(requestReviewInfo);
+  //   if(requestReviewInfo.id != null){
+     
+  //   }
+  // }, [requestReviewInfo]);
+  
   return (
     <div className="container">
      <br />
