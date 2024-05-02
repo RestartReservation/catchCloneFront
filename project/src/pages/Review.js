@@ -1,5 +1,5 @@
 import React ,{useState,useEffect} from "react"
-import {Routes,Route,useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import axios from 'axios';
 import { URL_VARIABLE } from "./ExportUrl"; 
 
@@ -35,7 +35,7 @@ const Review = () =>{
     useEffect(() => {
         const fetchComments = async () => {
             try {
-                const response = await axios.get(URL_VARIABLE + "comments/review/" + id);
+                const response = await axios.get(URL_VARIABLE + "comments/reviews/" + id);
                 console.log(response);
                 setComment(response.data);
             } catch (error) {
