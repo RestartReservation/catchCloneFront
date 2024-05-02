@@ -8,13 +8,12 @@
 
     return (
         <tr>
-            <td><Link to={`/reviews/${reviewData.id}`}> 제목 : {reviewData.reviewTitle} </Link></td>
+            <td><Link to={`/reviews/${reviewData.reviewId}`}> 제목 : {reviewData.reviewTitle} </Link></td>
             <td>평점 : {reviewData.totalRating}</td>
             <td>작성일 : {reviewData.createdAt}</td>
             <td>좋아요 : {reviewData.likeCount}</td>
         </tr>
-    );
-  }
+)  }
 
   const Store = () =>{
       const { id } = useParams(); 
