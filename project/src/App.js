@@ -74,10 +74,6 @@ function App() {
           <Link to="/reservationList" style={{ textDecoration: 'none', fontFamily: 'Arial, sans-serif' , color: 'white' }}>예약목록</Link>
           </Nav.Link>
 
-          <Nav.Link> 
-          <Link to="/writeReview/:id1/:id2"  style={{ textDecoration: 'none', fontFamily: 'Arial, sans-serif' , color: 'white' }}>리뷰작성</Link>
-          </Nav.Link>
-
 {/* 
             <Nav.Link> 
           <Link to="/reservations" style={{ textDecoration: 'none', fontFamily: 'Arial, sans-serif' , color: 'white' }}>예약</Link>
