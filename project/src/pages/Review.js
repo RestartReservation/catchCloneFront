@@ -17,6 +17,7 @@ const Review = () =>{
     const { id } = useParams(); 
     const [reviewContents,setReviewContents] = useState();
     const [comments,setComment] = useState([]);
+    const [writeComment,setWriteComment] = useState();
     
     useEffect(() => {
         const fetchReview = async () => {
@@ -31,6 +32,37 @@ const Review = () =>{
         fetchReview();
     },[id])
 
+
+    const requestWriteComment = async () => {
+        try {
+            const jwtToken = localStorage.getItem('jwtToken');
+            const requestData = {
+                commentContents: writeComment,
+                isChild : false, //임시
+                parentId: null //임시
+              };
+            const response = await axios.post(URL_VARIABLE + "comments/" + id, 
+            requestData,
+            {
+                headers: {
+                Authorization: `${jwtToken}`
+                }
+            });
+            console.log(response);
+
+            
+
+            setReviewContents(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+
+
+    const handleWriteComment = (event) => {
+        setWriteComment(event.target.value);
+      };
 
     useEffect(() => {
         const fetchComments = async () => {
@@ -49,6 +81,7 @@ const Review = () =>{
 
     return(
         <table>
+
         <tbody>
         {reviewContents && (
                 <tr>
@@ -58,9 +91,19 @@ const Review = () =>{
              <br/>
             {comments.map(comments => <Comments commentData={comments} />)}
         </tbody>
+       
         <div>
-        <input type="text"></input>
-        {/* <Link to = "/writeReview"><button onClick={writeComment}>댓글작성</button></Link > */}
+
+        <br></br>
+        <input
+        className="form-control"
+        type="text"
+        value={writeComment}
+        onChange={handleWriteComment}
+      />
+
+        <button onClick={requestWriteComment}>댓글작성</button>
+        
         </div>
         </table>
         
