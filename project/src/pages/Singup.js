@@ -23,9 +23,9 @@ const Signup = () => {
     console.log(userData)
     try {
       const response = await axios.post( URL_VARIABLE + 'users/signUp', userData);
-      console.log(response.data);
+      window.location.href = '/'; 
     } catch (error) {
-      console.error(error.response.data);
+      alert("입력하신 정보를 다시 확인하여 주세요");
     }
   };
   
