@@ -99,9 +99,9 @@ const Reservation = () => {
       timeInfo : selectedTime
     });
 
-    console.log(selectedCount);
-    console.log(selectedMonth);
-    console.log(requestReservationInfo);
+    // console.log(selectedCount);
+    // console.log(selectedMonth);
+    // console.log(requestReservationInfo);
     // await sendReservationRequest();
   };
 
@@ -121,8 +121,11 @@ const Reservation = () => {
           }
         );
         console.log(response.data);
+        alert("예약완료");
+        window.location.href = '/reservationList'; 
       } catch (error) {
         console.error('API 호출 에러:', error);
+        alert("다시 확인해 주세요");
         // 에러 처리
       }
     }

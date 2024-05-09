@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import {Form, Button, Modal } from 'react-bootstrap';
 import axios from 'axios';
-
+import { useLocation,  useNavigate  } from 'react-router-dom';
 import { URL_VARIABLE } from "./ExportUrl"; 
-
 
 
 const Login = ({ onClose }) => {
@@ -12,7 +11,10 @@ const Login = ({ onClose }) => {
 
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
- 
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const [userData, setUserData] = useState({
     username: '',
     password: ''
@@ -35,12 +37,19 @@ const Login = ({ onClose }) => {
         alert("아이디와 비밀번호를 다시 확인 해 주세요")
       }else{
         const token = response.headers['authorization'];
+        console.log(token);
         localStorage.setItem('jwtToken', token);
-        window.location.href = '/'; 
+        handleClose();
+        alert("로그인 확인")
+        // // 이전 페이지 URL 가져오기
+        // const { from } = location.state || { from: { pathname: '/' } };
+
+        // // 로그인 후 이전 페이지로 리다이렉션
+        // navigate(from);
       }
     }
      catch (error) {
-      console.error(error.response.data);
+      alert("아이디와 비밀번호를 다시 확인해 주세요");
       
     }
   };

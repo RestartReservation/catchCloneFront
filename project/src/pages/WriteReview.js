@@ -62,9 +62,11 @@ const WriteReview = () => {
           }
         );
         console.log(response.data);
+        alert("리뷰 작성 완료");
+        window.location.href = '/stores/' + id1; 
       } catch (error) {
         console.error('API 호출 에러:', error);
-        // 에러 처리
+        alert("입력하신 내용을 다시 확인 해 주세요");
       }
     };
   
