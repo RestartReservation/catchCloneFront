@@ -9,7 +9,10 @@ const Login = ({ onClose }) => {
 
   const [showModal, setShowModal] = useState(true);
 
-  const handleClose = () => setShowModal(false);
+  const handleClose = () => {
+    setShowModal(false);
+    onClose(); // 부모 컴포넌트의 closeLoginModal을 호출
+  };
   const handleShow = () => setShowModal(true);
 
   const location = useLocation();
