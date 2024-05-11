@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {Routes,Route,Link} from "react-router-dom";
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -23,23 +23,34 @@ function App() {
 
   const [userName, setUserName] = useState();
 
-  const[isLogin, setIsLogin] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // const checkUserData = async () =>{
-  //   const jwtToken = localStorage.getItem('jwtToken');
-  //   if(jwtToken === null || jwtToken === undefined || isLogin) return;
-  //   try {
-  //     const response = await axios.get( URL_VARIABLE + 'users/signUp', jwtToken);
-  //     response.statusCode !== 201 ? alert("다시 로그인 해 주세요") : setUserName(response.userName);
-  //     setIsLogin(true);
-  //     console.log(response.data);
-  //   } catch (error) {
-  //     console.error(error.response.data);
-  //     alert("로그인 정보를 가져오는 중 에러가 발생했습니다");
-  //   }
-  // }
-
-  // checkUserData();
+  useEffect(() => {
+    const jwtToken = localStorage.getItem('jwtToken');
+    // if (jwtToken) {
+    //   axios.get(URL_VARIABLE + 'users/signUp', {
+    //     headers: {
+    //       Authorization: `Bearer ${jwtToken}`
+    //     }
+    //   })
+    //   .then(response => {
+    //     const userData = response.data;
+    //     setUserName(userData.userName);
+    //     setIsLoggedIn(true);
+    //   })
+    //   .catch(error => {
+    //     console.error(error.response.data);
+    //     alert("로그인 정보를 가져오는 중 에러가 발생했습니다");
+    //     localStorage.removeItem('jwtToken');
+    //     setIsLoggedIn(false);
+    //   });
+    // }
+    if(jwtToken){
+      setIsLoggedIn(true);
+    }else{
+      setIsLoggedIn(false);
+    }
+  }, []);
 
   const openLoginModal = () => {
     console.log("show")
@@ -48,6 +59,11 @@ function App() {
 
   const closeLoginModal = () => {
     setShowLoginModal(false);
+  };
+
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true);
+    setShowLoginModal(false); 
   };
 
   
@@ -67,11 +83,15 @@ function App() {
           </Nav.Link>
 
           <Nav.Link>
-            <button onClick={openLoginModal} style={{ cursor: 'pointer', textDecoration: 'none', fontFamily: 'Arial, sans-serif', color: 'white' }} > 로그인 </button>
+          {!isLoggedIn && (
+        <button onClick={openLoginModal} style={{ cursor: 'pointer', textDecoration: 'none', fontFamily: 'Arial, sans-serif', color: 'white' }}>
+          로그인
+        </button>
+      )}
             </Nav.Link>
 
             <Nav.Link> 
-          <Link to="/reservationList" style={{ textDecoration: 'none', fontFamily: 'Arial, sans-serif' , color: 'white' }}>예약목록</Link>
+              {isLoggedIn && (<Link to="/reservationList" style={{ textDecoration: 'none', fontFamily: 'Arial, sans-serif' , color: 'white' }}>예약목록</Link>)}
           </Nav.Link>
 
 {/* 
@@ -103,7 +123,7 @@ function App() {
     <Route path="/reservationList" element={<ReservationList />} />
     <Route path="/writeReview/:id1/:id2" element={<WriteReview />} />
   </Routes>
-    {showLoginModal && <Login onClose={closeLoginModal} />}
+    {showLoginModal && <Login onClose={closeLoginModal} onLoginSuccess={handleLoginSuccess}/>}
   </div>
 
   

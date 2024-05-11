@@ -5,7 +5,7 @@ import { useLocation,  useNavigate  } from 'react-router-dom';
 import { URL_VARIABLE } from "./ExportUrl"; 
 
 
-const Login = ({ onClose }) => {
+const Login = ({ onClose , onLoginSuccess }) => {
 
   const [showModal, setShowModal] = useState(true);
 
@@ -43,7 +43,8 @@ const Login = ({ onClose }) => {
         console.log(token);
         localStorage.setItem('jwtToken', token);
         handleClose();
-        alert("로그인 확인")
+        onLoginSuccess();
+        alert("로그인 성공")
         // // 이전 페이지 URL 가져오기
         // const { from } = location.state || { from: { pathname: '/' } };
 
