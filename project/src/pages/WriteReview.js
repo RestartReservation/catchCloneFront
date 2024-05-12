@@ -52,8 +52,9 @@ const WriteReview = () => {
     
       try {
         const jwtToken = localStorage.getItem('jwtToken');
+
         const response = await axios.post(
-          URL_VARIABLE + `reviews/${id1}`,
+          URL_VARIABLE + `reviews/${id1}/${id2}`,
           requestData,
           {
             headers: {
@@ -61,6 +62,7 @@ const WriteReview = () => {
             }
           }
         );
+
         console.log(response.data);
         alert("리뷰 작성 완료");
         window.location.href = '/stores/' + id1; 
