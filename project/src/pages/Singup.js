@@ -31,7 +31,7 @@ const Signup = () => {
   
   return (
     <Form>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Group className="mb-3" controlId="formBasicId">
         <Form.Label>회원ID</Form.Label>
         <Form.Control 
           type="text"   
@@ -40,7 +40,7 @@ const Signup = () => {
           onChange={handleInputChange}
           placeholder="아이디를 입력해 주세요" />
         <Form.Text className="text-muted">
-         setUp
+         아이디는 영대소문자와 숫자, 4자에서 12자까지 사용 가능합니다.
         </Form.Text>
       </Form.Group>
 
@@ -53,11 +53,11 @@ const Signup = () => {
         onChange={handleInputChange}
         placeholder="Password" />
         <Form.Text className="text-muted">
-         setUp
+         비밀번호는 반드시 영대소문자와 숫자가 포함되어야 하며, 4자에서 15자까지 사용가능합니다.
         </Form.Text>
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formBasicEmail">
+      <Form.Group className="mb-3" controlId="formBasicNickName">
         <Form.Label>닉네임</Form.Label>
         <Form.Control 
         type="text" 
@@ -66,7 +66,7 @@ const Signup = () => {
         onChange={handleInputChange}
         placeholder="닉네임을 입력해 주세요" />
         <Form.Text className="text-muted">
-        setUp
+        닉네임은 영대소문자와 숫자, 4자에서 12자까지 사용 가능합니다.
         </Form.Text>
       </Form.Group>
 
@@ -79,17 +79,16 @@ const Signup = () => {
         onChange={handleInputChange}
         placeholder="전화번호를 입력해 주세요" />
         <Form.Text className="text-muted">
-        setUp
         </Form.Text>
       </Form.Group>
 
      
-
+{/* 
       <Form.Group className="mb-3" controlId="formBasicCheckbox">
         <Form.Check type="checkbox" label="Check me out" />
-      </Form.Group>
+      </Form.Group> */}
       <Button variant="primary" onClick={handleSignup}>
-        Submit
+        회원가입
       </Button>
     </Form>
   );
