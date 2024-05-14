@@ -52,6 +52,12 @@ function App() {
     }
   }, []);
 
+  const logout = () => {
+    localStorage.removeItem('jwtToken');
+    alert('로그아웃 되었습니다.');
+    setIsLoggedIn(false);
+  }
+
   const openLoginModal = () => {
     console.log("show")
     setShowLoginModal(true);
@@ -79,13 +85,21 @@ function App() {
             <Link to="/" style={{ textDecoration: 'none', fontFamily: 'Arial, sans-serif' , color: 'white' }}>Home</Link>
           </Nav.Link>
           <Nav.Link> 
-          <Link to="/signup" style={{ textDecoration: 'none', fontFamily: 'Arial, sans-serif' , color: 'white' }}>회원가입</Link>
+            {!isLoggedIn && (<Link to="/signup" style={{ textDecoration: 'none', fontFamily: 'Arial, sans-serif' , color: 'white' }}>회원가입</Link>)}
           </Nav.Link>
 
           <Nav.Link>
           {!isLoggedIn && (
         <button onClick={openLoginModal} style={{ cursor: 'pointer', textDecoration: 'none', fontFamily: 'Arial, sans-serif', color: 'white' }}>
           로그인
+        </button>
+      )}
+            </Nav.Link>
+
+            <Nav.Link>
+          {isLoggedIn && (
+        <button onClick={logout} style={{ cursor: 'pointer', textDecoration: 'none', fontFamily: 'Arial, sans-serif', color: 'white' }}>
+          로그아웃
         </button>
       )}
             </Nav.Link>
