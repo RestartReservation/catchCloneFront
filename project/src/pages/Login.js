@@ -32,15 +32,10 @@ const Login = ({ onClose , onLoginSuccess }) => {
   };
 
   const requestLogin = async () => { 
-    console.log(userData)
     try {
       const response = await axios.post( URL_VARIABLE + 'users/login', userData);
-      console.log(response.data);
-      if(response.headers == null){
-        alert("아이디와 비밀번호를 다시 확인 해 주세요")
-      }else{
+      if(response.data.statusCode == 201){
         const token = response.headers['authorization'];
-        console.log(token);
         localStorage.setItem('jwtToken', token);
         handleClose();
         onLoginSuccess();
@@ -50,6 +45,8 @@ const Login = ({ onClose , onLoginSuccess }) => {
 
         // // 로그인 후 이전 페이지로 리다이렉션
         // navigate(from);
+      }else{
+        alert("아이디와 비밀번호를 다시 확인 해 주세요")
       }
     }
      catch (error) {
