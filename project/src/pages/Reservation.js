@@ -121,8 +121,14 @@ const Reservation = () => {
           }
         );
         console.log(response.data);
-        alert("예약완료");
-        window.location.href = '/reservationList'; 
+        if(response.data.statusCode != 201){
+          alert("예약에 실패하였습니다. 다시 시도해 주세요");
+        }
+        else{
+          alert("예약완료");
+          window.location.href = '/reservationList'; 
+        }
+    
       } catch (error) {
         console.error('API 호출 에러:', error);
         alert("다시 확인해 주세요");
