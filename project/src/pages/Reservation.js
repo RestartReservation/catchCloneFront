@@ -106,36 +106,37 @@ const Reservation = () => {
   };
 
   useEffect(() => {
-    console.log(requestReservationInfo); 
-    if(selectedDateId != null){
-      const jwtToken = localStorage.getItem('jwtToken'); 
-    
-      try {
-        const response =  axios.post(
-          URL_VARIABLE + `reservations/users/${id}/` + selectedDateId,
-          requestReservationInfo,
-          {
-            headers: {
-              Authorization: `${jwtToken}`
+    const fetchData = async () => {
+      console.log(requestReservationInfo); 
+      if (selectedDateId != null) {
+        const jwtToken = localStorage.getItem('jwtToken'); 
+        
+        try {
+          const response = await axios.post(
+            URL_VARIABLE + `reservations/users/${id}/` + selectedDateId,
+            requestReservationInfo,
+            {
+              headers: {
+                Authorization: `${jwtToken}`
+              }
             }
+          );
+          console.log(response.data);
+          if (response.data.statusCode !== 201) {
+            alert("예약에 실패하였습니다. 다시 시도해 주세요");
+          } else {
+            alert("예약완료");
+            window.location.href = '/reservationList'; 
           }
-        );
-        console.log(response.data);
-        if(response.data.statusCode != 201){
-          alert("예약에 실패하였습니다. 다시 시도해 주세요");
+        } catch (error) {
+          console.error('API 호출 에러:', error);
+          alert("다시 확인해 주세요");
         }
-        else{
-          alert("예약완료");
-          window.location.href = '/reservationList'; 
-        }
-    
-      } catch (error) {
-        console.error('API 호출 에러:', error);
-        alert("다시 확인해 주세요");
-        // 에러 처리
       }
-    }
-      
+    };
+  
+    fetchData(); 
+  
   }, [requestReservationInfo]);
   
 
