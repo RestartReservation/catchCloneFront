@@ -3,20 +3,30 @@ import {useParams} from "react-router-dom";
 import axios from 'axios';
 import { URL_VARIABLE } from "./ExportUrl"; 
 
-const Comments = ({commentData}) => {
-    return(
-        <tr>
-        <td>{commentData.commentId} 작성자 : {commentData.nickName} 댓글내용 : {commentData.commentContent} 작성일자 : {commentData.createdAt} <br/> </td>
-    </tr>
-    )
-}
+const Comment = ({ comment }) => {
+    const { commentId, nickName, commentContent, createdAt, layer } = comment;
+  
+    // 들여쓰기를 위한 스타일 적용
+    const indentationStyle = {
+      marginLeft: `${layer * 20}px`, // 20px 단위로 들여쓰기
+    };
+  
+    return (
+      <tr style={indentationStyle}>
+        <td>
+          {commentId} 작성자: {nickName} 댓글내용: {commentContent} 작성일자: {createdAt} <br />
+        </td>
+      </tr>
+    );
+  };
+  
 
 
 const Review = () =>{
     
     const { id } = useParams(); 
     const [reviewContents,setReviewContents] = useState();
-    const [comments,setComment] = useState([]);
+    const [comments,setComments] = useState([]);
     const [writeComment,setWriteComment] = useState();
     
     useEffect(() => {
@@ -41,18 +51,20 @@ const Review = () =>{
                 isChild : false, //임시
                 parentId: null //임시
               };
-            const response = await axios.post(URL_VARIABLE + "comments/" + id, 
+              console.log(jwtToken);
+            const response = await axios.post(
+             URL_VARIABLE + "comments/" + id, 
             requestData,
             {
                 headers: {
-                Authorization: `${jwtToken}`
-                }
-            });
+                  Authorization: `${jwtToken}`
+                },
+              }
+            );
             console.log(response);
-
-            
-
-            setReviewContents(response.data);
+            fetchComments(); // 댓글 작성 후 다시 댓글 목록을 가져옴
+            setWriteComment(""); 
+            // setReviewContents(response.data);
         } catch (error) {
             console.error(error);
         }
@@ -64,19 +76,64 @@ const Review = () =>{
         setWriteComment(event.target.value);
       };
 
-    useEffect(() => {
-        const fetchComments = async () => {
-            try {
-                const response = await axios.get(URL_VARIABLE + "comments/reviews/" + id);
-                console.log(response);
-                setComment(response.data);
-            } catch (error) {
-                console.error(error);
-            }
-        };
+      const fetchComments = async () => {
+        try {
+          const response = await axios.get(URL_VARIABLE + "comments/reviews/" + id);
+          setComments(response.data);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+    
+      useEffect(() => {
         fetchComments();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [id])
+      }, [id]);
+
+const CommentList = ({ comments }) => {
+  const buildCommentTree = (comments) => {
+    const map = {};
+    const roots = [];
+
+    comments.forEach((comment) => {
+      map[comment.commentId] = { ...comment, children: [] };
+    });
+
+    comments.forEach((comment) => {
+      if (comment.parentId !== null) {
+        map[comment.parentId].children.push(map[comment.commentId]);
+      } else {
+        roots.push(map[comment.commentId]);
+      }
+    });
+
+    return roots;
+  };
+
+  const renderComments = (comments, layer = 0) => {
+    return comments.map((comment) => (
+      <React.Fragment key={comment.commentId}>
+        <Comment comment={comment} layer={layer} />
+        {renderComments(comment.children, layer + 1)}
+      </React.Fragment>
+    ));
+  };
+
+  const commentTree = buildCommentTree(comments);
+}
+
+    // useEffect(() => {
+    //     const fetchComments = async () => {
+    //         try {
+    //             const response = await axios.get(URL_VARIABLE + "comments/reviews/" + id);
+    //             console.log(response);
+    //             setComment(response.data);
+    //         } catch (error) {
+    //             console.error(error);
+    //         }
+    //     };
+    //     fetchComments();
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [id])
 
 
     return(
@@ -89,7 +146,10 @@ const Review = () =>{
                 </tr>
             )}
              <br/>
-            {comments.map(comments => <Comments commentData={comments} />)}
+
+               {comments.map(comment => (
+            <Comment key={comment.commentId} comment={comment} />
+          ))}
         </tbody>
        
         <div>
