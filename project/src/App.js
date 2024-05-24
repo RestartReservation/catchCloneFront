@@ -21,33 +21,36 @@ import WriteReview from "./pages/WriteReview";
 function App() {
   const [showLoginModal, setShowLoginModal] = useState(false);
 
-  const [userName, setUserName] = useState();
+  const [userProfile, setUserProfile] = useState([]);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const jwtToken = localStorage.getItem('jwtToken');
-    // if (jwtToken) {
-    //   axios.get(URL_VARIABLE + 'users/signUp', {
-    //     headers: {
-    //       Authorization: `Bearer ${jwtToken}`
-    //     }
-    //   })
-    //   .then(response => {
-    //     const userData = response.data;
-    //     setUserName(userData.userName);
-    //     setIsLoggedIn(true);
-    //   })
-    //   .catch(error => {
-    //     console.error(error.response.data);
-    //     alert("로그인 정보를 가져오는 중 에러가 발생했습니다");
-    //     localStorage.removeItem('jwtToken');
-    //     setIsLoggedIn(false);
-    //   });
-    // }
-    if(jwtToken){
-      setIsLoggedIn(true);
-    }else{
+    if (jwtToken) {
+      axios.get(URL_VARIABLE + 'users/profile', {
+        headers: {
+          Authorization: `${jwtToken}`
+        }
+      })
+      .then(response => {
+
+        if(response.data.nickName === null){
+          alert("다시 로그인 해 주세요");
+          setIsLoggedIn(false);
+          return;
+        }
+        setUserProfile(response.data);
+        setIsLoggedIn(true);
+      })
+      .catch(error => {
+        console.error(error.response.data);
+        alert("다시 로그인 해 주세요");
+        localStorage.removeItem('jwtToken');
+        setIsLoggedIn(false);
+      });
+    }
+    else{
       setIsLoggedIn(false);
     }
   }, []);
@@ -112,18 +115,27 @@ function App() {
             <Nav.Link> 
           <Link to="/reservations" style={{ textDecoration: 'none', fontFamily: 'Arial, sans-serif' , color: 'white' }}>예약</Link>
           </Nav.Link> */}
+{isLoggedIn &&
+    <NavDropdown 
+    title={ 
+        <span style={{ textDecoration: 'none', fontFamily: 'Arial, sans-serif', color: 'white' }}> 
+            {userProfile.nickName} 님 
+        </span> 
+    } 
+    id="basic-nav-dropdown"
+    className="custom-dropdown-toggle"
+>
+    <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+    <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+    <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+    <NavDropdown.Divider />
+    <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+</NavDropdown>
+}
+            
 
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown>
+
+
           </Nav>
         </Navbar.Collapse>
       </Container>
