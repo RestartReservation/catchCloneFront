@@ -27,6 +27,7 @@ function App() {
 
   useEffect(() => {
     const jwtToken = localStorage.getItem('jwtToken');
+  
     if (jwtToken) {
       axios.get(URL_VARIABLE + 'users/profile', {
         headers: {
@@ -34,9 +35,10 @@ function App() {
         }
       })
       .then(response => {
-
+        console.log(response);
         if(response.data.nickName === null){
           alert("다시 로그인 해 주세요");
+          localStorage.removeItem('jwtToken');
           setIsLoggedIn(false);
           return;
         }
@@ -44,13 +46,25 @@ function App() {
         setIsLoggedIn(true);
       })
       .catch(error => {
-        console.error(error.response.data);
-        alert("다시 로그인 해 주세요");
+        if (error.response) {
+          console.error('Error response:', error.response.data);
+          if (error.response.status === 401) {
+            alert("인증되지 않았습니다. 다시 로그인 해 주세요.");
+          } else if (error.response.status === 403) {
+            alert("접근 권한이 없습니다.");
+          } 
+        } else if (error.request) {
+          console.error('Error request:', error.request);
+          alert("다시 로그인 해 주세요.");
+        } else {
+          console.error('Error message:', error.message);
+          alert("요청을 처리하는 중에 에러가 발생했습니다. 다시 시도해 주세요.");
+        }
         localStorage.removeItem('jwtToken');
         setIsLoggedIn(false);
       });
-    }
-    else{
+    } else {
+      localStorage.removeItem('jwtToken');
       setIsLoggedIn(false);
     }
   }, []);
@@ -76,70 +90,49 @@ function App() {
   };
 
   
-  return(
-  <div className="App">
-      <Navbar expand="lg" className="bg-body-tertiary">
-      <Container>
-        <Navbar.Brand href="#home">MainPage</Navbar.Brand>
+  return (
+    <div className="App">
+      <Navbar expand="lg" className="navbar-custom">
+        <Navbar.Brand href="/">Home</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-          <Nav.Link >
-            <Link to="/" style={{ textDecoration: 'none', fontFamily: 'Arial, sans-serif' , color: 'white' }}>Home</Link>
-          </Nav.Link>
-          <Nav.Link> 
-            {!isLoggedIn && (<Link to="/signup" style={{ textDecoration: 'none', fontFamily: 'Arial, sans-serif' , color: 'white' }}>회원가입</Link>)}
-          </Nav.Link>
-
-          <Nav.Link>
-          {!isLoggedIn && (
-        <button onClick={openLoginModal} style={{ cursor: 'pointer', textDecoration: 'none', fontFamily: 'Arial, sans-serif', color: 'white' }}>
-          로그인
-        </button>
-      )}
-            </Nav.Link>
-
-            <Nav.Link>
-          {isLoggedIn && (
-        <button onClick={logout} style={{ cursor: 'pointer', textDecoration: 'none', fontFamily: 'Arial, sans-serif', color: 'white' }}>
-          로그아웃
-        </button>
-      )}
-            </Nav.Link>
-
-            <Nav.Link> 
-              {isLoggedIn && (<Link to="/reservationList" style={{ textDecoration: 'none', fontFamily: 'Arial, sans-serif' , color: 'white' }}>예약목록</Link>)}
-          </Nav.Link>
-
-{/* 
-            <Nav.Link> 
-          <Link to="/reservations" style={{ textDecoration: 'none', fontFamily: 'Arial, sans-serif' , color: 'white' }}>예약</Link>
-          </Nav.Link> */}
-{isLoggedIn &&
-    <NavDropdown 
-    title={ 
-        <span style={{ textDecoration: 'none', fontFamily: 'Arial, sans-serif', color: 'white' }}> 
-            {userProfile.nickName} 님 
-        </span> 
-    } 
-    id="basic-nav-dropdown"
-    className="custom-dropdown-toggle"
->
-    <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-    <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-    <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-    <NavDropdown.Divider />
-    <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-</NavDropdown>
-}
-            
-
-
-
+            {!isLoggedIn && (
+              <Nav.Link>
+                <Link to="/signup">회원가입</Link>
+              </Nav.Link>
+            )}
+            {!isLoggedIn && (
+              <Nav.Link>
+                <span onClick={openLoginModal}>로그인</span>
+              </Nav.Link>
+            )}
+            {isLoggedIn && (
+              <Nav.Link>
+                <span onClick={logout}>로그아웃</span>
+              </Nav.Link>
+            )}
+            {isLoggedIn && (
+              <Nav.Link>
+                <Link to="/reservationList">예약목록</Link>
+              </Nav.Link>
+            )}
+            {isLoggedIn && userProfile && (
+              <NavDropdown
+                title={<span>{userProfile.nickName} 님</span>}
+                id="basic-nav-dropdown"
+                className="nav-dropdown-toggle"
+              >
+                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+              </NavDropdown>
+            )}
           </Nav>
         </Navbar.Collapse>
-      </Container>
-    </Navbar>
+      </Navbar>
   <Routes>
     <Route path="/" element={<Home />} /> 
     <Route path="/reviews/:id" element={<Review />} />
