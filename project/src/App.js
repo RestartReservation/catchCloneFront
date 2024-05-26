@@ -1,5 +1,5 @@
-import React, { useState,useEffect } from "react";
-import {Routes,Route,Link} from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Routes, Route, Link } from "react-router-dom";
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './pages/css/style.css';
@@ -8,7 +8,7 @@ import { URL_VARIABLE } from "./pages/ExportUrl";
 import Review from "./pages/Review";
 import Home from "./pages/Home";
 import Signup from "./pages/Singup";
-import Container from 'react-bootstrap/Container';
+
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
@@ -20,10 +20,9 @@ import WriteReview from "./pages/WriteReview";
 
 function App() {
   const [showLoginModal, setShowLoginModal] = useState(false);
-
   const [userProfile, setUserProfile] = useState([]);
-
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isProfileLoading, setIsProfileLoading] = useState(true); 
 
   useEffect(() => {
     const jwtToken = localStorage.getItem('jwtToken');
@@ -40,10 +39,12 @@ function App() {
           alert("다시 로그인 해 주세요");
           localStorage.removeItem('jwtToken');
           setIsLoggedIn(false);
+          setIsProfileLoading(true); 
           return;
         }
         setUserProfile(response.data);
         setIsLoggedIn(true);
+        setIsProfileLoading(false);
       })
       .catch(error => {
         if (error.response) {
@@ -62,10 +63,12 @@ function App() {
         }
         localStorage.removeItem('jwtToken');
         setIsLoggedIn(false);
+        setIsProfileLoading(true); 
       });
     } else {
       localStorage.removeItem('jwtToken');
       setIsLoggedIn(false);
+      setIsProfileLoading(true); 
     }
   }, []);
 
@@ -89,7 +92,6 @@ function App() {
     setShowLoginModal(false); 
   };
 
-  
   return (
     <div className="App">
       <Navbar expand="lg" className="navbar-custom">
@@ -117,7 +119,7 @@ function App() {
                 <Link to="/reservationList">예약목록</Link>
               </Nav.Link>
             )}
-            {isLoggedIn && userProfile && (
+            {isLoggedIn && !isProfileLoading && userProfile && (
               <NavDropdown
                 title={<span>{userProfile.nickName} 님</span>}
                 id="basic-nav-dropdown"
@@ -133,19 +135,19 @@ function App() {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-  <Routes>
-    <Route path="/" element={<Home />} /> 
-    <Route path="/reviews/:id" element={<Review />} />
-    <Route path="/stores/:id" element={<Store />} />
-    <Route path="/signup" element={<Signup />} />
-    <Route path="/reservations/:id" element={<Reservation />} />
-    <Route path="/reservationList" element={<ReservationList />} />
-    <Route path="/writeReview/:id1/:id2" element={<WriteReview />} />
-  </Routes>
-    {showLoginModal && <Login onClose={closeLoginModal} onLoginSuccess={handleLoginSuccess}/>}
-  </div>
-
-  
+      
+      <Routes>
+        <Route path="/" element={<Home />} /> 
+        <Route path="/reviews/:id" element={<Review />} />
+        <Route path="/stores/:id" element={<Store />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/reservations/:id" element={<Reservation />} />
+        <Route path="/reservationList" element={<ReservationList />} />
+        <Route path="/writeReview/:id1/:id2" element={<WriteReview />} />
+      </Routes>
+      
+      {showLoginModal && <Login onClose={closeLoginModal} onLoginSuccess={handleLoginSuccess}/>}
+    </div>
   );
 }
 
