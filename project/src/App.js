@@ -95,10 +95,11 @@ function App() {
   return (
     <div className="App">
       <Navbar expand="lg" className="navbar-custom">
-        <Navbar.Brand href="/">Home</Navbar.Brand>
+        <Navbar.Brand><Link to="/">Home</Link></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
+
             {!isLoggedIn && (
               <Nav.Link>
                 <Link to="/signup">회원가입</Link>
@@ -132,6 +133,8 @@ function App() {
                 <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
               </NavDropdown>
             )}
+
+           
           </Nav>
         </Navbar.Collapse>
       </Navbar>
