@@ -3,6 +3,7 @@ import { Routes, Route, Link } from "react-router-dom";
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './pages/css/style.css';
+import signIcon from './img/sign-icon.jpg'; 
 
 import { URL_VARIABLE } from "./pages/ExportUrl"; 
 import Review from "./pages/Review";
@@ -25,51 +26,57 @@ function App() {
   const [isProfileLoading, setIsProfileLoading] = useState(true); 
 
   useEffect(() => {
-    const jwtToken = localStorage.getItem('jwtToken');
+    const fetchData = async () => {
+      const jwtToken = localStorage.getItem('jwtToken');
+    
+      if (jwtToken) {
+        try {
+          const response = await axios.get(URL_VARIABLE + 'users/profile', {
+            headers: {
+              Authorization: `${jwtToken}`
+            }
+          });
   
-    if (jwtToken) {
-      axios.get(URL_VARIABLE + 'users/profile', {
-        headers: {
-          Authorization: `${jwtToken}`
-        }
-      })
-      .then(response => {
-        console.log(response);
-        if(response.data.nickName === null){
-          alert("다시 로그인 해 주세요");
+          console.log(response);
+  
+          if(response.data.nickName === null){
+            alert("다시 로그인 해 주세요");
+            localStorage.removeItem('jwtToken');
+            setIsLoggedIn(false);
+            setIsProfileLoading(true); 
+            return;
+          }
+  
+          setUserProfile(response.data);
+          setIsLoggedIn(true);
+          setIsProfileLoading(false);
+        } catch (error) {
+          if (error.response) {
+            console.error('Error response:', error.response.data);
+            if (error.response.status === 401) {
+              alert("인증되지 않았습니다. 다시 로그인 해 주세요.");
+            } else if (error.response.status === 403) {
+              alert("접근 권한이 없습니다.");
+            } 
+          } else if (error.request) {
+            console.error('Error request:', error.request);
+            alert("다시 로그인 해 주세요.");
+          } else {
+            console.error('Error message:', error.message);
+            alert("요청을 처리하는 중에 에러가 발생했습니다. 다시 시도해 주세요.");
+          }
           localStorage.removeItem('jwtToken');
           setIsLoggedIn(false);
           setIsProfileLoading(true); 
-          return;
         }
-        setUserProfile(response.data);
-        setIsLoggedIn(true);
-        setIsProfileLoading(false);
-      })
-      .catch(error => {
-        if (error.response) {
-          console.error('Error response:', error.response.data);
-          if (error.response.status === 401) {
-            alert("인증되지 않았습니다. 다시 로그인 해 주세요.");
-          } else if (error.response.status === 403) {
-            alert("접근 권한이 없습니다.");
-          } 
-        } else if (error.request) {
-          console.error('Error request:', error.request);
-          alert("다시 로그인 해 주세요.");
-        } else {
-          console.error('Error message:', error.message);
-          alert("요청을 처리하는 중에 에러가 발생했습니다. 다시 시도해 주세요.");
-        }
+      } else {
         localStorage.removeItem('jwtToken');
         setIsLoggedIn(false);
         setIsProfileLoading(true); 
-      });
-    } else {
-      localStorage.removeItem('jwtToken');
-      setIsLoggedIn(false);
-      setIsProfileLoading(true); 
-    }
+      }
+    };
+  
+    fetchData();
   }, []);
 
   const logout = () => {
@@ -95,18 +102,22 @@ function App() {
   return (
     <div className="App">
       <Navbar expand="lg" className="navbar-custom">
-        <Navbar.Brand><Link to="/">Home</Link></Navbar.Brand>
+        <Navbar.Brand><Link to="/" className = "title">Home</Link></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <div className = "space"></div>
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-
+            <div className = "navContents"> 
+            <div className="d-flex align-items-center">
             {!isLoggedIn && (
               <Nav.Link>
                 <Link to="/signup">회원가입</Link>
               </Nav.Link>
             )}
+            </div>
             {!isLoggedIn && (
               <Nav.Link>
+                  {/* <img src={signIcon} alt="sign" className = "signIcon"/> */}
                 <span onClick={openLoginModal}>로그인</span>
               </Nav.Link>
             )}
@@ -133,12 +144,12 @@ function App() {
                 <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
               </NavDropdown>
             )}
-
-           
+            </div>
+       
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-      
+
       <Routes>
         <Route path="/" element={<Home />} /> 
         <Route path="/reviews/:id" element={<Review />} />
@@ -149,8 +160,13 @@ function App() {
         <Route path="/writeReview/:id1/:id2" element={<WriteReview />} />
       </Routes>
       
+      <div className="bottom-contents">
+              
+      </div>
       {showLoginModal && <Login onClose={closeLoginModal} onLoginSuccess={handleLoginSuccess}/>}
     </div>
+
+  
   );
 }
 
