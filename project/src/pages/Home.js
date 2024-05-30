@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { URL_VARIABLE } from "./ExportUrl"; 
 import './css/HomeStyle.css'
 import {Routes,Route,Link} from "react-router-dom";
-import Store from "./Store";
+import './css/style.css';
 
 const Stores = ({ storeData }) => {
   return (
@@ -62,7 +62,8 @@ const Home = () => {
   };
 
   return (
-    <main className="deals">
+    <div className='contents-section'>
+   <main className="deals">
        {data.map((storeData, index) => (
         <Stores key={index} storeData={storeData} />
       ))}
@@ -71,6 +72,8 @@ const Home = () => {
           <Route path="/store/:id/*" element={<Store />} />
       </Routes> */}
     </main>
+    </div>
+ 
   );
 }
 

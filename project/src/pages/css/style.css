@@ -6,6 +6,11 @@ body {
   font-family: Arial, sans-serif;
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
 
 /*/////////////////////////////////////////////////////////////// 네비바 css //////////////////////////////////////////////////////////*/
 .navbar-custom {
@@ -96,7 +101,8 @@ body {
 }
 
 /*//////////////////////////////////////////// item css //////////////////////////////////////////////////////*/
-.contents-section {
+
+/* .contents-section {
   position: relative;
   margin: 20px;
   border: 1px solid #ccc;
@@ -109,8 +115,25 @@ body {
   margin-left: auto;
   margin-right: auto;
   padding: 20px;
-  padding-bottom: 70px; /* .bottom-contents의 높이만큼 하단 여백 추가 */
-  min-height: calc(100vh - 70px); /* 화면 전체 높이에서 .bottom-contents의 높이를 뺀 값으로 최소 높이 설정 */
+  padding-bottom: 70px; /* .bottom-contents의 높이만큼 하단 여백 추가 
+  min-height: calc(100vh - 70px);  화면 전체 높이에서 .bottom-contents의 높이를 뺀 값으로 최소 높이 설정 
+} */
+
+
+.contents-section {
+  position: relative;
+  border-left: 1px solid #ccc; /* 좌측 윤곽선 */
+  border-right: 1px solid #ccc; /* 우측 윤곽선 */
+  width: 1400px; /* 고정된 너비 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #333;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+  height: 100vh; /* 세로 방향을 화면 가득 채움 */
+  box-sizing: border-box; /* 패딩과 테두리를 포함한 전체 크기 계산 */
 }
 
 .bottom-contents {
@@ -165,4 +188,19 @@ body {
  .image  {
     max-width: 100%;
     max-height: 100%;
+  }
+
+  /*///////////////////////////////////////////////////////////////////SignUpCss////////////////////////////////////////////////////////////////////////////////*/
+  .signUpText {
+    color: white;
+    text-decoration: none;
+  }
+
+  .signUpButton {
+    display: flex;
+    margin-left: 500px;
+  }
+
+  .signUpSpace {
+    margin-top: 50px;
   }
