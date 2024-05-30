@@ -40,11 +40,6 @@ const Login = ({ onClose , onLoginSuccess }) => {
         handleClose();
         onLoginSuccess();
         alert("로그인 성공")
-        // // 이전 페이지 URL 가져오기
-        // const { from } = location.state || { from: { pathname: '/' } };
-
-        // // 로그인 후 이전 페이지로 리다이렉션
-        // navigate(from);
       }else{
         alert("아이디와 비밀번호를 다시 확인 해 주세요")
       }
@@ -73,20 +68,20 @@ const Login = ({ onClose , onLoginSuccess }) => {
           onChange={handleInputChange}
           placeholder="아이디를 입력해 주세요" />
         <Form.Text className="text-muted">
-         setUp
+
         </Form.Text>
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
+        <Form.Label>비밀번호</Form.Label>
         <Form.Control 
         type="password"
         name="password"
         value={userData.password}
         onChange={handleInputChange}
-        placeholder="Password" />
+        placeholder="비밀번호를 입력해 주세요" />
         <Form.Text className="text-muted">
-         setUp
+
         </Form.Text>
       </Form.Group>
       </Form>
