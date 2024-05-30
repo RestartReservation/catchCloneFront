@@ -36,8 +36,7 @@ function App() {
               Authorization: `${jwtToken}`
             }
           });
-  
-          console.log(response);
+
   
           if(response.data.nickName === null){
             alert("다시 로그인 해 주세요");
@@ -77,7 +76,7 @@ function App() {
     };
   
     fetchData();
-  }, []);
+  }, [isLoggedIn]);
 
   const logout = () => {
     localStorage.removeItem('jwtToken');
@@ -98,6 +97,8 @@ function App() {
     setIsLoggedIn(true);
     setShowLoginModal(false); 
   };
+
+
 
   return (
     <div className="App">
@@ -160,9 +161,9 @@ function App() {
         <Route path="/writeReview/:id1/:id2" element={<WriteReview />} />
       </Routes>
       
-      <div className="bottom-contents">
+      {/* <div className="bottom-contents">
               
-      </div>
+      </div> */}
       {showLoginModal && <Login onClose={closeLoginModal} onLoginSuccess={handleLoginSuccess}/>}
     </div>
 
