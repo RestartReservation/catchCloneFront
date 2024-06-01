@@ -136,6 +136,7 @@ html, body {
   box-sizing: border-box; /* 패딩과 테두리를 포함한 전체 크기 계산 */
 }
 
+
 .bottom-contents {
   position: absolute;
   border-top: 1px solid #ccc; 
@@ -171,6 +172,21 @@ html, body {
   background-color: white;
 }
 /*////////////////////////////////////////////////////////////////storecss///////////////////////////////////////////////////////////////////////////////////////////////////*/
+.contents-section-store {
+  position: relative;
+  border-left: 1px solid #ccc; 
+  border-right: 1px solid #ccc; 
+  width: 1400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #333;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+
+  box-sizing: border-box; /* 패딩과 테두리를 포함한 전체 크기 계산 */
+}
 
 .square {
   margin-top: 50px;
@@ -285,7 +301,7 @@ button.prev:hover, button.next:hover {
   justify-content: center;
   align-items: center;
   width: 125px;
-  height: 45px;
+  height: 52px;
 }
 
 .tab.active {
@@ -294,7 +310,6 @@ button.prev:hover, button.next:hover {
 }
 
 .navtap-container{
-  border-top : 7px solid rgba(128, 128, 128, 0.596);
   border-bottom: 2px solid rgb(177, 177, 177);
   display: flex;
   flex-direction: row;
@@ -303,7 +318,12 @@ button.prev:hover, button.next:hover {
   height: 50px;
   align-items: center;
 }
+.container-space{
+  width: 500px;
+  height: 12px;
+  background-color: rgba(199, 199, 199, 0.945);
 
+}
 .navtap-contents{
   width: 500px;
   height: 300px;
@@ -322,6 +342,42 @@ button.prev:hover, button.next:hover {
   font-weight: bold;
 }
 
+.reservation-select{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 472px;
+}
+
+.menu{
+  background-color: white;
+  width: 500px;
+  height: 400px;
+}
+
+.menu-title{
+  margin-top: 25px;
+  margin-left: 15px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.store-contents-review{
+  background-color: white;
+  width: 500px;
+  height: 400px;
+}
+
+.review-title{
+  margin-top: 25px;
+  margin-left: 15px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.review-contents{
+  margin-left: 15px;
+}
   /*///////////////////////////////////////////////////////////////////SignUpCss////////////////////////////////////////////////////////////////////////////////*/
   .signUpText {
     color: white;

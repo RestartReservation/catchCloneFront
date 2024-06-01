@@ -3,7 +3,53 @@
   import axios from 'axios';
   import { URL_VARIABLE } from "./ExportUrl"; 
   import './css/style.css';
-
+  import DatePicker from 'react-datepicker';
+  import 'react-datepicker/dist/react-datepicker.css';
+  import { TextField, Dialog, DialogTitle, DialogContent } from '@mui/material';
+  
+  function ReservationDateSelect() {
+    const [open, setOpen] = useState(false);
+    const [selectedDate, setSelectedDate] = useState(null);
+  
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
+  
+    const handleDateChange = (date) => {
+      setSelectedDate(date);
+      setOpen(false);
+    };
+  
+    return (
+      <div className='reservation-select'>
+        <TextField
+          label="예약 날짜 선택"
+          value={selectedDate ? selectedDate.toLocaleDateString() : ''}
+          onClick={handleClickOpen}
+          fullWidth
+          InputLabelProps={{ shrink: true }}
+          variant="outlined"
+        />
+  
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>날짜 선택</DialogTitle>
+          <DialogContent>
+            <DatePicker
+              selected={selectedDate}
+              onChange={handleDateChange}
+              inline
+              dateFormat="yyyy/MM/dd"
+              minDate={new Date()}
+            />
+          </DialogContent>
+        </Dialog>
+      </div>
+    );
+  }
 
   const Reviews = ({ reviewData }) => {
 
@@ -98,9 +144,8 @@ const Tab = ({ label, onClick, active }) => (
   };
 
 
-
       return (
-          <div class="contents-section">
+          <div class="contents-section-store">
             <div>
             {/* url임시 */}
             <div class="square">
@@ -122,6 +167,7 @@ const Tab = ({ label, onClick, active }) => (
               </div>
               
             )}
+            <div className='container-space'></div>
           <div className='navtap-container'>
       <Tab label="홈" onClick={() => handleTabClick('home')} active={activeTab === 'home'} />
       <Tab label="예약" onClick={() => handleTabClick('reservation')} active={activeTab === 'reservation'} />
@@ -139,18 +185,26 @@ const Tab = ({ label, onClick, active }) => (
             {activeTab === 'reservation' && (
               <div className='navtap-contents-reservation'>
                   <p className='navtap-contents-title'>예약</p>
-                  <p>예약 라벨 추가</p>
+                  <ReservationDateSelect />
+                  <Link to = {`/reservations/${id}`}><button>예약</button></Link > 
               </div>
             )
             }
          </div>
+         <div className='container-space'></div>
+         <div className='menu'>
+          <p className='menu-title'>메뉴</p>
+         </div>
+         <div className='container-space'></div>
+
             <div className='store-contents-review'>
-              <p>리뷰</p>
-            {reviews.length > 0 ? reviews.map(review => <Reviews key={review.id} reviewData={review} />) : (<p>리뷰가 없습니다</p>)}
+              <p className='review-title'>리뷰</p>
+              <div className='review-contents'>
+              {reviews.length > 0 ? reviews.map(review => <Reviews key={review.id} reviewData={review} />) : (<p>리뷰가 없습니다</p>)}
+              </div>
+            
             </div>
-            <div>
-            <Link to = {`/reservations/${id}`}><button>예약</button></Link > 
-            </div>
+
 
           </div>
           
