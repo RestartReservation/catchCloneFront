@@ -78,12 +78,12 @@ const StarRating = ({ rating,reviewLength }) => {
   return <div className="star-rating">{stars} <p className='review-counting'>{reviewLength}개 리뷰 </p>  </div>;
 };
 
-const Tab = ({ label, onClick, active }) => (
+const Tab = ({ label, onClick, active, count }) => (
   <div
     className={`tab ${active ? 'active' : ''}`} // 클래스명 동적 설정
     onClick={onClick}
   >
-    {label}
+    {label}{count !== undefined && <span className="review-count">({count})</span>}
   </div>
 );
 
@@ -172,7 +172,7 @@ const Tab = ({ label, onClick, active }) => (
       <Tab label="홈" onClick={() => handleTabClick('home')} active={activeTab === 'home'} />
       <Tab label="예약" onClick={() => handleTabClick('reservation')} active={activeTab === 'reservation'} />
       <Tab label="메뉴" onClick={() => handleTabClick('menu')} active={activeTab === 'menu'} />
-      <Tab label="리뷰" onClick={() => handleTabClick('review')} active={activeTab === 'review'} />
+      <Tab label="리뷰" onClick={() => handleTabClick('review')} active={activeTab === 'review'} count={reviews.length} /> 
          </div>
          <div className='navtap-contents'>
             {activeTab === 'home' && (
@@ -198,7 +198,7 @@ const Tab = ({ label, onClick, active }) => (
          <div className='container-space'></div>
 
             <div className='store-contents-review'>
-              <p className='review-title'>리뷰</p>
+              <p className='review-title'>리뷰 </p> 
               <div className='review-contents'>
               {reviews.length > 0 ? reviews.map(review => <Reviews key={review.id} reviewData={review} />) : (<p>리뷰가 없습니다</p>)}
               </div>
