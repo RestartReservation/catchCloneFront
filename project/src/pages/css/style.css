@@ -347,6 +347,19 @@ button.prev:hover, button.next:hover {
   justify-content: center;
   align-items: center;
   width: 472px;
+  flex-direction: column;
+}
+
+.reservation-select-time{
+  display: flex;
+  justify-content: flex-start;
+  width: 100%; 
+  flex-wrap: wrap; 
+  margin-top : 10px;
+}
+
+.reservation-select-time button {
+  margin-right: 5px;
 }
 
 .menu{
