@@ -6,11 +6,17 @@
   import DatePicker from 'react-datepicker';
   import 'react-datepicker/dist/react-datepicker.css';
   import { TextField, Dialog, DialogTitle, DialogContent } from '@mui/material';
+
+  const ReservationTimes = ({reservationInfo}) => {
+    return(<button> 시간: {reservationInfo.timeInfo} </button>)
+  }
   
-  function ReservationDateSelect() {
+  const ReservationDateSelect = ({storeId}) => {
     const [open, setOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
-  
+    const [date, setDate] = useState(new Date());
+    const [reservationInfo,setReservationInfo] = useState([]);
+
     const handleClickOpen = () => {
       setOpen(true);
     };
@@ -19,16 +25,60 @@
       setOpen(false);
     };
   
-    const handleDateChange = (date) => {
-      setSelectedDate(date);
+    const handleDateChange = (selectedDate) => {
+      setSelectedDate(selectedDate);
       setOpen(false);
     };
+
+    useEffect (() =>{
+      const fetchTodayReservation = async() =>{
+        try {
+          const year = date.getFullYear();
+          const month = date.getMonth() + 1; 
+          const day = date.getDate();
   
+          const response = await axios.get(URL_VARIABLE + `reservations/${year}/${month}/${day}/` + storeId);
+  
+          setReservationInfo(response.data);
+          console.log(response);
+        } 
+        catch (error) {
+          console.error('API 호출 에러:', error);
+        }
+      }
+  
+      if(reservationInfo.length === 0){
+        fetchTodayReservation();
+      }
+  
+    },[]);
+  
+
+    useEffect (() =>{
+      const fetchReservation = async() =>{
+        try {
+          const year = date.getFullYear();
+          const month = date.getMonth() + 1; 
+          const day = date.getDate();
+
+          const response = await axios.get(URL_VARIABLE + `reservations/${year}/${month}/${day}/` + storeId);
+
+          setReservationInfo(response.data);
+          console.log(response);
+        } 
+        catch (error) {
+          console.error('API 호출 에러:', error);
+        }
+      }
+      fetchReservation();
+    },[date])
+  
+    
     return (
       <div className='reservation-select'>
         <TextField
           label="예약 날짜 선택"
-          value={selectedDate ? selectedDate.toLocaleDateString() : ''}
+          value={selectedDate ? selectedDate.toLocaleDateString() : date.getMonth()+1 + '월' + date.getDate() + '일'}
           onClick={handleClickOpen}
           fullWidth
           InputLabelProps={{ shrink: true }}
@@ -47,8 +97,19 @@
             />
           </DialogContent>
         </Dialog>
+
+        <div className='reservation-select-time'>
+        {reservationInfo && reservationInfo.length !== 0 ? (
+          reservationInfo.map(reservationInfo => (
+                <ReservationTimes key={reservationInfo.id} reservationInfo={reservationInfo} />
+              ))
+              ): (<p>예약이 가능하지 않습니다</p>)}
+        </div>
+      
       </div>
+      
     );
+    
   }
 
   const Reviews = ({ reviewData }) => {
@@ -93,8 +154,9 @@ const Tab = ({ label, onClick, active, count }) => (
       const [storeContents,setStoreContents] = useState();
       const [reviews, setReviews] = useState([]);
       const [currentImageIndex, setCurrentImageIndex] = useState(0);
-     const [activeTab, setActiveTab] = useState('home');
-
+      const [activeTab, setActiveTab] = useState('home');
+      const [todayReservation,setTodayReservation] = useState([]);
+ 
       useEffect(() => {
       const fetchReviews = async () => {
           try {
@@ -109,6 +171,30 @@ const Tab = ({ label, onClick, active, count }) => (
       fetchReviews();
       // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); 
+  
+  // useEffect (() =>{
+  //   const fetchTodayReservation = async() =>{
+  //     try {
+  //       const year = date.getFullYear();
+  //       const month = date.getMonth() + 1; 
+  //       const day = date.getDate();
+
+  //       const response = await axios.get(URL_VARIABLE + `reservations/${year}/${month}/${day}/` + id);
+
+  //       setReservationInfo(response.data);
+  //       console.log(response);
+  //     } 
+  //     catch (error) {
+  //       console.error('API 호출 에러:', error);
+  //     }
+  //   }
+
+  //   if(reservationInfo.length === 0){
+  //     fetchTodayReservation();
+  //   }
+
+  // },[id]);
+
 
       useEffect(() => {
           const fetchStore = async () => {
@@ -185,7 +271,7 @@ const Tab = ({ label, onClick, active, count }) => (
             {activeTab === 'reservation' && (
               <div className='navtap-contents-reservation'>
                   <p className='navtap-contents-title'>예약</p>
-                  <ReservationDateSelect />
+                  <ReservationDateSelect storeId={id} />
                   <Link to = {`/reservations/${id}`}><button>예약</button></Link > 
               </div>
             )
