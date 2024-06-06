@@ -172,28 +172,6 @@ const Tab = ({ label, onClick, active, count }) => (
       // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); 
   
-  // useEffect (() =>{
-  //   const fetchTodayReservation = async() =>{
-  //     try {
-  //       const year = date.getFullYear();
-  //       const month = date.getMonth() + 1; 
-  //       const day = date.getDate();
-
-  //       const response = await axios.get(URL_VARIABLE + `reservations/${year}/${month}/${day}/` + id);
-
-  //       setReservationInfo(response.data);
-  //       console.log(response);
-  //     } 
-  //     catch (error) {
-  //       console.error('API 호출 에러:', error);
-  //     }
-  //   }
-
-  //   if(reservationInfo.length === 0){
-  //     fetchTodayReservation();
-  //   }
-
-  // },[id]);
 
 
       useEffect(() => {
@@ -254,23 +232,23 @@ const Tab = ({ label, onClick, active, count }) => (
               
             )}
             <div className='container-space'></div>
-          <div className='navtap-container'>
+          <div className='navtab-container'>
       <Tab label="홈" onClick={() => handleTabClick('home')} active={activeTab === 'home'} />
       <Tab label="예약" onClick={() => handleTabClick('reservation')} active={activeTab === 'reservation'} />
       <Tab label="메뉴" onClick={() => handleTabClick('menu')} active={activeTab === 'menu'} />
       <Tab label="리뷰" onClick={() => handleTabClick('review')} active={activeTab === 'review'} count={reviews.length} /> 
          </div>
-         <div className='navtap-contents'>
+         <div className='navtab-contents'>
             {activeTab === 'home' && (
-              <div className='navtap-contents-home'>
-                  <p className='navtap-contents-title'>공지</p>
+              <div className='navtab-contents-home'>
+                  <p className='navtab-contents-title'>공지</p>
                   <p>공지칸입니다</p>
               </div>
             )
             }
             {activeTab === 'reservation' && (
-              <div className='navtap-contents-reservation'>
-                  <p className='navtap-contents-title'>예약</p>
+              <div className='navtab-contents-reservation'>
+                  <p className='navtab-contents-title'>예약</p>
                   <ReservationDateSelect storeId={id} />
                   <Link to = {`/reservations/${id}`}><button>예약</button></Link > 
               </div>
