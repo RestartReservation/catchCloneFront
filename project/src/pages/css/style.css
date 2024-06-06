@@ -309,7 +309,7 @@ button.prev:hover, button.next:hover {
   border-bottom: 2px solid black;
 }
 
-.navtap-container{
+.navtab-container{
   border-bottom: 2px solid rgb(177, 177, 177);
   display: flex;
   flex-direction: row;
@@ -324,20 +324,20 @@ button.prev:hover, button.next:hover {
   background-color: rgba(199, 199, 199, 0.945);
 
 }
-.navtap-contents{
+.navtab-contents{
   width: 500px;
   height: 300px;
   background-color: white;
 }
-.navtap-contents-home{
+.navtab-contents-home{
   margin-top: 25px;
   margin-left: 15px;
 }
-.navtap-contents-reservation{
+.navtab-contents-reservation{
   margin-top: 25px;
   margin-left: 15px;
 }
-.navtap-contents-title{
+.navtab-contents-title{
   font-size: 20px;
   font-weight: bold;
 }
@@ -405,3 +405,4 @@ button.prev:hover, button.next:hover {
   .signUpSpace {
     margin-top: 50px;
   }
+  
