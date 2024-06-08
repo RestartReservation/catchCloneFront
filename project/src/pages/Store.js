@@ -78,7 +78,7 @@
       <div className='reservation-select'>
         <TextField
           label="예약 날짜 선택"
-          value={selectedDate ? selectedDate.toLocaleDateString() : date.getMonth()+1 + '월' + date.getDate() + '일'}
+          value={selectedDate ? selectedDate.getMonth()+1 + '월' + selectedDate.getDate() + '일' : date.getMonth()+1 + '월' + date.getDate() + '일'}
           onClick={handleClickOpen}
           fullWidth
           InputLabelProps={{ shrink: true }}
