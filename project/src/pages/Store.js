@@ -55,23 +55,23 @@
   
 
     useEffect (() =>{
-      const fetchReservation = async() =>{
-        try {
-          const year = date.getFullYear();
-          const month = date.getMonth() + 1; 
-          const day = date.getDate();
+    const fetchReservation = async() =>{
+      try {
+        const year = selectedDate.getFullYear();
+        const month = selectedDate.getMonth() + 1; 
+        const day = selectedDate.getDate();
 
-          const response = await axios.get(URL_VARIABLE + `reservations/${year}/${month}/${day}/` + storeId);
+        const response = await axios.get(URL_VARIABLE + `reservations/${year}/${month}/${day}/` + storeId);
 
-          setReservationInfo(response.data);
-          console.log(response);
-        } 
-        catch (error) {
-          console.error('API 호출 에러:', error);
-        }
+        setReservationInfo(response.data);
+        console.log(response);
+      } 
+      catch (error) {
+        console.error('API 호출 에러:', error);
       }
-      fetchReservation();
-    },[date])
+    }
+    fetchReservation();
+  },[selectedDate]);
   
     
     return (
@@ -99,11 +99,22 @@
         </Dialog>
 
         <div className='reservation-select-time'>
-        {reservationInfo && reservationInfo.length !== 0 ? (
-          reservationInfo.map(reservationInfo => (
-                <ReservationTimes key={reservationInfo.id} reservationInfo={reservationInfo} />
-              ))
-              ): (<p>예약이 가능하지 않습니다</p>)}
+              {
+                reservationInfo && reservationInfo.length !== 0 ? (
+                  reservationInfo
+                    .slice()
+                    .sort((a, b) => {
+                      const [hoursA, minutesA] = a.timeInfo.split(':').map(Number);
+                      const [hoursB, minutesB] = b.timeInfo.split(':').map(Number);
+                      return hoursA - hoursB || minutesA - minutesB;
+                    })
+                    .map(reservation => (
+                      <ReservationTimes key={reservation.id} reservationInfo={reservation} />
+                    ))
+                ) : (
+                  <p>예약이 가능하지 않습니다</p>
+                )
+              }
         </div>
       
       </div>
@@ -250,7 +261,7 @@ const Tab = ({ label, onClick, active, count }) => (
               <div className='navtab-contents-reservation'>
                   <p className='navtab-contents-title'>예약</p>
                   <ReservationDateSelect storeId={id} />
-                  <Link to = {`/reservations/${id}`}><button>예약</button></Link > 
+                  <Link to = {`/reservations/${id}`}><button className='reservation-button'>예약</button></Link > 
               </div>
             )
             }

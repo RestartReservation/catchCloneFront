@@ -325,6 +325,7 @@ button.prev:hover, button.next:hover {
 
 }
 .navtab-contents{
+  position: relative;
   width: 500px;
   height: 300px;
   background-color: white;
@@ -358,8 +359,38 @@ button.prev:hover, button.next:hover {
   margin-top : 10px;
 }
 
-.reservation-select-time button {
+.navtab-contents-reservation button {
   margin-right: 5px;
+  background-color: #414141;
+  border: none; 
+  border-radius: 22px; 
+  padding: 8px 13px; 
+  color: #fff; 
+  font-size: 16px;
+  cursor: pointer; 
+  transition: background-color 0.3s; 
+}
+
+.navtab-contents-reservation button:hover {
+  background-color: #b0b0b0; 
+}
+
+.reservation-button{
+  position: absolute; 
+  bottom: 20px; 
+  right: 20px; 
+  background-color:#414141;
+  border: none; 
+  border-radius: 22px; 
+  padding: 8px 13px;
+  color: #fff; 
+  font-size: 16px;
+  cursor: pointer; 
+  transition: background-color 0.3s; 
+}
+
+.reservation-button:hover {
+  background-color: #b0b0b0; 
 }
 
 .menu{
