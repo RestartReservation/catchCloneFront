@@ -18,6 +18,7 @@ import Login from "./pages/Login";
 import Reservation from "./pages/Reservation";
 import ReservationList from "./pages/ReservationList";
 import WriteReview from "./pages/WriteReview";
+import UserProfile from "./pages/UserProfile";
 
 function App() {
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -132,7 +133,13 @@ function App() {
                 <Link to="/reservationList">예약목록</Link>
               </Nav.Link>
             )}
+            {isLoggedIn && (
+              <Nav.Link>
+                <Link to="/userProfile">회원정보</Link>
+              </Nav.Link>
+            )}
             {isLoggedIn && !isProfileLoading && userProfile && (
+
               <NavDropdown
                 title={<span>{userProfile.nickName} 님</span>}
                 id="basic-nav-dropdown"
@@ -151,21 +158,19 @@ function App() {
         </Navbar.Collapse>
       </Navbar>
 
-      <Routes>
-        <Route path="/" element={<Home />} /> 
-        <Route path="/reviews/:id" element={<Review />} />
-        <Route path="/stores/:id" element={<Store />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/reservations/:id" element={<Reservation />} />
-        <Route path="/reservationList" element={<ReservationList />} />
-        <Route path="/writeReview/:id1/:id2" element={<WriteReview />} />
-      </Routes>
-      
-      {/* <div className="bottom-contents">
-              
-      </div> */}
-      {showLoginModal && <Login onClose={closeLoginModal} onLoginSuccess={handleLoginSuccess}/>}
-    </div>
+  <Routes>
+    <Route path="/" element={<Home />} /> 
+    <Route path="/reviews/:id" element={<Review />} />
+    <Route path="/stores/:id" element={<Store />} />
+    <Route path="/signup" element={<Signup />} />
+    <Route path="/reservations/:id" element={<Reservation />} />
+    <Route path="/reservationList" element={<ReservationList />} />
+    <Route path="/writeReview/:id1/:id2" element={<WriteReview />} />
+    <Route path="/userProfile" element={<UserProfile />} />
+  </Routes>
+    {showLoginModal && <Login onClose={closeLoginModal} onLoginSuccess={handleLoginSuccess}/>}
+  </div>
+
 
   
   );

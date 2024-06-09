@@ -171,6 +171,16 @@ html, body {
   width: 100%;
   background-color: white;
 }
+
+
+.list-group{
+
+  margin-top:3%;
+  width: 30%;
+  margin-left: 35%;
+
+}
+
 /*////////////////////////////////////////////////////////////////storecss///////////////////////////////////////////////////////////////////////////////////////////////////*/
 .contents-section-store {
   position: relative;
@@ -437,3 +447,4 @@ button.prev:hover, button.next:hover {
     margin-top: 50px;
   }
   
+
