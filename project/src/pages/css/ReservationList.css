@@ -1,0 +1,47 @@
+.contents-section-reservation-list {
+    position: relative;
+    border-left: 1px solid #ccc; 
+    border-right: 1px solid #ccc; 
+    width: 1400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #333;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    height: 100vh; /* 세로 방향을 화면 가득 채움 */
+    box-sizing: border-box; /* 패딩과 테두리를 포함한 전체 크기 계산 */
+  }
+
+  .contents-section-div {
+    width: 500px;
+    background-color: #fff; 
+    flex-grow: 1; /* 높이를 부모의 높이에 맞추기 위해 flex-grow 사용 */
+}
+
+  .tab {
+    cursor: pointer;
+    padding: 5px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 167px;
+    height: 52px;
+  }
+  
+  .tab.active {
+    font-weight: bold;
+    border-bottom: 2px solid black;
+  }
+  
+  .navtab-container-reservation-list{
+    margin-top: 17px;
+    border-bottom: 2px solid rgb(177, 177, 177);
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    width: 500px;
+    height: 50px;
+    align-items: center;
+  }

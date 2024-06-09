@@ -2,6 +2,17 @@ import React ,{useState,useEffect} from "react"
 import {useParams,Link} from "react-router-dom";
 import axios from 'axios';
 import { URL_VARIABLE } from "./ExportUrl"; 
+import './css/ReservationList.css';
+
+const Tab = ({ label, onClick, active, count }) => (
+  <div
+    className={`tab ${active ? 'active' : ''}`} // 클래스명 동적 설정
+    onClick={onClick}
+  >
+    {label}{count !== undefined && <span className="review-count">({count})</span>}
+  </div>
+);
+
 
 const UserReservations = ({ userReservationData }) => {
     const {
@@ -33,8 +44,11 @@ const UserReservations = ({ userReservationData }) => {
 
 const ReservationList = () => {
     const [reservations,setReservations] = useState([]);
-
+    const [activeTab, setActiveTab] = useState('before');
     
+    const handleTabClick = (tabName) => {
+      setActiveTab(tabName);
+    };
 
     const fetchReservations = async () => {
         const jwtToken = localStorage.getItem('jwtToken'); 
@@ -61,12 +75,20 @@ const ReservationList = () => {
     useEffect(() => {
     }, [reservations]);
 
+ 
     
     return(
-        <div>
-        {reservations.map(reservations => (
+        <div className="contents-section-reservation-list">
+          <div className="contents-section-div">
+          {reservations.map(reservations => (
             <UserReservations key={reservations.reservationId} userReservationData={reservations} />
         ))}
+      <div className='navtab-container-reservation-list'>
+      <Tab label="방문예정" onClick={() => handleTabClick('before')} active={activeTab === 'before'} />
+      <Tab label="방문완료" onClick={() => handleTabClick('after')} active={activeTab === 'after'} />
+      <Tab label="취소/노쇼" onClick={() => handleTabClick('cancle')} active={activeTab === 'cancle'} />
+      </div>
+          </div>
     </div>
     );
 

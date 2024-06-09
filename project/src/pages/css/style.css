@@ -1,12 +1,20 @@
 /*/////////////////////////////////////////////////////////////// 배경 css //////////////////////////////////////////////////////////*/
 body {
-  background-color: #000000a1; 
+  background-color: #000000a1;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
 
 /*/////////////////////////////////////////////////////////////// 네비바 css //////////////////////////////////////////////////////////*/
 .navbar-custom {
-  width: 100vw;
+  width: 100%;
   position: fixed;
   top: 0;
   left: 0;
@@ -16,13 +24,24 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 0 1rem;
+  border-bottom: 0.5px solid #d3d3d3;
+  height: 50px;
+  padding-left: 20%;
+/* 수정된 부분 */
+}
+.title {
+  color: white;
+  text-decoration: none;
+}
+.space{
+  padding-right: 40%;
 }
 
-
-.bg-body-tertiary {
-  --bs-bg-opacity: 1;
-  background-color: #242424 !important;
-  border-radius: 10px;
+.navbar-custom .navbar-brand {
+  color: white;
+  text-decoration: none;
+  font-family: Arial, sans-serif;
+  flex: 1; /* 수정된 부분 */
 }
 
 .navbar-custom .nav-link,
@@ -35,57 +54,104 @@ body {
   display: flex;
   align-items: center;
   height: 100%;
-}
-
-.navbar-custom .navbar-brand {
-  color: white;
-  text-decoration: none;
-  font-family: Arial, sans-serif;
-  display: flex;
-  align-items: center;
-  height: 100%;
-  margin-left: 300px;
-}
-.navbar-custom .nav-link span {
   cursor: pointer;
-}
-
-.navbar-custom .nav-link button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: white;
-}
-
-.navbar-expand-lg .navbar-nav {
-  flex-direction: row;
-  margin-left: 900px;
-}
-
-.navbar-expand-lg .navbar-collapse {
-  display: flex !important;
-  flex-basis: auto;
-  padding-bottom: 5px;
-}
-
-.navbar-custom .navbar-nav,
-.navbar-custom .nav-item,
-.navbar-custom .nav-dropdown-toggle {
-  display: flex;
-  align-items: center;
-  height: 100%;
+  margin-right : 3px;
+  flex: 1; /* 수정된 부분 */
 }
 
 /* 중앙 정렬을 위한 추가 */
 .navbar-custom .navbar-nav {
-  margin-top: 5px;
   justify-content: center;
   align-items: center;
 }
 
+.navContents {
+  display: flex;
+  align-items: center;
+  flex: 4; /* 수정된 부분 */
+}
+
+/* 글씨 크기를 고정하기 위한 미디어 쿼리 */
+@media (max-width: 768px) {
+  .navbar-custom .nav-link,
+  .navbar-custom .nav-dropdown-toggle,
+  .navbar-custom .nav-link a,
+  .navbar-custom .nav-link span {
+    font-size: 14px; /* 작은 화면에서는 글씨 크기를 고정 */
+  }
+
+  .navbar-custom .navContents {
+    flex-wrap: nowrap; /* 요소들이 줄 바꿈 되지 않도록 */
+  }
+
+
+}
+
+.navbar-toggler {
+  display: none; /* 햄버거 버튼 숨김 */
+}
+
+@media (min-width: 769px) {
+  .navbar-custom .nav-link,
+  .navbar-custom .nav-dropdown-toggle,
+  .navbar-custom .nav-link a,
+  .navbar-custom .nav-link span {
+    font-size: 16px; /* 큰 화면에서는 기본 글씨 크기를 유지 */
+  }
+}
 
 /*//////////////////////////////////////////// item css //////////////////////////////////////////////////////*/
 
+/* .contents-section {
+  position: relative;
+  margin: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 1400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #333;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+  padding-bottom: 70px; /* .bottom-contents의 높이만큼 하단 여백 추가 
+  min-height: calc(100vh - 70px);  화면 전체 높이에서 .bottom-contents의 높이를 뺀 값으로 최소 높이 설정 
+} */
+
+
+.contents-section {
+  position: relative;
+  border-left: 1px solid #ccc; 
+  border-right: 1px solid #ccc; 
+  width: 1400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #333;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+  height: 100vh; /* 세로 방향을 화면 가득 채움 */
+  box-sizing: border-box; /* 패딩과 테두리를 포함한 전체 크기 계산 */
+}
+
+
+.bottom-contents {
+  position: absolute;
+  border-top: 1px solid #ccc; 
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #333;
+  padding: 50px;
+  text-align: center;
+  z-index: 999;
+}
+
+.contents-section h2 {
+  margin-bottom: 10px;
+}
 
 .deals {
   font-family: Avenir, Roboto, Helvetica, san-serif;
@@ -106,6 +172,7 @@ body {
   background-color: white;
 }
 
+
 .list-group{
 
   margin-top:3%;
@@ -113,3 +180,271 @@ body {
   margin-left: 35%;
 
 }
+
+/*////////////////////////////////////////////////////////////////storecss///////////////////////////////////////////////////////////////////////////////////////////////////*/
+.contents-section-store {
+  position: relative;
+  border-left: 1px solid #ccc; 
+  border-right: 1px solid #ccc; 
+  width: 1400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #333;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+
+  box-sizing: border-box; /* 패딩과 테두리를 포함한 전체 크기 계산 */
+}
+
+.square {
+  margin-top: 50px;
+  width: 500px;
+  height: 300px;
+  background-color: white; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  box-shadow: 0px 0px 10px black;
+  position: relative; /* Position 설정 추가 */
+}
+
+.store-contents{
+  width: 500px;
+  height: 300px;
+  background-color: white; 
+  display: flex;
+
+  align-items: center;
+  overflow: hidden;
+  box-shadow: 10px 0px 10px -5px rgba(0, 0, 0, 0.5), -10px 0px 10px -5px rgba(0, 0, 0, 0.5);
+  position: relative; 
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.store-contents p{
+  margin-left: 10px;
+}
+.store-contents-storename{
+  margin: 0px;
+  margin-top: 10px;
+  margin-bottom: 0px;
+  font-size: 30px;
+}
+.star-rating{
+ margin-left: 10px;
+ margin-bottom: 10px;
+ display: flex;
+ flex-direction: row;
+}
+.review-counting{
+  margin-top: 5.9px;
+  font-size: 15px;
+  color: gray;
+}
+
+.image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+}
+
+.image-counter {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  z-index: 2; 
+  border: 1px solid #ccc;
+}
+
+button.prev, button.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 2; 
+  opacity: 0.7; /* 버튼 투명도 조절 */
+  border: 1px solid #ccc;
+}
+
+button.prev {
+  left: 10px;
+}
+
+button.next {
+  right: 10px;
+}
+
+button.prev:hover, button.next:hover {
+  opacity: 1; /* 마우스 오버 시 투명도 변경 */
+}
+
+.star {
+  font-size: 20px;
+  color: gray;
+}
+
+.star.filled {
+  color: gold;
+}
+
+.tab {
+  cursor: pointer;
+  padding: 5px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 125px;
+  height: 52px;
+}
+
+.tab.active {
+  font-weight: bold;
+  border-bottom: 2px solid black;
+}
+
+.navtab-container{
+  border-bottom: 2px solid rgb(177, 177, 177);
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  width: 500px;
+  height: 50px;
+  align-items: center;
+}
+.container-space{
+  width: 500px;
+  height: 12px;
+  background-color: rgba(199, 199, 199, 0.945);
+
+}
+.navtab-contents{
+  position: relative;
+  width: 500px;
+  height: 300px;
+  background-color: white;
+}
+.navtab-contents-home{
+  margin-top: 25px;
+  margin-left: 15px;
+}
+.navtab-contents-reservation{
+  margin-top: 25px;
+  margin-left: 15px;
+}
+.navtab-contents-title{
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.reservation-select{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 472px;
+  flex-direction: column;
+}
+
+.reservation-select-time{
+  display: flex;
+  justify-content: flex-start;
+  width: 100%; 
+  flex-wrap: wrap; 
+  margin-top : 10px;
+}
+
+.navtab-contents-reservation button {
+  margin-right: 5px;
+  background-color: #414141;
+  border: none; 
+  border-radius: 22px; 
+  padding: 8px 13px; 
+  color: #fff; 
+  font-size: 16px;
+  cursor: pointer; 
+  transition: background-color 0.3s; 
+}
+
+.navtab-contents-reservation button:hover {
+  background-color: #b0b0b0; 
+}
+
+.reservation-button{
+  position: absolute; 
+  bottom: 20px; 
+  right: 20px; 
+  background-color:#414141;
+  border: none; 
+  border-radius: 22px; 
+  padding: 8px 13px;
+  color: #fff; 
+  font-size: 16px;
+  cursor: pointer; 
+  transition: background-color 0.3s; 
+}
+
+.reservation-button:hover {
+  background-color: #b0b0b0; 
+}
+
+.menu{
+  background-color: white;
+  width: 500px;
+  height: 400px;
+}
+
+.menu-title{
+  margin-top: 25px;
+  margin-left: 15px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.store-contents-review{
+  background-color: white;
+  width: 500px;
+  height: 400px;
+}
+
+.review-title{
+  margin-top: 25px;
+  margin-left: 15px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.review-contents{
+  margin-left: 15px;
+}
+  /*///////////////////////////////////////////////////////////////////SignUpCss////////////////////////////////////////////////////////////////////////////////*/
+  .signUpText {
+    color: white;
+    text-decoration: none;
+  }
+
+  .signUpButton {
+    display: flex;
+    margin-left: 500px;
+  }
+
+  .signUpSpace {
+    margin-top: 50px;
+  }
+  
+

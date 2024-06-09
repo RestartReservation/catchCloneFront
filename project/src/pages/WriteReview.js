@@ -52,9 +52,8 @@ const WriteReview = () => {
     
       try {
         const jwtToken = localStorage.getItem('jwtToken');
-
         const response = await axios.post(
-          URL_VARIABLE + `reviews/${id1}/${id2}`,
+          URL_VARIABLE + `reviews/${id1}`,
           requestData,
           {
             headers: {
