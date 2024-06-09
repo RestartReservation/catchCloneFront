@@ -11,14 +11,16 @@ const UserProfile = () =>{
 
     const jwtToken = localStorage.getItem('jwtToken');
   
-    useEffect(() => { if (jwtToken) {
+    useEffect(() => { 
+        if (jwtToken) {
         axios.get(URL_VARIABLE + 'users/profile', {
           headers: {
             Authorization: `${jwtToken}`
           }
         })
         .then(response => {
-          console.log(response);
+          console.log("this is response!");
+          console.log(response.data);
           if(response.data.nickName === null){
             alert("다시 로그인 해 주세요");
             localStorage.removeItem('jwtToken');
@@ -53,8 +55,20 @@ const UserProfile = () =>{
     }, []);
 
       return(
-
-        <div>{userProfile.nickName}</div>
+        
+        // <><div>{userProfile.nickName}</div>
+        //{reviews.length > 0 ? reviews.map(review => <Reviews key={review.id} reviewData={review} />) : (<p>리뷰가 없습니다</p>)}
+        // </>
+      <ul class="list-group">
+        <li class="list-group-item" >{userProfile.profileUrl ?  userProfile.profileUrl : <img src='./person.png' style={{ width: '100px', height: '100px' }}></img>}</li>
+        <li class="list-group-item">{userProfile.nickName}</li>
+        <li class="list-group-item">
+        {userProfile.aboutMe ? userProfile.aboutMe : "회원 정보가 없습니다!"}
+          </li>
+        <li class="list-group-item">{userProfile.phoneNumber}</li>
+        <li class="list-group-item">And a fifth one</li>
+      </ul>
+        
 
       );
 }
