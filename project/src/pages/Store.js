@@ -6,6 +6,7 @@
   import DatePicker from 'react-datepicker';
   import 'react-datepicker/dist/react-datepicker.css';
   import { TextField, Dialog, DialogTitle, DialogContent } from '@mui/material';
+  import StoreMenu from './StoreMenu';
 
   const ReservationTimes = ({reservationInfo}) => {
     return(<button> 시간: {reservationInfo.timeInfo} </button>)
@@ -16,6 +17,7 @@
     const [selectedDate, setSelectedDate] = useState(null);
     const [date, setDate] = useState(new Date());
     const [reservationInfo,setReservationInfo] = useState([]);
+
 
     const handleClickOpen = () => {
       setOpen(true);
@@ -167,7 +169,9 @@ const Tab = ({ label, onClick, active, count }) => (
       const [currentImageIndex, setCurrentImageIndex] = useState(0);
       const [activeTab, setActiveTab] = useState('home');
       const [todayReservation,setTodayReservation] = useState([]);
- 
+      const [storeMenuList,setStoreMenuList] = useState([]);
+      const limitedStoreMenuList = storeMenuList.slice(0, 5);
+
       useEffect(() => {
       const fetchReviews = async () => {
           try {
@@ -190,6 +194,7 @@ const Tab = ({ label, onClick, active, count }) => (
               try {
                   const response = await axios.get(URL_VARIABLE + "stores/" + id);
                   setStoreContents(response.data);
+                  setStoreMenuList(response.data.storeMenuDtoList);
               } catch (error) {
                   console.error(error);
               }
@@ -243,12 +248,14 @@ const Tab = ({ label, onClick, active, count }) => (
               
             )}
             <div className='container-space'></div>
+
           <div className='navtab-container'>
       <Tab label="홈" onClick={() => handleTabClick('home')} active={activeTab === 'home'} />
       <Tab label="예약" onClick={() => handleTabClick('reservation')} active={activeTab === 'reservation'} />
       <Tab label="메뉴" onClick={() => handleTabClick('menu')} active={activeTab === 'menu'} />
       <Tab label="리뷰" onClick={() => handleTabClick('review')} active={activeTab === 'review'} count={reviews.length} /> 
          </div>
+
          <div className='navtab-contents'>
             {activeTab === 'home' && (
               <div className='navtab-contents-home'>
@@ -262,6 +269,17 @@ const Tab = ({ label, onClick, active, count }) => (
                   <p className='navtab-contents-title'>예약</p>
                   <ReservationDateSelect storeId={id} />
                   <Link to = {`/reservations/${id}`}><button className='reservation-button'>예약</button></Link > 
+              </div>
+            )
+            }
+            {activeTab === 'menu' && (
+              <div className='navtab-contents-menu'>
+                  <p className='navtab-contents-title'>메뉴</p>
+                  <div className='div-space-long'></div>
+                  {limitedStoreMenuList.map(storeMenu => (
+                  <StoreMenu storeMenu={storeMenu} isTab={true} />
+                      ))
+                  }
               </div>
             )
             }
