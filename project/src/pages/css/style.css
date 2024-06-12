@@ -334,6 +334,21 @@ button.prev:hover, button.next:hover {
   background-color: rgba(199, 199, 199, 0.945);
 
 }
+.div-space-long{
+  position: absolute; 
+  width: 500px;
+  height: 1px;
+  background-color: rgba(199, 199, 199, 0.945);
+  top: 32px; 
+  left: -15px;
+}
+.div-space-short{
+  width: 465px;
+  height: 1px;
+  background-color: rgba(199, 199, 199, 0.945);
+  top: -16px; 
+  left: 5px;
+}
 .navtab-contents{
   position: relative;
   width: 500px;
@@ -402,6 +417,30 @@ button.prev:hover, button.next:hover {
 .reservation-button:hover {
   background-color: #b0b0b0; 
 }
+
+.navtab-contents-menu{
+  margin-top: 25px;
+  margin-left: 15px;
+  position: relative; 
+}
+
+.store-menu-list-tab{
+  margin-top: 8px;
+  width: 460px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.store-menu-list{
+  margin-top: 12px;
+  width: 460px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+
 
 .menu{
   background-color: white;
