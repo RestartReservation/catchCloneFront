@@ -1,12 +1,13 @@
   import React, { useState, useEffect } from 'react';
   import {useParams,Link} from "react-router-dom";
   import axios from 'axios';
-  import { URL_VARIABLE } from "./ExportUrl"; 
+  import { URL_VARIABLE } from "./export/ExportUrl"; 
   import './css/style.css';
   import DatePicker from 'react-datepicker';
   import 'react-datepicker/dist/react-datepicker.css';
   import { TextField, Dialog, DialogTitle, DialogContent } from '@mui/material';
   import StoreMenu from './StoreMenu';
+  import Tab from './export/Tab'
 
   const ReservationTimes = ({reservationInfo}) => {
     return(<button> 시간: {reservationInfo.timeInfo} </button>)
@@ -152,14 +153,6 @@ const StarRating = ({ rating,reviewLength }) => {
   return <div className="star-rating">{stars} <p className='review-counting'>{reviewLength}개 리뷰 </p>  </div>;
 };
 
-const Tab = ({ label, onClick, active, count }) => (
-  <div
-    className={`tab ${active ? 'active' : ''}`} // 클래스명 동적 설정
-    onClick={onClick}
-  >
-    {label}{count !== undefined && <span className="review-count">({count})</span>}
-  </div>
-);
 
 
   const Store = () =>{
@@ -252,7 +245,7 @@ const Tab = ({ label, onClick, active, count }) => (
           <div className='navtab-container'>
       <Tab label="홈" onClick={() => handleTabClick('home')} active={activeTab === 'home'} />
       <Tab label="예약" onClick={() => handleTabClick('reservation')} active={activeTab === 'reservation'} />
-      <Tab label="메뉴" onClick={() => handleTabClick('menu')} active={activeTab === 'menu'} />
+      <Tab label="사진" onClick={() => handleTabClick('menu')} active={activeTab === 'menu'} />
       <Tab label="리뷰" onClick={() => handleTabClick('review')} active={activeTab === 'review'} count={reviews.length} /> 
          </div>
 
@@ -275,11 +268,7 @@ const Tab = ({ label, onClick, active, count }) => (
             {activeTab === 'menu' && (
               <div className='navtab-contents-menu'>
                   <p className='navtab-contents-title'>메뉴</p>
-                  <div className='div-space-long'></div>
-                  {limitedStoreMenuList.map(storeMenu => (
-                  <StoreMenu storeMenu={storeMenu} isTab={true} />
-                      ))
-                  }
+                
               </div>
             )
             }
@@ -287,6 +276,12 @@ const Tab = ({ label, onClick, active, count }) => (
          <div className='container-space'></div>
          <div className='menu'>
           <p className='menu-title'>메뉴</p>
+          <div className='div-space-long'></div>
+                  {limitedStoreMenuList.map(storeMenu => (
+                  <StoreMenu storeMenu={storeMenu} isTab={false} />
+                      ))
+                  }
+              <button className = 'menu-open-button'>메뉴 전체보기</button>
          </div>
          <div className='container-space'></div>
 
