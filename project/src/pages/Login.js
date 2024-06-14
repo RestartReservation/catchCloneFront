@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {Form, Button, Modal } from 'react-bootstrap';
 import axios from 'axios';
 import { useLocation,  useNavigate  } from 'react-router-dom';
-import { URL_VARIABLE } from "./ExportUrl"; 
+import { URL_VARIABLE } from "./export/ExportUrl"; 
 
 
 const Login = ({ onClose , onLoginSuccess }) => {

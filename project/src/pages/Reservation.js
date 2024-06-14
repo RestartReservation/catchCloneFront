@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import { URL_VARIABLE } from "./ExportUrl"; 
+import { URL_VARIABLE } from "./export/ExportUrl"; 
 import {useParams} from "react-router-dom";
 import axios from 'axios';
 
