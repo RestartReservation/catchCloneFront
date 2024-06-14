@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from 'axios';
-import { URL_VARIABLE } from "./ExportUrl"; 
+import { URL_VARIABLE } from "./export/ExportUrl"; 
 
 const WriteReview = () => {
   const [ratings, setRatings] = useState({ 맛: 0, 분위기: 0, 서비스: 0 });

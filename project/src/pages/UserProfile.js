@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { URL_VARIABLE } from "./ExportUrl"; 
+import { URL_VARIABLE } from "./export/ExportUrl"; 
 import { useParams } from 'react-router-dom';
 
 const UserProfile = () =>{

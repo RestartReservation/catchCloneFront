@@ -335,13 +335,13 @@ button.prev:hover, button.next:hover {
 
 }
 .div-space-long{
-  position: absolute; 
   width: 500px;
   height: 1px;
   background-color: rgba(199, 199, 199, 0.945);
   top: 32px; 
   left: -15px;
 }
+
 .div-space-short{
   width: 465px;
   height: 1px;
@@ -352,8 +352,9 @@ button.prev:hover, button.next:hover {
 .navtab-contents{
   position: relative;
   width: 500px;
-  height: 300px;
+  min-height: 300px;
   background-color: white;
+  overflow: auto;
 }
 .navtab-contents-home{
   margin-top: 25px;
@@ -418,6 +419,25 @@ button.prev:hover, button.next:hover {
   background-color: #b0b0b0; 
 }
 
+.menu-open-button{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 350px;
+  display: flex;
+  background-color:#414141;
+  border: none; 
+  border-radius: 22px; 
+  padding: 8px 13px;
+  color: #fff; 
+  font-size: 16px;
+  cursor: pointer; 
+  transition: background-color 0.3s; 
+}
+
+.menu-open-button:hover {
+  background-color: #b0b0b0; 
+}
+
 .navtab-contents-menu{
   margin-top: 25px;
   margin-left: 15px;
@@ -433,19 +453,24 @@ button.prev:hover, button.next:hover {
 }
 
 .store-menu-list{
-  margin-top: 12px;
+  margin-top: 8px;
   width: 460px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-
+.store-menu-space{
+  margin-top: 25px;
+  margin-left: 15px;
+}
 
 .menu{
+  position: relative;
   background-color: white;
   width: 500px;
-  height: 400px;
+  min-height: 400px;
+  overflow: auto;
 }
 
 .menu-title{

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { URL_VARIABLE } from "./ExportUrl"; 
+import { URL_VARIABLE } from "./export/ExportUrl"; 
 import './css/HomeStyle.css'
 import {Routes,Route,Link} from "react-router-dom";
 import './css/style.css';

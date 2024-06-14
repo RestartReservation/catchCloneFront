@@ -3,9 +3,8 @@ import { Routes, Route, Link } from "react-router-dom";
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './pages/css/style.css';
-import signIcon from './img/sign-icon.jpg'; 
 
-import { URL_VARIABLE } from "./pages/ExportUrl"; 
+import { URL_VARIABLE } from "./pages/export/ExportUrl"; 
 import Review from "./pages/Review";
 import Home from "./pages/Home";
 import Signup from "./pages/Singup";

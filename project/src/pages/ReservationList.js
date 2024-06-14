@@ -1,7 +1,7 @@
 import React ,{useState,useEffect} from "react"
 import {useParams,Link} from "react-router-dom";
 import axios from 'axios';
-import { URL_VARIABLE } from "./ExportUrl"; 
+import { URL_VARIABLE } from "./export/ExportUrl"; 
 import './css/ReservationList.css';
 
 const Tab = ({ label, onClick, active, count }) => (
