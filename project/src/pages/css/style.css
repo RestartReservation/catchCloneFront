@@ -328,6 +328,17 @@ button.prev:hover, button.next:hover {
   height: 50px;
   align-items: center;
 }
+
+.navtab-container-page{
+  border-bottom: 2px solid rgb(177, 177, 177);
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  width: 500px;
+  height: 50px;
+  align-items: center;
+}
+
 .container-space{
   width: 500px;
   height: 12px;
@@ -353,6 +364,16 @@ button.prev:hover, button.next:hover {
   position: relative;
   width: 500px;
   min-height: 300px;
+  background-color: white;
+  overflow: auto;
+}
+
+.navtab-contents-page{
+  margin-top: 12px;
+  position: relative;
+  width: 500px;
+  height: 100vh;
+  box-sizing: border-box;
   background-color: white;
   overflow: auto;
 }
@@ -403,7 +424,7 @@ button.prev:hover, button.next:hover {
 
 .reservation-button{
   position: absolute; 
-  bottom: 20px; 
+  bottom: 650px; 
   right: 20px; 
   background-color:#414141;
   border: none; 
@@ -480,10 +501,12 @@ button.prev:hover, button.next:hover {
   font-weight: bold;
 }
 
-.store-contents-review{
+.review{
+  position: relative;
   background-color: white;
   width: 500px;
-  height: 400px;
+  min-height: 400px;
+  overflow: auto;
 }
 
 .review-title{
