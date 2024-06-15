@@ -6,7 +6,7 @@
   import DatePicker from 'react-datepicker';
   import 'react-datepicker/dist/react-datepicker.css';
   import { TextField, Dialog, DialogTitle, DialogContent } from '@mui/material';
-  import StoreMenu from './StoreMenu';
+  import StoreMenu from './export/StoreMenu';
   import Tab from './export/Tab'
 
   const ReservationTimes = ({reservationInfo}) => {
@@ -214,84 +214,128 @@ const StarRating = ({ rating,reviewLength }) => {
 
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);
+    if (tabName !== 'home') {
+      window.scrollTo({ top: 0, behavior: 'smooth' }); // 화면을 최상단으로 스크롤
+  }
   };
 
 
       return (
+    
           <div class="contents-section-store">
-            <div>
-            {/* url임시 */}
-            <div class="square">
-                <img src={images[currentImageIndex]} alt="Store" className="image" />
-                <button className="prev" onClick={handlePrevImage}>❮</button>
-                <button className="next" onClick={handleNextImage}>❯</button>
-                <div className="image-counter">
-                    {currentImageIndex + 1} / {images.length}
-                </div>
-              </div>
-            
-            </div>
-            {storeContents && (
-              <div className="store-contents">
-                <p className='store-contents-storename'>{storeContents.storeName}</p>
-                <StarRating rating={storeContents.starRate} reviewLength={reviews.length} />
-                <p>{storeContents.aboutStore}</p>
-              
-              </div>
-              
-            )}
-            <div className='container-space'></div>
-
-          <div className='navtab-container'>
-      <Tab label="홈" onClick={() => handleTabClick('home')} active={activeTab === 'home'} />
-      <Tab label="예약" onClick={() => handleTabClick('reservation')} active={activeTab === 'reservation'} />
-      <Tab label="사진" onClick={() => handleTabClick('menu')} active={activeTab === 'menu'} />
-      <Tab label="리뷰" onClick={() => handleTabClick('review')} active={activeTab === 'review'} count={reviews.length} /> 
-         </div>
-
-         <div className='navtab-contents'>
             {activeTab === 'home' && (
-              <div className='navtab-contents-home'>
-                  <p className='navtab-contents-title'>공지</p>
-                  <p>공지칸입니다</p>
+              <div className='home-tap'>
+              <div>
+              <div class="square">
+                  <img src={images[currentImageIndex]} alt="Store" className="image" />
+                  <button className="prev" onClick={handlePrevImage}>❮</button>
+                  <button className="next" onClick={handleNextImage}>❯</button>
+                  <div className="image-counter">
+                      {currentImageIndex + 1} / {images.length}
+                  </div>
+                </div>
+              
               </div>
-            )
-            }
+              {storeContents && (
+                <div className="store-contents">
+                  <p className='store-contents-storename'>{storeContents.storeName}</p>
+                  <StarRating rating={storeContents.starRate} reviewLength={reviews.length} />
+                  <p>{storeContents.aboutStore}</p>
+                
+                </div>
+                
+              )}
+              <div className='container-space'></div>
+
+            <div className='navtab-container'>
+            <Tab label="홈" onClick={() => handleTabClick('home')} active={activeTab === 'home'} />
+            <Tab label="예약" onClick={() => handleTabClick('reservation')} active={activeTab === 'reservation'} />
+            <Tab label="사진" onClick={() => handleTabClick('pictures')} active={activeTab === 'pictures'} />
+            <Tab label="리뷰" onClick={() => handleTabClick('review')} active={activeTab === 'review'} count={reviews.length} /> 
+            </div>
+
+            <div className='navtab-contents'>
+              {activeTab === 'home' && (
+                <div className='navtab-contents-home'>
+                    <p className='navtab-contents-title'>공지</p>
+                    <p>공지칸입니다</p>
+                </div>
+              )
+              }
+              {activeTab === 'reservation' && (
+                <div className='navtab-contents-reservation'>
+                    <p className='navtab-contents-title'>예약</p>
+                    <ReservationDateSelect storeId={id} />
+                    <Link to = {`/reservations/${id}`}><button className='reservation-button'>예약</button></Link > 
+                </div>
+              )
+              }
+              {activeTab === 'menu' && (
+                <div className='navtab-contents-menu'>
+                    <p className='navtab-contents-title'>메뉴</p>
+                  
+                </div>
+              )
+              }
+            </div>
+            <div className='container-space'></div>
+            <div className='menu'>
+            <p className='menu-title'>메뉴</p>
+            <div className='div-space-long'></div>
+                    {limitedStoreMenuList.map(storeMenu => (
+                    <StoreMenu storeMenu={storeMenu} isTab={false} />
+                        ))
+                    }
+                <button className = 'menu-open-button'>메뉴 전체보기</button>
+            </div>
+          <div className='container-space'></div>
+            <div>
+            <div className='review'>
+            <p className='review-title'>리뷰</p>
+            <div className='review-contents'>
+                {reviews.length > 0 ? reviews.map(review => <Reviews key={review.id} reviewData={review} />) : (<p>리뷰가 없습니다</p>)}
+                </div>
+            </div>
+          </div>
+     
+        </div>
+            )}
             {activeTab === 'reservation' && (
-              <div className='navtab-contents-reservation'>
+              <div className= 'navtab-contents-page'>
+                <div className='navtab-container-page'>
+                  <Tab label="홈" onClick={() => handleTabClick('home')} active={activeTab === 'home'} />
+                  <Tab label="예약" onClick={() => handleTabClick('reservation')} active={activeTab === 'reservation'} />
+                  <Tab label="사진" onClick={() => handleTabClick('pictures')} active={activeTab === 'pictures'} />
+                  <Tab label="리뷰" onClick={() => handleTabClick('review')} active={activeTab === 'review'} count={reviews.length} /> 
+                </div>
+                <div className='navtab-contents-reservation'>
                   <p className='navtab-contents-title'>예약</p>
                   <ReservationDateSelect storeId={id} />
                   <Link to = {`/reservations/${id}`}><button className='reservation-button'>예약</button></Link > 
               </div>
-            )
-            }
-            {activeTab === 'menu' && (
-              <div className='navtab-contents-menu'>
-                  <p className='navtab-contents-title'>메뉴</p>
-                
-              </div>
-            )
-            }
-         </div>
-         <div className='container-space'></div>
-         <div className='menu'>
-          <p className='menu-title'>메뉴</p>
-          <div className='div-space-long'></div>
-                  {limitedStoreMenuList.map(storeMenu => (
-                  <StoreMenu storeMenu={storeMenu} isTab={false} />
-                      ))
-                  }
-              <button className = 'menu-open-button'>메뉴 전체보기</button>
-         </div>
-         <div className='container-space'></div>
-
-            <div className='store-contents-review'>
-              <p className='review-title'>리뷰 </p> 
-              <div className='review-contents'>
-              {reviews.length > 0 ? reviews.map(review => <Reviews key={review.id} reviewData={review} />) : (<p>리뷰가 없습니다</p>)}
-              </div>
-            
             </div>
+            )}
+            {activeTab === 'pictures' && (
+              <div className= 'navtab-contents-page'>
+                <div className='navtab-container-page'>
+                  <Tab label="홈" onClick={() => handleTabClick('home')} active={activeTab === 'home'} />
+                  <Tab label="예약" onClick={() => handleTabClick('reservation')} active={activeTab === 'reservation'} />
+                  <Tab label="사진" onClick={() => handleTabClick('pictures')} active={activeTab === 'pictures'} />
+                  <Tab label="리뷰" onClick={() => handleTabClick('review')} active={activeTab === 'review'} count={reviews.length} /> 
+                </div>
+            </div>
+            )}
+            {activeTab === 'review' && (
+              <div className= 'navtab-contents-page'>
+                <div className='navtab-container-page'>
+                  <Tab label="홈" onClick={() => handleTabClick('home')} active={activeTab === 'home'} />
+                  <Tab label="예약" onClick={() => handleTabClick('reservation')} active={activeTab === 'reservation'} />
+                  <Tab label="사진" onClick={() => handleTabClick('pictures')} active={activeTab === 'pictures'} />
+                  <Tab label="리뷰" onClick={() => handleTabClick('review')} active={activeTab === 'review'} count={reviews.length} /> 
+                </div>
+            </div>
+            )}
+
 
 
           </div>
