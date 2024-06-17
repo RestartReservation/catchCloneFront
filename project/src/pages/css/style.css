@@ -297,11 +297,11 @@ button.prev:hover, button.next:hover {
 
 .star {
   font-size: 20px;
-  color: gray;
+  color: gray !important;
 }
 
 .star.filled {
-  color: gold;
+  color: gold !important;
 }
 
 .tab {
@@ -501,7 +501,7 @@ button.prev:hover, button.next:hover {
   font-weight: bold;
 }
 
-.review{
+/* .review{
   position: relative;
   background-color: white;
   width: 500px;
@@ -518,7 +518,59 @@ button.prev:hover, button.next:hover {
 
 .review-contents{
   margin-left: 15px;
+} */
+
+.review {
+  position: relative;
+  background-color: white;
+  width: 500px;
+  min-height: 400px;
+  overflow: hidden; /* 기본 스크롤을 숨기기 위해 overflow를 hidden으로 설정 */
 }
+
+.review-title {
+  margin-top: 25px;
+  margin-left: 15px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.review-contents {
+  display: flex; /* Flexbox를 사용하여 가로 정렬 */
+  margin-left: 15px;
+  overflow-x: hidden; /* 스크롤바를 숨깁니다 */
+  scroll-behavior: smooth; /* 스크롤을 부드럽게 이동 */
+  -webkit-overflow-scrolling: touch; /* 터치스크린에서 부드러운 스크롤 */
+}
+
+.review-contents-wrapper {
+  display: flex;
+  overflow-x: auto; /* 실제 스크롤을 위한 래퍼 */
+}
+
+.arrow-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.7);
+  border: none;
+  cursor: pointer;
+  z-index: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+.arrow-button.left {
+  margin-left: 5px;
+  left: 0;
+}
+
+.arrow-button.right {
+  margin-right: 5px;
+  right: 0;
+}
+
   /*///////////////////////////////////////////////////////////////////SignUpCss////////////////////////////////////////////////////////////////////////////////*/
   .signUpText {
     color: white;
