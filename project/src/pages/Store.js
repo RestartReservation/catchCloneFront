@@ -1,4 +1,4 @@
-  import React, { useState, useEffect } from 'react';
+  import React, { useState, useEffect, useRef } from 'react';
   import {useParams,Link} from "react-router-dom";
   import axios from 'axios';
   import { URL_VARIABLE } from "./export/ExportUrl"; 
@@ -8,6 +8,8 @@
   import { TextField, Dialog, DialogTitle, DialogContent } from '@mui/material';
   import StoreMenu from './export/StoreMenu';
   import Tab from './export/Tab'
+  import StoreReview from './export/StoreReview'
+
 
   const ReservationTimes = ({reservationInfo}) => {
     return(<button> 시간: {reservationInfo.timeInfo} </button>)
@@ -164,6 +166,7 @@ const StarRating = ({ rating,reviewLength }) => {
       const [todayReservation,setTodayReservation] = useState([]);
       const [storeMenuList,setStoreMenuList] = useState([]);
       const limitedStoreMenuList = storeMenuList.slice(0, 5);
+      const reviewContentsRef = useRef(null); 
 
       useEffect(() => {
       const fetchReviews = async () => {
@@ -219,7 +222,13 @@ const StarRating = ({ rating,reviewLength }) => {
   }
   };
 
+  const handleScrollLeft = () => {
+    reviewContentsRef.current.scrollBy({ left: -300, behavior: 'smooth' });
+};
 
+const handleScrollRight = () => {
+    reviewContentsRef.current.scrollBy({ left: 300, behavior: 'smooth' });
+};
       return (
     
           <div class="contents-section-store">
@@ -291,12 +300,17 @@ const StarRating = ({ rating,reviewLength }) => {
           <div className='container-space'></div>
             <div>
             <div className='review'>
-            <p className='review-title'>리뷰</p>
-            <div className='review-contents'>
-                {reviews.length > 0 ? reviews.map(review => <Reviews key={review.id} reviewData={review} />) : (<p>리뷰가 없습니다</p>)}
+                        <p className='review-title'>리뷰</p>
+                        <button className="arrow-button left" onClick={handleScrollLeft}>❮</button>
+                        <div className='review-contents-wrapper'>
+                            <div className='review-contents' ref={reviewContentsRef}>
+                                {reviews.length > 0 ? reviews.map(review => <StoreReview key={review.reviewId} reviewData={review} />) : (<p>리뷰가 없습니다</p>)}
+                                <button className="arrow-button right" onClick={handleScrollRight}>❯</button>
+                            </div>
+                        </div>
+                        
+                    </div>
                 </div>
-            </div>
-          </div>
      
         </div>
             )}

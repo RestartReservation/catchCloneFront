@@ -1,0 +1,23 @@
+/* .store-review {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 16px;
+    margin: 10px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    width: 300px; 
+} */
+.store-review {
+    flex: 0 0 300px; /* 고정된 너비 설정 */
+    height: 300px;
+    margin-right: 10px; /* 각 리뷰 사이에 간격 추가 */
+    background-color: #f9f9f9; /* 배경색 설정 */
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+.store-review p {
+    margin: 8px 0;
+}
