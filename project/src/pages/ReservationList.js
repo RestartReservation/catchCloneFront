@@ -26,10 +26,19 @@ const UserReservations = ({ userReservationData }) => {
       reservationStatus,
       reservationDate 
     } = userReservationData;
+    
   
-  
+  // switch(reservationStatus){
+
+  //   case "V":
+  //     userReservationData.filter(userReservationData =>{
+  //       userReservationData.reservationStatus=="V"
+  //     }
+
+  //     );
+  // }
     return (
-      <div>
+      <div className="reservation">
         <p>
           {reservationId} 가게명: {storeName} 예약(방문)일: {yearInfo} 년 {monthInfo} 월 {dayInfo} 일 /  {timeInfo} 시 예약상태: {reservationStatus} 예약한 날짜:
           <Link to={`/writeReview/${storeId}/${reservationId}`}>
@@ -44,6 +53,7 @@ const UserReservations = ({ userReservationData }) => {
 
 const ReservationList = () => {
     const [reservations,setReservations] = useState([]);
+    const [filteredReservations, setFilteredReservations] = useState([]);
     const [activeTab, setActiveTab] = useState('before');
     
     const handleTabClick = (tabName) => {
@@ -60,13 +70,21 @@ const ReservationList = () => {
                   Authorization: `${jwtToken}`
                 }
               });
-            console.log(response);
+            //console.log(response);
+            console.log("123123");
+            console.log(response.data);
             setReservations(response.data);
+            setFilteredReservations(response.data.filter(reservation => reservation.reservationStatus === 'Y'));
+            console.log("filtered");
+            console.log(filteredReservations);
+            
+            
         } catch (error) {
             console.error(error);
         }
     };
 
+    //const filteredReservations = reservations.filter(reservation => reservation.reservationStatus === 'Y');
     // 컴포넌트가 마운트될 때(fetchReservations를 호출)
     useEffect(() => {
         fetchReservations();
@@ -75,18 +93,56 @@ const ReservationList = () => {
     useEffect(() => {
     }, [reservations]);
 
- 
+    useEffect(() => {
+      getFilteredReservations();
+    }, [activeTab]);
+
+    const getFilteredReservations = () => {
+      let filtered ;
+      switch (activeTab) {
+        
+        case 'before':
+          filtered = reservations.filter(reservation => reservation.reservationStatus === 'Y');
+          break;
+        case 'after':
+          filtered = reservations.filter(reservation => reservation.reservationStatus === 'V');
+          break;
+        case 'cancle':
+          filtered = reservations.filter(reservation => reservation.reservationStatus === 'N');
+          break;
+        default:
+          filtered = 'error';
+          break
+      }
+      setFilteredReservations(filtered);
+    };
+
+    
+    
+
     
     return(
         <div className="contents-section-reservation-list">
           <div className="contents-section-div">
-          {reservations.map(reservations => (
+          {/* {reservations.map(reservations => (
             <UserReservations key={reservations.reservationId} userReservationData={reservations} />
-        ))}
+        ))} */}
       <div className='navtab-container-reservation-list'>
       <Tab label="방문예정" onClick={() => handleTabClick('before')} active={activeTab === 'before'} />
       <Tab label="방문완료" onClick={() => handleTabClick('after')} active={activeTab === 'after'} />
       <Tab label="취소/노쇼" onClick={() => handleTabClick('cancle')} active={activeTab === 'cancle'} />
+      </div>
+      <div>
+      <ul class="list-group">
+        <li class="list-group-item">
+
+        {filteredReservations.map(reservations => (
+            <UserReservations key={reservations.reservationId} userReservationData={reservations} />
+        ))}
+
+        </li>
+       
+      </ul>
       </div>
           </div>
     </div>
