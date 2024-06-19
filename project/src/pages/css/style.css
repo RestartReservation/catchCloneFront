@@ -297,11 +297,11 @@ button.prev:hover, button.next:hover {
 
 .star {
   font-size: 20px;
-  color: gray !important;
+  color: gray;
 }
 
 .star.filled {
-  color: gold !important;
+  color: gold;
 }
 
 .tab {
@@ -545,7 +545,8 @@ button.prev:hover, button.next:hover {
 
 .review-contents-wrapper {
   display: flex;
-  overflow-x: auto; /* 실제 스크롤을 위한 래퍼 */
+  overflow: hidden; /* 가로 스크롤만 허용 */
+  white-space: nowrap; /* 요소들이 한 줄로 배치되도록 설정 */
 }
 
 .arrow-button {
