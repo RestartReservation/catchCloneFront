@@ -301,15 +301,17 @@ const handleScrollRight = () => {
             <div>
             <div className='review'>
                         <p className='review-title'>리뷰</p>
-                        <button className="arrow-button left" onClick={handleScrollLeft}>❮</button>
-                        <div className='review-contents-wrapper'>
+                 
                             <div className='review-contents' ref={reviewContentsRef}>
+                                <button className="arrow-button left" onClick={handleScrollLeft}>❮</button>
                                 {reviews.length > 0 ? reviews.map(review => <StoreReview key={review.reviewId} reviewData={review} />) : (<p>리뷰가 없습니다</p>)}
                                 <button className="arrow-button right" onClick={handleScrollRight}>❯</button>
-                            </div>
+       
                         </div>
                         
                     </div>
+
+                    <div className='review-button'></div>
                 </div>
      
         </div>

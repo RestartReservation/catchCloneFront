@@ -541,6 +541,7 @@ button.prev:hover, button.next:hover {
   overflow-x: hidden; /* 스크롤바를 숨깁니다 */
   scroll-behavior: smooth; /* 스크롤을 부드럽게 이동 */
   -webkit-overflow-scrolling: touch; /* 터치스크린에서 부드러운 스크롤 */
+
 }
 
 .review-contents-wrapper {
@@ -570,6 +571,11 @@ button.prev:hover, button.next:hover {
 .arrow-button.right {
   margin-right: 5px;
   right: 0;
+}
+.review-button{
+  width: 500px;
+  height: 100px;
+  background-color:white;
 }
 
   /*///////////////////////////////////////////////////////////////////SignUpCss////////////////////////////////////////////////////////////////////////////////*/
