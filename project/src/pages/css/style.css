@@ -527,9 +527,11 @@ button.prev:hover, button.next:hover {
   min-height: 400px;
   overflow: hidden; /* 기본 스크롤을 숨기기 위해 overflow를 hidden으로 설정 */
 }
-
-.review-title {
+.review-title-contents{
   margin-top: 25px;
+}
+.review-title {
+
   margin-left: 15px;
   font-size: 20px;
   font-weight: bold;
@@ -541,7 +543,6 @@ button.prev:hover, button.next:hover {
   overflow-x: hidden; /* 스크롤바를 숨깁니다 */
   scroll-behavior: smooth; /* 스크롤을 부드럽게 이동 */
   -webkit-overflow-scrolling: touch; /* 터치스크린에서 부드러운 스크롤 */
-
 }
 
 .review-contents-wrapper {
@@ -577,7 +578,46 @@ button.prev:hover, button.next:hover {
   height: 100px;
   background-color:white;
 }
+.review-star{
+  margin-top: 5px;
+  margin-left: 10px;
+  margin-bottom: 16px;
+}
+.review-star-rating{
+  font-size: 20px;
+  margin-top : 24px;
+  margin-left : 5px;
+  font-weight: bold;
+}
+.review-star-gold{
+  margin-top: 17px;
+  margin-left: 10px;
+  color: gold;
+  font-size: 30px;
+}
+.review-star-count{
+  font-size: 15px;
+  color: gray;
+}
 
+.review-open-button{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 350px;
+  display: flex;
+  background-color:#414141;
+  border: none; 
+  border-radius: 22px; 
+  padding: 8px 13px;
+  color: #fff; 
+  font-size: 16px;
+  cursor: pointer; 
+  transition: background-color 0.3s; 
+}
+
+.review-open-button:hover {
+  background-color: #b0b0b0; 
+}
   /*///////////////////////////////////////////////////////////////////SignUpCss////////////////////////////////////////////////////////////////////////////////*/
   .signUpText {
     color: white;

@@ -167,7 +167,8 @@ const StarRating = ({ rating,reviewLength }) => {
       const [storeMenuList,setStoreMenuList] = useState([]);
       const limitedStoreMenuList = storeMenuList.slice(0, 5);
       const reviewContentsRef = useRef(null); 
-
+      const [roundedRating,setRoundedRating] = useState();
+      
       useEffect(() => {
       const fetchReviews = async () => {
           try {
@@ -191,6 +192,7 @@ const StarRating = ({ rating,reviewLength }) => {
                   const response = await axios.get(URL_VARIABLE + "stores/" + id);
                   setStoreContents(response.data);
                   setStoreMenuList(response.data.storeMenuDtoList);
+                  setRoundedRating(response.data.starRate.toFixed(1));
               } catch (error) {
                   console.error(error);
               }
@@ -300,18 +302,22 @@ const handleScrollRight = () => {
           <div className='container-space'></div>
             <div>
             <div className='review'>
-                        <p className='review-title'>리뷰</p>
-                 
+                        <p className='review-title-contents'><span className='review-title'>리뷰</span><br></br>
+                        <span className="review-star-gold">★</span><span className="review-star-rating">{roundedRating} </span><span className="review-star-count">({reviews.length})</span>
+                        </p>
+                        <p className='review-star'></p>
                             <div className='review-contents' ref={reviewContentsRef}>
                                 <button className="arrow-button left" onClick={handleScrollLeft}>❮</button>
                                 {reviews.length > 0 ? reviews.map(review => <StoreReview key={review.reviewId} reviewData={review} />) : (<p>리뷰가 없습니다</p>)}
                                 <button className="arrow-button right" onClick={handleScrollRight}>❯</button>
        
                         </div>
-                        
+                        <button className = 'review-open-button'>리뷰전체보기</button>
                     </div>
 
-                    <div className='review-button'></div>
+               
+ 
+                
                 </div>
      
         </div>
