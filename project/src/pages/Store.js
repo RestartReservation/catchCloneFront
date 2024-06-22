@@ -9,7 +9,7 @@
   import StoreMenu from './export/StoreMenu';
   import Tab from './export/Tab'
   import StoreReview from './export/StoreReview'
-
+  import ReviewBar from './export/ReviewBar'
 
   const ReservationTimes = ({reservationInfo}) => {
     return(<button> 시간: {reservationInfo.timeInfo} </button>)
@@ -168,6 +168,8 @@ const StarRating = ({ rating,reviewLength }) => {
       const limitedStoreMenuList = storeMenuList.slice(0, 5);
       const reviewContentsRef = useRef(null); 
       const [roundedRating,setRoundedRating] = useState();
+      const backImage = '/back.png';
+
       
       useEffect(() => {
       const fetchReviews = async () => {
@@ -214,7 +216,6 @@ const StarRating = ({ rating,reviewLength }) => {
         'https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/201702/27/117f5b49-1d09-4550-8ab7-87c0d82614de.jpg', 
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRJyX-QgEmUkuqutcLsUS8dQXg_eE9mzSoxA&s'   
     ];
-
 
 
   const handleTabClick = (tabName) => {
@@ -312,7 +313,7 @@ const handleScrollRight = () => {
                                 <button className="arrow-button right" onClick={handleScrollRight}>❯</button>
        
                         </div>
-                        <button className = 'review-open-button'>리뷰전체보기</button>
+                        <button className ='review-open-button' onClick={() => handleTabClick('review')} active={activeTab === 'review'} >리뷰전체보기</button>
                     </div>
 
                
@@ -324,6 +325,10 @@ const handleScrollRight = () => {
             )}
             {activeTab === 'reservation' && (
               <div className= 'navtab-contents-page'>
+                      <div className= 'store-home'>
+                      <div className="store-home-back-img" style={{ backgroundImage: `url(${backImage})` }} onClick={() => handleTabClick('home')} active={activeTab === 'home'} ></div>
+                       <span className = "store-home-name">{storeContents.storeName}</span>
+                      </div>
                 <div className='navtab-container-page'>
                   <Tab label="홈" onClick={() => handleTabClick('home')} active={activeTab === 'home'} />
                   <Tab label="예약" onClick={() => handleTabClick('reservation')} active={activeTab === 'reservation'} />
@@ -339,6 +344,10 @@ const handleScrollRight = () => {
             )}
             {activeTab === 'pictures' && (
               <div className= 'navtab-contents-page'>
+                      <div className= 'store-home'>
+                      <div className="store-home-back-img" style={{ backgroundImage: `url(${backImage})` }} onClick={() => handleTabClick('home')} active={activeTab === 'home'} ></div>
+                       <span className = "store-home-name">{storeContents.storeName}</span>
+                      </div>
                 <div className='navtab-container-page'>
                   <Tab label="홈" onClick={() => handleTabClick('home')} active={activeTab === 'home'} />
                   <Tab label="예약" onClick={() => handleTabClick('reservation')} active={activeTab === 'reservation'} />
@@ -349,13 +358,29 @@ const handleScrollRight = () => {
             )}
             {activeTab === 'review' && (
               <div className= 'navtab-contents-page'>
+                    <div className= 'store-home'>
+                      <div className="store-home-back-img" style={{ backgroundImage: `url(${backImage})` }} onClick={() => handleTabClick('home')} active={activeTab === 'home'} ></div>
+                       <span className = "store-home-name">{storeContents.storeName}</span>
+                      </div>
                 <div className='navtab-container-page'>
                   <Tab label="홈" onClick={() => handleTabClick('home')} active={activeTab === 'home'} />
                   <Tab label="예약" onClick={() => handleTabClick('reservation')} active={activeTab === 'reservation'} />
                   <Tab label="사진" onClick={() => handleTabClick('pictures')} active={activeTab === 'pictures'} />
                   <Tab label="리뷰" onClick={() => handleTabClick('review')} active={activeTab === 'review'} count={reviews.length} /> 
                 </div>
-            </div>
+
+        <div className='review-bar-div'>
+          <div className='review-bar-star'>
+            <p>
+              <span className='review-bar-star-color'>★</span>
+              <br></br>
+                <span className='review-bar-star-rating'>{roundedRating}</span>
+          </p>
+          </div>
+          <ReviewBar reviews = {reviews}  reviewCount={reviews.length}/>
+          </div>
+          <div className='container-space-thin'></div>
+                    </div>
             )}
 
 

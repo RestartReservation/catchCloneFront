@@ -210,7 +210,11 @@ html, body {
   box-shadow: 0px 0px 10px black;
   position: relative; /* Position 설정 추가 */
 }
-
+.store-home{
+  margin-top: 5px;
+  display: flex;
+  flex-direction: row;
+}
 .store-contents{
   width: 500px;
   height: 300px;
@@ -225,6 +229,19 @@ html, body {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+}
+.store-home-back-img{
+  width: 38px; 
+  height: 40px;
+  background-position: center; 
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 3px;
+}
+.store-home-name{
+  margin-top :5px;
+  font-size: 20px;
+  font-weight: 500;
 }
 
 .store-contents p{
@@ -344,6 +361,11 @@ button.prev:hover, button.next:hover {
   height: 12px;
   background-color: rgba(199, 199, 199, 0.945);
 
+}
+.container-space-thin{
+  width: 500px;
+  height: 1px;
+  background-color: rgba(199, 199, 199, 0.945);
 }
 .div-space-long{
   width: 500px;
@@ -617,6 +639,27 @@ button.prev:hover, button.next:hover {
 
 .review-open-button:hover {
   background-color: #b0b0b0; 
+}
+.review-bar-div{
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+
+}
+.review-bar-star{
+  width: 190px;
+  height: 145px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.review-bar-star-color{
+  font-size: 30px;
+  color: gold;
+}
+.review-bar-star-rating{
+  font-size: 23px;
+  font-weight: bold;
 }
   /*///////////////////////////////////////////////////////////////////SignUpCss////////////////////////////////////////////////////////////////////////////////*/
   .signUpText {
