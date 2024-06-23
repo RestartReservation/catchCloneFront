@@ -261,7 +261,7 @@ const handleScrollRight = () => {
 
             <div className='navtab-container'>
             <Tab label="홈" onClick={() => handleTabClick('home')} active={activeTab === 'home'} />
-            <Tab label="예약" onClick={() => handleTabClick('reservation')} active={activeTab === 'reservation'} />
+            <Tab label="메뉴" onClick={() => handleTabClick('menu')} active={activeTab === 'menu'} />
             <Tab label="사진" onClick={() => handleTabClick('pictures')} active={activeTab === 'pictures'} />
             <Tab label="리뷰" onClick={() => handleTabClick('review')} active={activeTab === 'review'} count={reviews.length} /> 
             </div>
@@ -274,21 +274,13 @@ const handleScrollRight = () => {
                 </div>
               )
               }
-              {activeTab === 'reservation' && (
-                <div className='navtab-contents-reservation'>
-                    <p className='navtab-contents-title'>예약</p>
-                    <ReservationDateSelect storeId={id} />
-                    <Link to = {`/reservations/${id}`}><button className='reservation-button'>예약</button></Link > 
-                </div>
-              )
-              }
-              {activeTab === 'menu' && (
-                <div className='navtab-contents-menu'>
-                    <p className='navtab-contents-title'>메뉴</p>
-                  
-                </div>
-              )
-              }
+
+            </div>
+            <div className='container-space'></div>
+            <div className='store-reservation'>
+            <p className='store-reservation-title'>예약</p>
+                  <ReservationDateSelect storeId={id} />
+                  <Link to = {`/reservations/${id}`}><button className='reservation-button'>예약</button></Link > 
             </div>
             <div className='container-space'></div>
             <div className='menu'>
@@ -323,7 +315,9 @@ const handleScrollRight = () => {
      
         </div>
             )}
-            {activeTab === 'reservation' && (
+
+
+            {activeTab === 'menu' && (
               <div className= 'navtab-contents-page'>
                       <div className= 'store-home'>
                       <div className="store-home-back-img" style={{ backgroundImage: `url(${backImage})` }} onClick={() => handleTabClick('home')} active={activeTab === 'home'} ></div>
@@ -331,7 +325,7 @@ const handleScrollRight = () => {
                       </div>
                 <div className='navtab-container-page'>
                   <Tab label="홈" onClick={() => handleTabClick('home')} active={activeTab === 'home'} />
-                  <Tab label="예약" onClick={() => handleTabClick('reservation')} active={activeTab === 'reservation'} />
+                  <Tab label="메뉴" onClick={() => handleTabClick('menu')} active={activeTab === 'menu'} />
                   <Tab label="사진" onClick={() => handleTabClick('pictures')} active={activeTab === 'pictures'} />
                   <Tab label="리뷰" onClick={() => handleTabClick('review')} active={activeTab === 'review'} count={reviews.length} /> 
                 </div>
@@ -342,6 +336,8 @@ const handleScrollRight = () => {
               </div>
             </div>
             )}
+
+
             {activeTab === 'pictures' && (
               <div className= 'navtab-contents-page'>
                       <div className= 'store-home'>
@@ -350,12 +346,14 @@ const handleScrollRight = () => {
                       </div>
                 <div className='navtab-container-page'>
                   <Tab label="홈" onClick={() => handleTabClick('home')} active={activeTab === 'home'} />
-                  <Tab label="예약" onClick={() => handleTabClick('reservation')} active={activeTab === 'reservation'} />
+                  <Tab label="메뉴" onClick={() => handleTabClick('menu')} active={activeTab === 'menu'} />
                   <Tab label="사진" onClick={() => handleTabClick('pictures')} active={activeTab === 'pictures'} />
                   <Tab label="리뷰" onClick={() => handleTabClick('review')} active={activeTab === 'review'} count={reviews.length} /> 
                 </div>
             </div>
             )}
+
+
             {activeTab === 'review' && (
               <div className= 'navtab-contents-page'>
                     <div className= 'store-home'>
@@ -364,7 +362,7 @@ const handleScrollRight = () => {
                       </div>
                 <div className='navtab-container-page'>
                   <Tab label="홈" onClick={() => handleTabClick('home')} active={activeTab === 'home'} />
-                  <Tab label="예약" onClick={() => handleTabClick('reservation')} active={activeTab === 'reservation'} />
+                  <Tab label="메뉴" onClick={() => handleTabClick('menu')} active={activeTab === 'menu'} />
                   <Tab label="사진" onClick={() => handleTabClick('pictures')} active={activeTab === 'pictures'} />
                   <Tab label="리뷰" onClick={() => handleTabClick('review')} active={activeTab === 'review'} count={reviews.length} /> 
                 </div>
