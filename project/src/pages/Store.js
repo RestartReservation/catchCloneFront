@@ -174,9 +174,10 @@ const StarRating = ({ rating,reviewLength }) => {
       useEffect(() => {
       const fetchReviews = async () => {
           try {
-              const response = await axios.get(URL_VARIABLE + "reviews/stores/" + id);
+            //임시 리뷰 총 갯수 조회, 페이지 번호 수정 필요
+              const response = await axios.get(URL_VARIABLE + "reviews/stores/" + id + `?page=${0}&size=15`);
               console.log(response);
-              setReviews(response.data);
+              setReviews(response.data.content);
           } catch (error) {
               console.error(error);
           }
