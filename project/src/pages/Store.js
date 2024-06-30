@@ -141,7 +141,7 @@
 
 const StarRating = ({ rating,reviewLength }) => {
   const totalStars = 5;
-  const filledStars = Math.round(rating);
+  const filledStars = Math.round(rating * 100) / 100;
   const stars = [];
 
   for (let i = 1; i <= totalStars; i++) {
@@ -152,7 +152,7 @@ const StarRating = ({ rating,reviewLength }) => {
       }
   }
 
-  return <div className="star-rating">{stars} <p className='review-counting'>{reviewLength}개 리뷰 </p>  </div>;
+  return <div className="star-rating">{stars}<p className='start-rating-number'>{filledStars}</p> <p className='review-counting'>{reviewLength}개 리뷰 </p>  </div>;
 };
 
 
