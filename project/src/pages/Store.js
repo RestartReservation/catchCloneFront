@@ -169,15 +169,16 @@ const StarRating = ({ rating,reviewLength }) => {
       const reviewContentsRef = useRef(null); 
       const [roundedRating,setRoundedRating] = useState();
       const backImage = '/back.png';
-
+      const [totalReviewSize,setTotalReviewSize] = useState();
       
       useEffect(() => {
       const fetchReviews = async () => {
           try {
             //임시 리뷰 총 갯수 조회, 페이지 번호 수정 필요
-              const response = await axios.get(URL_VARIABLE + "reviews/stores/" + id + `?page=${0}&size=15`);
+              const response = await axios.get(URL_VARIABLE + "reviews/stores/" + id + `?page=${0}&size=5`);
               console.log(response);
               setReviews(response.data.content);
+              setTotalReviewSize(response.data.totalElements);
           } catch (error) {
               console.error(error);
           }
@@ -193,6 +194,8 @@ const StarRating = ({ rating,reviewLength }) => {
           const fetchStore = async () => {
               try {
                   const response = await axios.get(URL_VARIABLE + "stores/" + id);
+                  console.log('스토어');
+                  console.log(response);
                   setStoreContents(response.data);
                   setStoreMenuList(response.data.storeMenuDtoList);
                   setRoundedRating(response.data.starRate.toFixed(1));
@@ -252,7 +255,7 @@ const handleScrollRight = () => {
               {storeContents && (
                 <div className="store-contents">
                   <p className='store-contents-storename'>{storeContents.storeName}</p>
-                  <StarRating rating={storeContents.starRate} reviewLength={reviews.length} />
+                  <StarRating rating={storeContents.starRate} reviewLength={totalReviewSize} />
                   <p>{storeContents.aboutStore}</p>
                 
                 </div>
@@ -264,7 +267,7 @@ const handleScrollRight = () => {
             <Tab label="홈" onClick={() => handleTabClick('home')} active={activeTab === 'home'} />
             <Tab label="메뉴" onClick={() => handleTabClick('menu')} active={activeTab === 'menu'} />
             <Tab label="사진" onClick={() => handleTabClick('pictures')} active={activeTab === 'pictures'} />
-            <Tab label="리뷰" onClick={() => handleTabClick('review')} active={activeTab === 'review'} count={reviews.length} /> 
+            <Tab label="리뷰" onClick={() => handleTabClick('review')} active={activeTab === 'review'} count={totalReviewSize} /> 
             </div>
 
             <div className='navtab-contents'>
@@ -297,7 +300,7 @@ const handleScrollRight = () => {
             <div>
             <div className='review'>
                         <p className='review-title-contents'><span className='review-title'>리뷰</span><br></br>
-                        <span className="review-star-gold">★</span><span className="review-star-rating">{roundedRating} </span><span className="review-star-count">({reviews.length})</span>
+                        <span className="review-star-gold">★</span><span className="review-star-rating">{roundedRating} </span><span className="review-star-count">({totalReviewSize})</span>
                         </p>
                         <p className='review-star'></p>
                             <div className='review-contents' ref={reviewContentsRef}>
@@ -328,7 +331,7 @@ const handleScrollRight = () => {
                   <Tab label="홈" onClick={() => handleTabClick('home')} active={activeTab === 'home'} />
                   <Tab label="메뉴" onClick={() => handleTabClick('menu')} active={activeTab === 'menu'} />
                   <Tab label="사진" onClick={() => handleTabClick('pictures')} active={activeTab === 'pictures'} />
-                  <Tab label="리뷰" onClick={() => handleTabClick('review')} active={activeTab === 'review'} count={reviews.length} /> 
+                  <Tab label="리뷰" onClick={() => handleTabClick('review')} active={activeTab === 'review'} count={totalReviewSize} /> 
                 </div>
                 <div className='navtab-contents-reservation'>
                   <p className='navtab-contents-title'>예약</p>
@@ -349,7 +352,7 @@ const handleScrollRight = () => {
                   <Tab label="홈" onClick={() => handleTabClick('home')} active={activeTab === 'home'} />
                   <Tab label="메뉴" onClick={() => handleTabClick('menu')} active={activeTab === 'menu'} />
                   <Tab label="사진" onClick={() => handleTabClick('pictures')} active={activeTab === 'pictures'} />
-                  <Tab label="리뷰" onClick={() => handleTabClick('review')} active={activeTab === 'review'} count={reviews.length} /> 
+                  <Tab label="리뷰" onClick={() => handleTabClick('review')} active={activeTab === 'review'} count={totalReviewSize} /> 
                 </div>
             </div>
             )}
@@ -365,7 +368,7 @@ const handleScrollRight = () => {
                   <Tab label="홈" onClick={() => handleTabClick('home')} active={activeTab === 'home'} />
                   <Tab label="메뉴" onClick={() => handleTabClick('menu')} active={activeTab === 'menu'} />
                   <Tab label="사진" onClick={() => handleTabClick('pictures')} active={activeTab === 'pictures'} />
-                  <Tab label="리뷰" onClick={() => handleTabClick('review')} active={activeTab === 'review'} count={reviews.length} /> 
+                  <Tab label="리뷰" onClick={() => handleTabClick('review')} active={activeTab === 'review'} count={totalReviewSize} /> 
                 </div>
 
         <div className='review-bar-div'>
@@ -376,7 +379,7 @@ const handleScrollRight = () => {
                 <span className='review-bar-star-rating'>{roundedRating}</span>
           </p>
           </div>
-          <ReviewBar reviews = {reviews}  reviewCount={reviews.length}/>
+          <ReviewBar reviews = {reviews}  reviewCount={totalReviewSize}/>
           </div>
           <div className='container-space-thin'></div>
                     </div>
