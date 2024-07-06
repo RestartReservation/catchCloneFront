@@ -10,6 +10,7 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+  
 }
 
 /*/////////////////////////////////////////////////////////////// 네비바 css //////////////////////////////////////////////////////////*/
@@ -397,7 +398,7 @@ button.prev:hover, button.next:hover {
   height: 100vh;
   box-sizing: border-box;
   background-color: white;
-  overflow: auto;
+  overflow: hidden; 
 }
 .navtab-contents-home{
   margin-top: 25px;
@@ -692,6 +693,19 @@ button.prev:hover, button.next:hover {
   font-size: 23px;
   font-weight: bold;
 }
+  
+.navtab-contents-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.reviews-container {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+
   /*///////////////////////////////////////////////////////////////////SignUpCss////////////////////////////////////////////////////////////////////////////////*/
   .signUpText {
     color: white;
@@ -706,5 +720,4 @@ button.prev:hover, button.next:hover {
   .signUpSpace {
     margin-top: 50px;
   }
-  
 

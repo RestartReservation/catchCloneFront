@@ -2,14 +2,16 @@
   import {useParams,Link} from "react-router-dom";
   import axios from 'axios';
   import { URL_VARIABLE } from "./export/ExportUrl"; 
-  import './css/style.css';
   import DatePicker from 'react-datepicker';
   import 'react-datepicker/dist/react-datepicker.css';
   import { TextField, Dialog, DialogTitle, DialogContent } from '@mui/material';
+
   import StoreMenu from './export/StoreMenu';
   import Tab from './export/Tab'
   import StoreReview from './export/StoreReview'
   import ReviewBar from './export/ReviewBar'
+  import ReviewScroll from './export/ReviewScroll';
+  import './css/style.css';
 
   const ReservationTimes = ({reservationInfo}) => {
     return(<button> 시간: {reservationInfo.timeInfo} </button>)
@@ -382,7 +384,8 @@ const handleScrollRight = () => {
           <ReviewBar reviews = {reviews}  reviewCount={totalReviewSize}/>
           </div>
           <div className='container-space-thin'></div>
-                    </div>
+          {reviews.length > 0 ? reviews.map(review => <ReviewScroll key={review.reviewId} reviewData={review} />) : (<p>리뷰가 없습니다</p>)}
+        </div>
             )}
 
 
