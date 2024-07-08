@@ -172,23 +172,70 @@ const StarRating = ({ rating,reviewLength }) => {
       const [roundedRating,setRoundedRating] = useState();
       const backImage = '/back.png';
       const [totalReviewSize,setTotalReviewSize] = useState();
-      
+      const [reviewPage, setReviewPage] = useState(0);
+      const [totalReviewPage, setTotalReviewPage] = useState({total : 0});
+      const [sortedReviews, setSortedReviews] = useState([]);
+
       useEffect(() => {
-      const fetchReviews = async () => {
-          try {
-            //임시 리뷰 총 갯수 조회, 페이지 번호 수정 필요
-              const response = await axios.get(URL_VARIABLE + "reviews/stores/" + id + `?page=${0}&size=5`);
-              console.log(response);
-              setReviews(response.data.content);
-              setTotalReviewSize(response.data.totalElements);
-          } catch (error) {
-              console.error(error);
-          }
+          const sorted = [...reviews].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+          setSortedReviews(sorted);
+      }, [reviews]);
+  
+      useEffect(() => {
+        fetchReview();
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, [reviewPage]);
+
+      const handleScroll = () => {
+        if (
+          window.innerHeight + document.documentElement.scrollTop >=
+          document.documentElement.offsetHeight 
+        ) {
+          loadMoreReviewData();
+        }
       };
 
-      fetchReviews();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); 
+      const loadMoreReviewData = () => {
+        if (reviewPage < totalReviewPage.total - 1) {
+          setReviewPage(reviewPage + 1);
+        }
+      };
+    
+      const fetchReview = async () => {
+        const response = await fetch(URL_VARIABLE + "reviews/stores/" + id + `?page=${reviewPage}&size=5`);
+        const newData = await response.json();
+        console.log(newData);
+        setReviews((prevData) => [...prevData, ...newData.content]);
+        setTotalReviewSize(newData.totalElements);
+        setTotalReviewPage((prevState) => {
+          prevState.total = newData.totalPages;
+          return prevState;
+        });
+      };
+
+  //     useEffect(() => {
+  //     const fetchReviews = async () => {
+  //         try {
+  //           // //임시 리뷰 총 갯수 조회, 페이지 번호 수정 필요
+  //           //   const response = await axios.get(URL_VARIABLE + "reviews/stores/" + id + `?page=${reviewPage}&size=5`);
+  //           //   console.log(response);
+  //           //   setReviews(response.data.content);
+  //           //   setTotalReviewSize(response.data.totalElements);
+  //           //   setTotalReviewPage((prevState) => {
+  //           //     prevState.total = response.data.totalPages;
+  //           //     return prevState;
+  //           //   });
+  //           fetchReview();
+  //         } catch (error) {
+  //             console.error(error);
+  //         }
+  //     };
+
+  //     fetchReviews();
+  //     // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []); 
   
 
 
@@ -307,7 +354,7 @@ const handleScrollRight = () => {
                         <p className='review-star'></p>
                             <div className='review-contents' ref={reviewContentsRef}>
                                 <button className="arrow-button left" onClick={handleScrollLeft}>❮</button>
-                                {reviews.length > 0 ? reviews.map(review => <StoreReview key={review.reviewId} reviewData={review} />) : (<p>리뷰가 없습니다</p>)}
+                                {sortedReviews.length > 0 ? sortedReviews.map(review => <StoreReview key={review.reviewId} reviewData={review} />) : (<p>리뷰가 없습니다</p>)}
                                 <button className="arrow-button right" onClick={handleScrollRight}>❯</button>
        
                         </div>
@@ -384,7 +431,7 @@ const handleScrollRight = () => {
           <ReviewBar reviews = {reviews}  reviewCount={totalReviewSize}/>
           </div>
           <div className='container-space-thin'></div>
-          {reviews.length > 0 ? reviews.map(review => <ReviewScroll key={review.reviewId} reviewData={review} />) : (<p>리뷰가 없습니다</p>)}
+          {sortedReviews.length > 0 ? sortedReviews.map(review => <ReviewScroll key={review.reviewId} reviewData={review} />) : (<p>리뷰가 없습니다</p>)}
         </div>
             )}
 
