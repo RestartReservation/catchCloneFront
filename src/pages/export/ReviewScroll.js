@@ -1,8 +1,9 @@
 import React, { useState, useRef } from 'react';
-import { Link } from "react-router-dom";
+import axios from 'axios';
+import { URL_VARIABLE } from "./ExportUrl"; 
 import '../css/ReviewScroll.css';
 
-//남은 작업 : 무한스크롤 구현, 댓글버튼, 좋아요 버튼 구현, 신고버튼 구현    
+//남은 작업 : 댓글버튼, 신고버튼 구현    
 
 
 const ReviewImage = ({ reviewUrl }) => {
@@ -13,14 +14,17 @@ const ReviewImage = ({ reviewUrl }) => {
 
 const ReviewScroll = ({ reviewData }) => {
     const userProfileUrl = reviewData.userProfileUrl ? reviewData.userProfileUrl : '/sign-icon.jpg';
+    const upIcon = '/up.png'
+    const downIcon = '/down.png'
+    const [heartIcon,setHeartIcon] = useState(reviewData.isLiked ? '/heart-full-1.png' : '/heart-empty.png');
+
     const roundedRating = reviewData.totalRating.toFixed(1);
     const formattedDate = new Date(reviewData.createdAt).toISOString().split('T')[0];
     const [reviewPictures] = useState(reviewData.reviewPictures);
+    const [reviewLikeCount,setReviewLikeCount] = useState(reviewData.likeCount);
+
     const scrollContainerRef = useRef(null);
-    const upIcon = '/up.png'
-    const downIcon = '/down.png'
     const [ratingDetail, setRatingDetail] = useState('up');
-  
 
     const handleRatingDetail = (ratingDetail) => {
         setRatingDetail(ratingDetail);
@@ -40,6 +44,31 @@ const ReviewScroll = ({ reviewData }) => {
             behavior: 'smooth'
         });
     };
+
+    const handleLikeClick = async () => {
+        const jwtToken = localStorage.getItem('jwtToken');
+    
+        if (jwtToken === null) {
+            alert("로그인 해 주세요");
+            return;
+        } else {
+            try {
+                await axios.post(URL_VARIABLE + `likes/reviews/` + reviewData.reviewId, {}, {
+                    headers: { Authorization: `${jwtToken}` }
+                });
+                if(heartIcon === '/heart-empty.png'){
+                    setHeartIcon('/heart-full-1.png');
+                    setReviewLikeCount(reviewLikeCount + 1);
+                }
+                else{
+                    setHeartIcon('/heart-empty.png');
+                    setReviewLikeCount(reviewLikeCount - 1);
+                }
+            } catch (error) {
+                console.error('API 호출 에러:', error);
+            }
+        }
+    }
 
     return (
         <div className='review-scroll-space'>
@@ -79,6 +108,10 @@ const ReviewScroll = ({ reviewData }) => {
             </div>
             <div className='review-scroll-review-contents'>
                 <p className='review-scroll-review-contents-p'>{reviewData.reviewContent}</p>
+            </div>
+            <div className='review-scroll-review-interaction-contents'>
+                <img className={`review-scroll-review-like-image ${reviewData.isLiked ? '-like-review' : ''}`}  src={heartIcon} alt='Like Icon' onClick={handleLikeClick}/>
+                <span className='review-scroll-review-like-count'>{reviewLikeCount}</span>
             </div>
         </div>
     );

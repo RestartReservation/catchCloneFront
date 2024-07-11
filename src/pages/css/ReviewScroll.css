@@ -165,4 +165,27 @@
     font-size: 11px;
     color: gray;
 }
-
+.review-scroll-review-interaction-contents{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.review-scroll-review-like-image,
+.review-scroll-review-like-image-like-review{
+    width: 21px; 
+    height: 21px;
+    border-radius: 50%; 
+    background-size: cover; 
+    background-position: center; 
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+.review-scroll-review-like-image:hover {
+    background-image: url('../../../public/heart-full-1.png'); 
+}
+.review-scroll-review-like-count {
+    font-size: 14px;
+    color: gray;
+    margin-bottom: 10px;
+    margin-left: 3px;
+}

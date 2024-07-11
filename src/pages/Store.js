@@ -354,7 +354,7 @@ const handleScrollRight = () => {
                         <p className='review-star'></p>
                             <div className='review-contents' ref={reviewContentsRef}>
                                 <button className="arrow-button left" onClick={handleScrollLeft}>❮</button>
-                                {sortedReviews.length > 0 ? sortedReviews.map(review => <StoreReview key={review.reviewId} reviewData={review} />) : (<p>리뷰가 없습니다</p>)}
+                                {sortedReviews.length > 0 ? sortedReviews.map(review => <StoreReview  reviewData={review} />) : (<p>리뷰가 없습니다</p>)}
                                 <button className="arrow-button right" onClick={handleScrollRight}>❯</button>
        
                         </div>
@@ -431,7 +431,7 @@ const handleScrollRight = () => {
           <ReviewBar reviews = {reviews}  reviewCount={totalReviewSize}/>
           </div>
           <div className='container-space-thin'></div>
-          {sortedReviews.length > 0 ? sortedReviews.map(review => <ReviewScroll key={review.reviewId} reviewData={review} />) : (<p>리뷰가 없습니다</p>)}
+          {sortedReviews.length > 0 ? sortedReviews.map(review => <ReviewScroll reviewData={review} />) : (<p>리뷰가 없습니다</p>)}
         </div>
             )}
 
