@@ -17,6 +17,8 @@ const ReviewScroll = ({ reviewData }) => {
     const upIcon = '/up.png'
     const downIcon = '/down.png'
     const [heartIcon,setHeartIcon] = useState(reviewData.isLiked ? '/heart-full-1.png' : '/heart-empty.png');
+    const bellIcon = '/bell.png'
+    const commentIcon = '/comment.png'
 
     const roundedRating = reviewData.totalRating.toFixed(1);
     const formattedDate = new Date(reviewData.createdAt).toISOString().split('T')[0];
@@ -112,6 +114,8 @@ const ReviewScroll = ({ reviewData }) => {
             <div className='review-scroll-review-interaction-contents'>
                 <img className={`review-scroll-review-like-image ${reviewData.isLiked ? '-like-review' : ''}`}  src={heartIcon} alt='Like Icon' onClick={handleLikeClick}/>
                 <span className='review-scroll-review-like-count'>{reviewLikeCount}</span>
+                <img className='review-scroll-review-comment'  src={commentIcon} alt='Comment Icon'/>
+                <img className='review-scroll-review-declaration'  src={bellIcon} alt='Declaration Icon'/>
             </div>
         </div>
     );
