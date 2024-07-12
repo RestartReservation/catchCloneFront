@@ -3,7 +3,7 @@ import axios from 'axios';
 import { URL_VARIABLE } from "./ExportUrl"; 
 import '../css/ReviewScroll.css';
 
-//남은 작업 : 댓글버튼, 신고버튼 구현    
+//남은 작업 : api추가
 
 
 const ReviewImage = ({ reviewUrl }) => {
@@ -24,6 +24,7 @@ const ReviewScroll = ({ reviewData }) => {
     const formattedDate = new Date(reviewData.createdAt).toISOString().split('T')[0];
     const [reviewPictures] = useState(reviewData.reviewPictures);
     const [reviewLikeCount,setReviewLikeCount] = useState(reviewData.likeCount);
+    const commentCount = reviewData.commentCount;
 
     const scrollContainerRef = useRef(null);
     const [ratingDetail, setRatingDetail] = useState('up');
@@ -115,6 +116,7 @@ const ReviewScroll = ({ reviewData }) => {
                 <img className={`review-scroll-review-like-image ${reviewData.isLiked ? '-like-review' : ''}`}  src={heartIcon} alt='Like Icon' onClick={handleLikeClick}/>
                 <span className='review-scroll-review-like-count'>{reviewLikeCount}</span>
                 <img className='review-scroll-review-comment'  src={commentIcon} alt='Comment Icon'/>
+                <span className='review-scroll-review-comment-count'>{commentCount}</span>
                 <img className='review-scroll-review-declaration'  src={bellIcon} alt='Declaration Icon'/>
             </div>
         </div>
