@@ -104,7 +104,7 @@ const ReviewScroll = ({ reviewData }) => {
                     }  
             <div className='review-scroll-review-image-container'>
                 <div className='review-scroll-review-image-div' ref={scrollContainerRef}>
-                    {reviewPictures.length > 0 ? reviewPictures.map(reviewPictureUrl => <ReviewImage key={reviewPictureUrl.reviewPictureUrl} reviewUrl={reviewPictureUrl} />) : (<p>사진이 없습니다</p>)}
+                {reviewPictures.length > 0 ? reviewPictures.map((reviewPictureUrl, index) => (<ReviewImage key={`${reviewPictureUrl.reviewPictureUrl}-${index}`} reviewUrl={reviewPictureUrl} /> )) : (<p>사진이 없습니다</p>)}
                 </div>
                 <button onClick={scrollLeft} className='scroll-arrow left'>&lt;</button>
                 <button onClick={scrollRight} className='scroll-arrow right'>&gt;</button>

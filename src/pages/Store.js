@@ -163,6 +163,7 @@ const StarRating = ({ rating,reviewLength }) => {
       const { id } = useParams(); 
       const [storeContents,setStoreContents] = useState();
       const [reviews, setReviews] = useState([]);
+      const [mainReviews, setMainReviews] = useState([]);
       const [currentImageIndex, setCurrentImageIndex] = useState(0);
       const [activeTab, setActiveTab] = useState('home');
       const [todayReservation,setTodayReservation] = useState([]);
@@ -177,37 +178,36 @@ const StarRating = ({ rating,reviewLength }) => {
       const [sortedReviews, setSortedReviews] = useState([]);
 
       useEffect(() => {
-          const sorted = [...reviews].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-          setSortedReviews(sorted);
+        const sorted = [...reviews].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        setSortedReviews(sorted);
       }, [reviews]);
-  
+    
       useEffect(() => {
         fetchReview();
+        const handleScroll = () => {
+          if (
+            window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 75
+          ) {
+            loadMoreReviewData();
+          }
+        };
+    
         window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [reviewPage]);
-
-      const handleScroll = () => {
-        if (
-          window.innerHeight + document.documentElement.scrollTop >=
-          document.documentElement.offsetHeight 
-        ) {
-          loadMoreReviewData();
-        }
-      };
-
+    
       const loadMoreReviewData = () => {
         if (reviewPage < totalReviewPage.total - 1) {
-          setReviewPage(reviewPage + 1);
+          setReviewPage(prevPage => prevPage + 1);
         }
       };
+    
     
       const fetchReview = async () => {
         const response = await fetch(URL_VARIABLE + "reviews/stores/" + id + `?page=${reviewPage}&size=5`);
         const newData = await response.json();
         console.log(newData);
-        setReviews((prevData) => [...prevData, ...newData.content]);
+        setReviews(prevData => [...prevData, ...newData.content]);
         setTotalReviewSize(newData.totalElements);
         setTotalReviewPage((prevState) => {
           prevState.total = newData.totalPages;
@@ -215,27 +215,20 @@ const StarRating = ({ rating,reviewLength }) => {
         });
       };
 
-  //     useEffect(() => {
-  //     const fetchReviews = async () => {
-  //         try {
-  //           // //임시 리뷰 총 갯수 조회, 페이지 번호 수정 필요
-  //           //   const response = await axios.get(URL_VARIABLE + "reviews/stores/" + id + `?page=${reviewPage}&size=5`);
-  //           //   console.log(response);
-  //           //   setReviews(response.data.content);
-  //           //   setTotalReviewSize(response.data.totalElements);
-  //           //   setTotalReviewPage((prevState) => {
-  //           //     prevState.total = response.data.totalPages;
-  //           //     return prevState;
-  //           //   });
-  //           fetchReview();
-  //         } catch (error) {
-  //             console.error(error);
-  //         }
-  //     };
+      useEffect(() => {
+      const fetchMainReviews = async () => {
+          try {
+              const response = await axios.get(URL_VARIABLE + "reviews/stores/" + id + `?page=${0}&size=5`);
+              console.log(response);
+              setMainReviews(response.data.content);
+          } catch (error) {
+              console.error(error);
+          }
+      };
 
-  //     fetchReviews();
-  //     // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []); 
+      fetchMainReviews();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); 
   
 
 
@@ -354,7 +347,7 @@ const handleScrollRight = () => {
                         <p className='review-star'></p>
                             <div className='review-contents' ref={reviewContentsRef}>
                                 <button className="arrow-button left" onClick={handleScrollLeft}>❮</button>
-                                {sortedReviews.length > 0 ? sortedReviews.map(review => <StoreReview  reviewData={review} />) : (<p>리뷰가 없습니다</p>)}
+                                {mainReviews.length > 0 ? mainReviews.map(review => <StoreReview  reviewData={review} />) : (<p>리뷰가 없습니다</p>)}
                                 <button className="arrow-button right" onClick={handleScrollRight}>❯</button>
        
                         </div>
