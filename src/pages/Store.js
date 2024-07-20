@@ -176,6 +176,7 @@ const StarRating = ({ rating,reviewLength }) => {
       const [reviewPage, setReviewPage] = useState(0);
       const [totalReviewPage, setTotalReviewPage] = useState({total : 0});
       const [sortedReviews, setSortedReviews] = useState([]);
+      const [storeName,setStoreName] = useState(null);
 
       useEffect(() => {
         const sorted = [...reviews].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -186,7 +187,7 @@ const StarRating = ({ rating,reviewLength }) => {
         fetchReview();
         const handleScroll = () => {
           if (
-            window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 75
+            window.innerHeight + window.scrollY >= document.documentElement.scrollHeight
           ) {
             loadMoreReviewData();
           }
@@ -201,7 +202,6 @@ const StarRating = ({ rating,reviewLength }) => {
           setReviewPage(prevPage => prevPage + 1);
         }
       };
-    
     
       const fetchReview = async () => {
         const response = await fetch(URL_VARIABLE + "reviews/stores/" + id + `?page=${reviewPage}&size=5`);
@@ -241,6 +241,7 @@ const StarRating = ({ rating,reviewLength }) => {
                   setStoreContents(response.data);
                   setStoreMenuList(response.data.storeMenuDtoList);
                   setRoundedRating(response.data.starRate.toFixed(1));
+                  setStoreName(response.data.storeName);
               } catch (error) {
                   console.error(error);
               }
@@ -403,7 +404,7 @@ const handleScrollRight = () => {
             {activeTab === 'review' && (
               <div className= 'navtab-contents-page'>
                     <div className= 'store-home'>
-                      <div className="store-home-back-img" style={{ backgroundImage: `url(${backImage})` }} onClick={() => handleTabClick('home')} active={activeTab === 'home'} ></div>
+                    <div className="store-home-back-img" style={{ backgroundImage: `url(${backImage})` }} onClick={() => handleTabClick('home')} active={activeTab === 'home'} ></div>
                        <span className = "store-home-name">{storeContents.storeName}</span>
                       </div>
                 <div className='navtab-container-page'>
@@ -424,8 +425,8 @@ const handleScrollRight = () => {
           <ReviewBar reviews = {reviews}  reviewCount={totalReviewSize}/>
           </div>
           <div className='container-space-thin'></div>
-          {sortedReviews.length > 0 ? sortedReviews.map(review => <ReviewScroll reviewData={review} />) : (<p>리뷰가 없습니다</p>)}
-        </div>
+          {sortedReviews.length > 0 ? sortedReviews.map(review => <ReviewScroll reviewData={review} storeName={storeName}/>) : (<p>리뷰가 없습니다</p>)}
+          </div>
             )}
 
 
