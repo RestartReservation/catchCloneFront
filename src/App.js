@@ -18,6 +18,7 @@ import Reservation from "./pages/Reservation";
 import ReservationList from "./pages/ReservationList";
 import WriteReview from "./pages/WriteReview";
 import UserProfile from "./pages/UserProfile";
+import Comment from "./pages/Comment";
 
 function App() {
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -166,6 +167,7 @@ function App() {
     <Route path="/reservationList" element={<ReservationList />} />
     <Route path="/writeReview/:id1/:id2" element={<WriteReview />} />
     <Route path="/userProfile" element={<UserProfile />} />
+    <Route path="/comments/:storeName/:reviewId" element={<Comment />} />
   </Routes>
     {showLoginModal && <Login onClose={closeLoginModal} onLoginSuccess={handleLoginSuccess}/>}
   </div>
