@@ -1,0 +1,66 @@
+.store-home-comment{
+    margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+    position: fixed;
+    z-index: 1000;
+  }
+
+.no-scroll {
+    overflow: hidden;
+    height: 100vh; /* 높이를 지정하여 스크롤을 숨깁니다 */
+  }
+
+  .navtab-contents-page-comment{
+    margin-top: 12px;
+    position: relative;
+    width: 500px;
+    min-height: 97vh;
+    box-sizing: border-box;
+    background-color: white;
+    overflow: hidden; 
+    display: flex;
+    flex-direction: column;
+  }
+
+
+  .review-comments-div{
+    width: 500px;
+    min-height: 90vh;
+  }
+
+  .comment-input-div{
+    display: flex;
+    flex-direction: row;
+}
+
+.comment-input-form{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.comment-text-input{
+    width: 370px;
+    margin-top: 15px;
+    margin-left: 10px;
+    border: none;
+    outline: none;
+}
+  .comment-submit-button{
+    margin-top: 15px;
+    margin-left: 20px;
+    background-color:#b0b0b0;
+    border: none; 
+    border-radius: 22px; 
+    padding: 5px 25px;
+    color: #fff; 
+    font-size: 16px;
+    cursor: pointer; 
+    transition: background-color 0.3s; 
+  }
+
+  .comment-submit-button:hover {
+    background-color: #414141; 
+  }
+  

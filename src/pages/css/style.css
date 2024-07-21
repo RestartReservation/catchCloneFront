@@ -10,8 +10,8 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  
 }
+
 
 /*/////////////////////////////////////////////////////////////// 네비바 css //////////////////////////////////////////////////////////*/
 .navbar-custom {
@@ -395,10 +395,12 @@ button.prev:hover, button.next:hover {
   margin-top: 12px;
   position: relative;
   width: 500px;
-  height: 100vh;
+  height: 100%;
   box-sizing: border-box;
   background-color: white;
   overflow: hidden; 
+  display: flex;
+  flex-direction: column;
 }
 .navtab-contents-home{
   margin-top: 25px;
@@ -694,11 +696,7 @@ button.prev:hover, button.next:hover {
   font-weight: bold;
 }
   
-.navtab-contents-page {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
+
 
 .reviews-container {
   flex-grow: 1;
