@@ -178,6 +178,7 @@ const StarRating = ({ rating,reviewLength }) => {
       const [sortedReviews, setSortedReviews] = useState([]);
       const [storeName,setStoreName] = useState(null);
       const [reviewCheck, setReviewCheck] = useState(null);
+      const [totalReviewRating,setTotalReviewRating] = useState([]);
 
       useEffect(() => {
         const sorted = [...reviews].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -220,8 +221,10 @@ const StarRating = ({ rating,reviewLength }) => {
       const fetchMainReviews = async () => {
           try {
               const response = await axios.get(URL_VARIABLE + "reviews/stores/" + id + `?page=${0}&size=5`);
+              const reviewRating = await axios.get(URL_VARIABLE + "reviews/stores/rating/" + id);
               console.log(response);
               setMainReviews(response.data.content);
+              setTotalReviewRating(reviewRating.data);
           } catch (error) {
               console.error(error);
           }
@@ -394,11 +397,6 @@ const handleScrollRight = () => {
                   <Tab label="사진" onClick={() => handleTabClick('pictures')} active={activeTab === 'pictures'} />
                   <Tab label="리뷰" onClick={() => handleTabClick('review')} active={activeTab === 'review'} count={totalReviewSize} /> 
                 </div>
-                <div className='navtab-contents-reservation'>
-                  <p className='navtab-contents-title'>예약</p>
-                  <ReservationDateSelect storeId={id} />
-                  <Link to = {`/reservations/${id}`}><button className='reservation-button'>예약</button></Link > 
-              </div>
             </div>
             )}
 
@@ -440,7 +438,7 @@ const handleScrollRight = () => {
                 <span className='review-bar-star-rating'>{roundedRating}</span>
           </p>
           </div>
-          <ReviewBar reviews = {reviews}  reviewCount={totalReviewSize}/>
+          <ReviewBar reviews = {totalReviewRating}  reviewCount={totalReviewSize}/>
           </div>
           <div className='container-space-thin'></div>
           {sortedReviews.length > 0 ? sortedReviews.map(review => <ReviewScroll reviewData={review} storeName={storeName}/>) : (<p>리뷰가 없습니다</p>)}
