@@ -177,6 +177,7 @@ const StarRating = ({ rating,reviewLength }) => {
       const [totalReviewPage, setTotalReviewPage] = useState({total : 0});
       const [sortedReviews, setSortedReviews] = useState([]);
       const [storeName,setStoreName] = useState(null);
+      const [reviewCheck, setReviewCheck] = useState(null);
 
       useEffect(() => {
         const sorted = [...reviews].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -264,6 +265,23 @@ const StarRating = ({ rating,reviewLength }) => {
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRJyX-QgEmUkuqutcLsUS8dQXg_eE9mzSoxA&s'   
     ];
 
+    useEffect(() => {
+      const data = localStorage.getItem('reviewCheck');
+      if (data) {
+        setReviewCheck(data);
+      }
+    }, []);
+
+    useEffect(() => {
+      const handlereviewTabClick = async () => {
+        if(reviewCheck !== null){
+          setActiveTab('review');
+          localStorage.removeItem('reviewCheck');
+        }
+      };
+      handlereviewTabClick();
+  },[reviewCheck])
+
 
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);
@@ -297,7 +315,7 @@ const handleScrollRight = () => {
               </div>
               {storeContents && (
                 <div className="store-contents">
-                  <p className='store-contents-storename'>{storeContents.storeName}</p>
+                  <p className='store-contents-storename'>{storeName}</p>
                   <StarRating rating={storeContents.starRate} reviewLength={totalReviewSize} />
                   <p>{storeContents.aboutStore}</p>
                 
@@ -368,7 +386,7 @@ const handleScrollRight = () => {
               <div className= 'navtab-contents-page'>
                       <div className= 'store-home'>
                       <div className="store-home-back-img" style={{ backgroundImage: `url(${backImage})` }} onClick={() => handleTabClick('home')} active={activeTab === 'home'} ></div>
-                       <span className = "store-home-name">{storeContents.storeName}</span>
+                       <span className = "store-home-name">{storeName}</span>
                       </div>
                 <div className='navtab-container-page'>
                   <Tab label="홈" onClick={() => handleTabClick('home')} active={activeTab === 'home'} />
@@ -389,7 +407,7 @@ const handleScrollRight = () => {
               <div className= 'navtab-contents-page'>
                       <div className= 'store-home'>
                       <div className="store-home-back-img" style={{ backgroundImage: `url(${backImage})` }} onClick={() => handleTabClick('home')} active={activeTab === 'home'} ></div>
-                       <span className = "store-home-name">{storeContents.storeName}</span>
+                       <span className = "store-home-name">{storeName}</span>
                       </div>
                 <div className='navtab-container-page'>
                   <Tab label="홈" onClick={() => handleTabClick('home')} active={activeTab === 'home'} />
@@ -405,7 +423,7 @@ const handleScrollRight = () => {
               <div className= 'navtab-contents-page'>
                     <div className= 'store-home'>
                     <div className="store-home-back-img" style={{ backgroundImage: `url(${backImage})` }} onClick={() => handleTabClick('home')} active={activeTab === 'home'} ></div>
-                       <span className = "store-home-name">{storeContents.storeName}</span>
+                       <span className = "store-home-name">{storeName}</span>
                       </div>
                 <div className='navtab-container-page'>
                   <Tab label="홈" onClick={() => handleTabClick('home')} active={activeTab === 'home'} />
