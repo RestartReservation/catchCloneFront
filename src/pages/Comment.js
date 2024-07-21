@@ -1,14 +1,34 @@
 
 import React, { useState, useEffect } from 'react';
 import './css/Comment.css';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate} from 'react-router-dom';
 
 const Comment = () => {
   const [comments,setComments] = useState([]);
   const [parentComments, setParentComments] = useState([]);
   const [childCommentsMap, setChildCommentsMap] = useState({});
-  const { storeName, reviewId} = useParams();
+  const {storeName, reviewId} = useParams();
   const backImage = '/back.png';
+  const navigate = useNavigate();
+  const [requestComment, setResquestComment] = useState('');
+
+
+  const handleChange = (event) => {
+    setResquestComment(event.target.value);
+  };
+
+
+  const handleRequestComment = (event) => {
+    event.preventDefault();
+  };
+
+
+  const handleBackClick = () => {
+    localStorage.setItem('reviewCheck',true);
+    navigate(-1);
+};
+
+
 
   useEffect(() => {
     const parents = comments.filter(comment => comment.parentId === null);
@@ -36,9 +56,31 @@ const Comment = () => {
   };
 
   return (
-    <div>
-
+    <div className='no-scroll'>
+    <div className = 'contents-section-store'>
+      <div className= 'navtab-contents-page-comment'>
+        <div className= 'store-home-comment'>
+        <div className="store-home-back-img" style={{ backgroundImage: `url(${backImage})` }} onClick={handleBackClick}></div>
+            <span className = "store-home-name">{storeName}</span>
+        </div>
+        <div className='review-comments-div'></div>
+        <div className='container-space-thin'></div>
+        <div className = 'comment-input-div'>
+              <form onSubmit={handleRequestComment} className = 'comment-input-form'>
+                <input
+                  className='comment-text-input'
+                  type="text"
+                  value={requestComment}
+                  onChange={handleChange}
+                  placeholder="댓글을 입력하세요"
+                />
+              <button type="submit" className='comment-submit-button'>등록</button>
+          </form>
+        </div>
+      </div>
     </div>
+    </div>
+
     );
 };
 
