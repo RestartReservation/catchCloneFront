@@ -206,7 +206,13 @@ const StarRating = ({ rating,reviewLength }) => {
       };
     
       const fetchReview = async () => {
-        const response = await fetch(URL_VARIABLE + "reviews/stores/" + id + `?page=${reviewPage}&size=5`);
+        const jwtToken = localStorage.getItem('jwtToken');
+        
+        const response = await fetch(URL_VARIABLE + "reviews/stores/" + id + `?page=${reviewPage}&size=5`, {
+          headers: {
+            Authorization: `${jwtToken}`
+          }
+        })
         const newData = await response.json();
         console.log(newData);
         setReviews(prevData => [...prevData, ...newData.content]);
@@ -219,8 +225,14 @@ const StarRating = ({ rating,reviewLength }) => {
 
       useEffect(() => {
       const fetchMainReviews = async () => {
+        const jwtToken = localStorage.getItem('jwtToken');
+
           try {
-              const response = await axios.get(URL_VARIABLE + "reviews/stores/" + id + `?page=${0}&size=5`);
+              const response = await axios.get(URL_VARIABLE + "reviews/stores/" + id + `?page=${0}&size=5`, {
+                headers: {
+                  Authorization: `${jwtToken}`
+                }
+              })
               const reviewRating = await axios.get(URL_VARIABLE + "reviews/stores/rating/" + id);
               console.log(response);
               setMainReviews(response.data.content);
