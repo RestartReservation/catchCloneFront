@@ -13,15 +13,21 @@ const Comment = () => {
   const navigate = useNavigate();
   const [writeComment, setWriteComment] = useState('');
   //임시
-  const heartIcon = '/heart-empty.png';
+  const heartIconEmpty = '/heart-empty.png';
+  const heartIconFull = '/heart-full-1.png';
 
   useEffect(() => {
     fetchComments();
   }, []);
 
   const fetchComments = async () => {
+    const jwtToken = localStorage.getItem('jwtToken');
     try {
-      const response = await axios.get(`${URL_VARIABLE}comments/reviews/${reviewId}`);
+      const response = await axios.get(`${URL_VARIABLE}comments/reviews/${reviewId}`, {
+        headers: {
+          Authorization: `${jwtToken}`
+        }
+      });
       setComments(Array.isArray(response.data) ? response.data : []); // 응답이 배열인지 확인 후 설정
     } catch (error) {
       console.error(error);
@@ -110,7 +116,7 @@ const Comment = () => {
       <div className='comment-contents-section'>
         <div className='comment-contents'>{comment.commentContent}</div>
           <div className='comment-contents-interaction'>
-             <img className= "comment-like-image" src={heartIcon} alt='Like Icon' /> <p className= "comment-like-count" >{comment.likeCount}</p>
+             <img className= {`comment-like-image${comment.isLiked ? '-full' : ''}`}  src={comment.isLiked ? heartIconFull : heartIconEmpty} alt='Like Icon'/> <p className= "comment-like-count" >{comment.likeCount}</p>
              </div>
 
       </div>
