@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { URL_VARIABLE } from "./export/ExportUrl";
 import './css/Comment.css';
+import RenderComment from './export/RenderComment';
 
 const Comment = () => {
   const [comments, setComments] = useState([]);
@@ -12,13 +13,13 @@ const Comment = () => {
   const backImage = '/back.png';
   const navigate = useNavigate();
   const [writeComment, setWriteComment] = useState('');
-  //임시
-  const heartIconEmpty = '/heart-empty.png';
-  const heartIconFull = '/heart-full-1.png';
+
 
   useEffect(() => {
     fetchComments();
   }, []);
+
+
 
   const fetchComments = async () => {
     const jwtToken = localStorage.getItem('jwtToken');
@@ -93,36 +94,53 @@ const Comment = () => {
     setChildCommentsMap(childrenMap);
   }, [comments]);
 
-  const RenderComments = (comments, layer = 0) => {
-    const userProfileUrl = (profileUrl) => {
-      return profileUrl ? profileUrl : '/sign-icon.jpg';
-    }
+  // const RenderComments = (comments, layer = 0) => {
 
-    if (!Array.isArray(comments)) {
-      return null; // comments가 배열이 아니면 null 반환
-    }
-    const formatDate = (dateString) => {
-      const date = new Date(dateString);
-      return date.toISOString().split('T')[0]; // 'T'를 기준으로 날짜 부분만 추출
-    };
+  //   const handleLikeClick = async (commentId) => {
+  //     const jwtToken = localStorage.getItem('jwtToken');
+  //     if (jwtToken === null) {
+  //         alert("로그인 해 주세요");
+  //         return;
+  //     } else {
+  //         try {
+  //             await axios.post(URL_VARIABLE + `likes/comments/` + commentId, {}, {
+  //                 headers: { Authorization: `${jwtToken}` }
+  //             });
+  //         } catch (error) {
+  //             console.error('API 호출 에러:', error);
+  //         }
+  //     }
+  // }
 
-        return comments.map(comment => (
-    <div className='comment'>
-      <div className='comment-user-info'>
-            <div className="comment-user-profile-image" style={{ backgroundImage: `url(${userProfileUrl(comment.profileUrl)})` }}></div>
-            <p className='comment-user-nickname'>{comment.nickName}</p>
-            <span className="comment-created-date">{formatDate(comment.createdAt)}</span>
-      </div>
-      <div className='comment-contents-section'>
-        <div className='comment-contents'>{comment.commentContent}</div>
-          <div className='comment-contents-interaction'>
-             <img className= {`comment-like-image${comment.isLiked ? '-full' : ''}`}  src={comment.isLiked ? heartIconFull : heartIconEmpty} alt='Like Icon'/> <p className= "comment-like-count" >{comment.likeCount}</p>
-             </div>
+  //   const userProfileUrl = (profileUrl) => {
+  //     return profileUrl ? profileUrl : '/sign-icon.jpg';
+  //   }
 
-      </div>
-          <div className='container-space-thin'></div>
-    </div>
-    ));
+  //   if (!Array.isArray(comments)) {
+  //     return null; // comments가 배열이 아니면 null 반환
+  //   }
+  //   const formatDate = (dateString) => {
+  //     const date = new Date(dateString);
+  //     return date.toISOString().split('T')[0]; // 'T'를 기준으로 날짜 부분만 추출
+  //   };
+
+  //       return comments.map(comment => (
+  //   <div className='comment'>
+  //     <div className='comment-user-info'>
+  //           <div className="comment-user-profile-image" style={{ backgroundImage: `url(${userProfileUrl(comment.profileUrl)})` }}></div>
+  //           <p className='comment-user-nickname'>{comment.nickName}</p>
+  //           <span className="comment-created-date">{formatDate(comment.createdAt)}</span>
+  //     </div>
+  //     <div className='comment-contents-section'>
+  //       <div className='comment-contents'>{comment.commentContent}</div>
+  //         <div className='comment-contents-interaction'>
+  //            <img className= {`comment-like-image${comment.isLiked ? '-full' : ''}`}  src={comment.isLiked ? heartIconFull : heartIconEmpty} alt='Like Icon' onClick={handleLikeClick(comment.likeCount)}/> <p className= "comment-like-count" >{comment.likeCount}</p>
+  //            </div>
+
+  //     </div>
+  //         <div className='container-space-thin'></div>
+  //   </div>
+  //   ));
 
     // return comments.map(comment => (
     //   <div key={comment.id} style={{ marginLeft: layer * 20 }}>
@@ -130,7 +148,7 @@ const Comment = () => {
     //     {childCommentsMap[comment.id] && RenderComments(childCommentsMap[comment.id], layer + 1)}
     //   </div>
     // ));
-  };
+  // };
 
   return (
     <div className='no-scroll'>
@@ -141,7 +159,7 @@ const Comment = () => {
             <span className="store-home-name">{storeName}</span>
           </div>
           <div className='review-comments-div'>
-            {comments.length > 0 ? RenderComments(comments) : (<div className='no-comments'>댓글이 없습니다</div>)}
+          {comments.length > 0 ? comments.map(comment => <RenderComment key={comment.id} commentData={comment}/> ): (<div className='no-comments'>댓글이 없습니다</div>)}
           </div>
           <div className='comment-input-div-fixed'> 
             <div className='container-space-thin'></div>
@@ -164,5 +182,4 @@ const Comment = () => {
     </div>
   );
 };
-
 export default Comment;
