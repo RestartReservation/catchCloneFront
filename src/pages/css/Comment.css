@@ -1,147 +1,153 @@
-.store-home-comment{
-    margin-top: 2px;
-    display: flex;
-    flex-direction: row;
-    position: fixed;
-    z-index: 1000;
-    background-color: white;
-    width: 500px;
-
-  }
+.store-home-comment {
+  margin-top: 2px;
+  display: flex;
+  flex-direction: row;
+  position: fixed;
+  z-index: 1000;
+  background-color: white;
+  width: 500px;
+}
 
 .no-scroll {
-    overflow: hidden;
-    height: 100vh; /* 높이를 지정하여 스크롤을 숨깁니다 */
-  }
-
-  .navtab-contents-page-comment{
-    margin-top: 12px;
-    position: relative;
-    width: 500px;
-    min-height: 97vh;
-    box-sizing: border-box;
-    background-color: white;
-    overflow: hidden; 
-    display: flex;
-    flex-direction: column;
-  }
-
-
-  .review-comments-div{
-    margin-top: 50px;
-    width: 500px;
-    min-height: 90vh;
-  }
-
-  .comment-input-div-fixed{
-    bottom : 0px;
-    position: fixed;
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    padding-bottom: 10px;
+  overflow: hidden;
+  height: 100vh;
 }
 
-  .comment-input-div{
-    display: flex;
-    flex-direction: row;
+.navtab-contents-page-comment {
+  margin-top: 12px;
+  position: relative;
+  width: 500px;
+  min-height: 97vh;
+  box-sizing: border-box;
+  background-color: white;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
-.comment-input-form{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+.review-comments-div {
+  margin-top: 40px;
+  width: 500px;
+  min-height: 90vh;
 }
 
-.comment-text-input{
-    width: 370px;
-    margin-top: 15px;
-    margin-left: 10px;
-    border: none;
-    outline: none;
-}
-  .comment-submit-button{
-    margin-top: 15px;
-    margin-left: 20px;
-    background-color:#b0b0b0;
-    border: none; 
-    border-radius: 22px; 
-    padding: 5px 25px;
-    color: #fff; 
-    font-size: 16px;
-    cursor: pointer; 
-    transition: background-color 0.3s; 
-  }
-
-  .comment-submit-button:hover {
-    background-color: #414141; 
-  }
-  
-  .no-comments{
-    margin-top : 360px;
-    margin-left : 185px;
-  }
-
-  .comment-user-info{
-    display: flex;
-    margin-top: 5px;
-    flex-direction: row;
-    align-items: center;
+.comment-input-div-fixed {
+  bottom: 0;
+  position: fixed;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding-bottom: 10px;
 }
 
-.comment-user-profile-image{
-  width: 32px; 
+.comment-input-div {
+  display: flex;
+  flex-direction: row;
+}
+
+.comment-input-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.comment-text-input {
+  width: 370px;
+  margin-top: 15px;
+  margin-left: 10px;
+  border: none;
+  outline: none;
+}
+
+.comment-submit-button {
+  margin-top: 15px;
+  margin-left: 20px;
+  background-color: #b0b0b0;
+  border: none;
+  border-radius: 22px;
+  padding: 5px 25px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.comment-submit-button:hover {
+  background-color: #414141;
+}
+
+.no-comments {
+  margin-top: 360px;
+  margin-left: 185px;
+}
+
+.comment-user-info {
+  display: flex;
+  margin-top: 5px;
+  flex-direction: row;
+  align-items: center;
+}
+
+.comment-user-profile-image {
+  width: 32px;
   height: 34px;
-  border-radius: 50%; 
-  background-size: cover; 
-  background-position: center; 
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
   margin-right: 10px;
   margin-bottom: 3px;
   margin-left: 14px;
 }
 
-.comment-user-nickname{
+.comment-user-nickname {
   margin-top: 10px;
 }
 
-.comment-container-space-thin{
+.comment-container-space-thin {
   width: 500px;
   height: 1px;
-  border-top: 1px dashed rgba(199, 199, 199, 0.945); 
+  border-top: 1px dashed rgba(199, 199, 199, 0.945);
   background-color: rgba(199, 199, 199, 0.945);
 }
-.comment-created-date{
-  margin-left: 330px;
+
+.comment-created-date {
+  margin-left: auto;
   font-size: 12px;
   color: gray;
   padding-right: 10px;
 }
 
-.comment-contents-section{
+.comment-contents-section {
   margin-left: 14px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.comment-contents-interaction{
+.comment-contents-interaction {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
-.comment-like-image{
-    width: 18px; 
-    height: 18px;
-    border-radius: 50%; 
-    background-size: cover; 
-    background-position: center; 
-    margin-top: 5px;
-    margin-bottom: 10px;
+.comment-like-image,
+.comment-like-image-full {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  cursor: pointer;
 }
 
-.comment-like-count{
+.comment-like-image:hover {
+  background-image: url('../../../public/heart-full-1.png');
+}
+
+.comment-like-count {
   margin-top: 10px;
   font-size: 14px;
   color: gray;
