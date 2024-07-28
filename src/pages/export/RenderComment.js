@@ -9,7 +9,8 @@ const RenderComment = ({ commentData }) => {
   const [commentLikeCount, setCommentLikeCount] = useState(commentData.likeCount);
   const formattedDate = new Date(commentData.createdAt).toISOString().split('T')[0];
   const [commentId,setCommentId] = useState();
-
+  const bellIcon = '/bell.png'
+  
   useEffect(() => {
     setComment(commentData);
     setHeartIcon(commentData.isLiked ? '/heart-full-1.png' : '/heart-empty.png');
@@ -60,6 +61,7 @@ const RenderComment = ({ commentData }) => {
           alt='Like Icon' 
           onClick={() => handleLikeClick()} />
           <p className="comment-like-count">{commentLikeCount}</p>
+          <img className='comment-declaration'  src={bellIcon} alt='Declaration Icon'/>
         </div>
       </div>
       <div className='container-space-thin'></div>
