@@ -153,3 +153,13 @@
   color: gray;
   padding-left: 5px;
 }
+
+.comment-declaration{
+  width: 23px; 
+  height: 23px;
+  border-radius: 50%; 
+  background-size: cover; 
+  background-position: center; 
+  margin-left: 420px;
+  margin-bottom: 8px;
+}
